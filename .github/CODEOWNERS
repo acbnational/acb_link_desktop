@@ -1,3 +1,4 @@
-# CODEOWNERS
-# Assign code owners for the repository\n# Replace with your org/team/user handles\n* @acbnational/maintainers
-
+# CODEOWNERS 
+# Assign code owners for the repository 
+# Replace with your org/team/user handles 
+* @acbnational/maintainers 
