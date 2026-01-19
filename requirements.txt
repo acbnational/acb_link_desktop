@@ -1,0 +1,74 @@
+# ACB Link Desktop - Requirements
+# Version 1.0.0 - WCAG 2.2 AA Compliant
+# Developed by BITS for the American Council of the Blind
+
+# ============================================================================
+# Core Dependencies
+# ============================================================================
+wxPython>=4.2.0          # Native Windows UI framework with accessibility support
+fastapi>=0.100.0         # Local web server for accessible HTML content
+uvicorn>=0.23.0          # ASGI server for FastAPI
+
+# ============================================================================
+# Audio & Media
+# ============================================================================
+# Note: wx.media.MediaCtrl is included in wxPython
+python-vlc>=3.0.18121    # VLC bindings for native audio playback (optional)
+
+# ============================================================================
+# Accessibility (WCAG 2.2 AA Compliance)
+# ============================================================================
+accessible_output2>=0.17  # Direct screen reader communication (NVDA, JAWS, Narrator)
+                          # Required for WCAG 4.1.3 Status Messages compliance
+
+# ============================================================================
+# Voice Control
+# ============================================================================
+SpeechRecognition>=3.10.0    # Speech recognition engine
+pyaudio>=0.2.13              # Audio input for speech recognition
+pyttsx3>=2.90                # Text-to-speech for voice feedback
+
+# Wake word detection (optional - enables "Hey ACB Link" activation)
+openwakeword>=0.6.0          # Free, open-source wake word detection
+                              # Runs locally, no API keys or costs
+                              # Falls back to speech recognition if not installed
+
+# ============================================================================
+# RSS Feed Parsing (Podcasts)
+# ============================================================================
+feedparser>=6.0.0            # RSS/Atom feed parser for podcast episodes
+
+# ============================================================================
+# HTTP & Networking
+# ============================================================================
+requests>=2.31.0             # HTTP library for API calls
+
+# ============================================================================
+# Calendar/Time
+# ============================================================================
+python-dateutil>=2.8.0       # Date parsing utilities
+icalendar>=5.0.0             # iCalendar file generation
+
+# ============================================================================
+# Data Handling
+# ============================================================================
+numpy>=1.24.0                # Required for OpenWakeWord audio processing
+# Note: json, dataclasses, typing are Python standard library (3.9+)
+
+# ============================================================================
+# Development Dependencies (install with: pip install -r requirements-dev.txt)
+# ============================================================================
+# pytest>=7.0.0              # Testing framework
+# pytest-cov>=4.0.0          # Test coverage
+# black>=23.0.0              # Code formatting
+# mypy>=1.0.0                # Type checking
+# flake8>=6.0.0              # Linting
+
+# ============================================================================
+# Platform Notes
+# ============================================================================
+# Windows x64: All packages available via pip
+# Windows ARM64: All packages are pure Python or have ARM64 wheels available
+#   - wxPython ARM64 builds available
+#   - VLC ARM64 builds available from VideoLAN
+#   - All other packages are pure Python

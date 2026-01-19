@@ -1,0 +1,487 @@
+<h1 id="accessibility-guide">Accessibility Guide</h1>
+<p>ACB Link Desktop is designed to be fully accessible to users who are
+blind or visually impaired. This guide covers accessibility features and
+best practices.</p>
+<h2 id="screen-reader-support">Screen Reader Support</h2>
+<h3 id="windows">Windows</h3>
+<p>ACB Link Desktop supports these screen readers:</p>
+<table>
+<thead>
+<tr>
+<th>Screen Reader</th>
+<th>Support Level</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NVDA</strong></td>
+<td>Full</td>
+<td>Recommended for best experience</td>
+</tr>
+<tr>
+<td><strong>JAWS</strong></td>
+<td>Full</td>
+<td>All features work</td>
+</tr>
+<tr>
+<td><strong>Narrator</strong></td>
+<td>Full</td>
+<td>Windows built-in</td>
+</tr>
+<tr>
+<td><strong>System Access</strong></td>
+<td>Good</td>
+<td>Basic support</td>
+</tr>
+</tbody>
+</table>
+<p><strong>To verify screen reader detection:</strong> 1. Open ACB Link
+Desktop 2. The screen reader should announce “ACB Link Desktop window”
+3. Navigate with Tab to hear control names</p>
+<h3 id="macos">macOS</h3>
+<p>ACB Link Desktop has deep VoiceOver integration:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Support Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Element announcement</strong></td>
+<td>Full</td>
+</tr>
+<tr>
+<td><strong>Rotor navigation</strong></td>
+<td>Full</td>
+</tr>
+<tr>
+<td><strong>Keyboard commands</strong></td>
+<td>Full</td>
+</tr>
+<tr>
+<td><strong>VoiceOver gestures</strong></td>
+<td>Supported</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Enable VoiceOver:</strong> - Press <strong>Command +
+F5</strong> - Or: System Preferences &gt; Accessibility &gt;
+VoiceOver</p>
+<hr />
+<h2 id="keyboard-navigation">Keyboard Navigation</h2>
+<h3 id="global-shortcuts">Global Shortcuts</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Windows</th>
+<th>macOS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Play/Pause</td>
+<td>Space</td>
+<td>Space</td>
+</tr>
+<tr>
+<td>Stop</td>
+<td>Ctrl+S</td>
+<td>Command+S</td>
+</tr>
+<tr>
+<td>Volume Up</td>
+<td>Ctrl+Up</td>
+<td>Command+Up</td>
+</tr>
+<tr>
+<td>Volume Down</td>
+<td>Ctrl+Down</td>
+<td>Command+Down</td>
+</tr>
+<tr>
+<td>Mute</td>
+<td>Ctrl+M</td>
+<td>Command+M</td>
+</tr>
+<tr>
+<td>Next Stream</td>
+<td>Ctrl+Right</td>
+<td>Command+Right</td>
+</tr>
+<tr>
+<td>Previous Stream</td>
+<td>Ctrl+Left</td>
+<td>Command+Left</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>Ctrl+Comma</td>
+<td>Command+Comma</td>
+</tr>
+<tr>
+<td>Check Updates</td>
+<td>Ctrl+U</td>
+<td>Command+U</td>
+</tr>
+<tr>
+<td>Exit</td>
+<td>Alt+F4</td>
+<td>Command+Q</td>
+</tr>
+</tbody>
+</table>
+<h3 id="navigation">Navigation</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Move between controls</td>
+<td>Tab / Shift+Tab</td>
+</tr>
+<tr>
+<td>Move in lists</td>
+<td>Arrow Up/Down</td>
+</tr>
+<tr>
+<td>Select item</td>
+<td>Enter or Space</td>
+</tr>
+<tr>
+<td>Open context menu</td>
+<td>Application key or Shift+F10</td>
+</tr>
+<tr>
+<td>Cancel/Close</td>
+<td>Escape</td>
+</tr>
+</tbody>
+</table>
+<h3 id="menu-navigation">Menu Navigation</h3>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open menu bar</td>
+<td>Alt or F10</td>
+</tr>
+<tr>
+<td>Navigate menus</td>
+<td>Arrow keys</td>
+</tr>
+<tr>
+<td>Select menu item</td>
+<td>Enter</td>
+</tr>
+<tr>
+<td>Close menu</td>
+<td>Escape</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="interface-elements">Interface Elements</h2>
+<h3 id="streams-list">Streams List</h3>
+<p>The streams list shows available audio streams.</p>
+<p><strong>Navigating:</strong> 1. Press Tab until you reach “Streams
+list” 2. Use Up/Down arrows to move through streams 3. Press Enter to
+play the selected stream 4. Screen reader announces stream name and
+status</p>
+<p><strong>Columns:</strong> - Stream name - Category - Status
+(playing/stopped)</p>
+<h3 id="podcasts-list">Podcasts List</h3>
+<p>Browse and play podcast episodes.</p>
+<p><strong>Navigating:</strong> 1. Tab to “Podcasts panel” 2. Tab to
+“Podcast list” to browse shows 3. Select a show with Enter 4. Tab to
+“Episodes list” 5. Select an episode with Enter to play</p>
+<h3 id="media-controls">Media Controls</h3>
+<p>Located at the bottom of the window.</p>
+<p><strong>Controls (in order):</strong> 1. Play button - Starts
+playback 2. Pause button - Pauses playback 3. Stop button - Stops
+playback 4. Volume slider - Adjusts volume (0-100%) 5. Mute checkbox -
+Toggles mute</p>
+<h3 id="settings-dialog">Settings Dialog</h3>
+<p>Access via File &gt; Settings or Ctrl+Comma.</p>
+<p><strong>Tab pages:</strong> 1. <strong>General</strong> - Startup
+options, theme 2. <strong>Playback</strong> - Audio backend, quality 3.
+<strong>Accessibility</strong> - Screen reader, font size 4.
+<strong>Scheduling</strong> - Recurring tasks 5.
+<strong>Updates</strong> - Auto-update settings</p>
+<h3 id="admin-dialogs">Admin Dialogs</h3>
+<p>Administrative features are fully accessible:</p>
+<p><strong>GitHub Login Dialog:</strong> - Clear instructions for
+obtaining a Personal Access Token - Help link opens GitHub token
+creation page - Password field for secure token entry - Role assignment
+announced upon successful login - Error messages are descriptive and
+actionable</p>
+<p><strong>Advanced Settings Dialog (Requires CONFIG_ADMIN):</strong> -
+All settings have accessible labels and tooltips - Radio buttons for
+mutually exclusive options - Help text explains each setting’s impact -
+Success/failure messages are announced</p>
+<p><strong>Affiliate Admin Panel (Requires AFFILIATE_ADMIN):</strong> -
+List of pending corrections is keyboard navigable - Approve/Reject
+buttons have clear accessible names - Status updates are announced via
+live region - Confirmation dialogs for destructive actions</p>
+<hr />
+<h2 id="accessibility-settings">Accessibility Settings</h2>
+<h3 id="screen-reader-options">Screen Reader Options</h3>
+<p><strong>Menu: File &gt; Settings &gt; Accessibility</strong></p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enable announcements</strong></td>
+<td>Turn spoken feedback on/off</td>
+</tr>
+<tr>
+<td><strong>Announce status changes</strong></td>
+<td>Speak when playback status changes</td>
+</tr>
+<tr>
+<td><strong>Announce connections</strong></td>
+<td>Speak connection status</td>
+</tr>
+<tr>
+<td><strong>Verbose mode</strong></td>
+<td>Include additional details</td>
+</tr>
+</tbody>
+</table>
+<h3 id="visual-options">Visual Options</h3>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Theme</strong></td>
+<td>Light, Dark, or High Contrast</td>
+</tr>
+<tr>
+<td><strong>Font size</strong></td>
+<td>Small, Medium, Large, Extra Large</td>
+</tr>
+<tr>
+<td><strong>Show focus ring</strong></td>
+<td>Visible indicator on focused control</td>
+</tr>
+</tbody>
+</table>
+<h3 id="high-contrast-mode">High Contrast Mode</h3>
+<p>For users with low vision:</p>
+<ol type="1">
+<li>Open Settings (Ctrl+Comma)</li>
+<li>Go to Accessibility tab</li>
+<li>Select “High Contrast” theme</li>
+<li>Click OK</li>
+</ol>
+<p>This provides: - Black background, white text - Bold, larger fonts -
+Thick focus indicators - No background images</p>
+<hr />
+<h2 id="voice-control">Voice Control</h2>
+<p>ACB Link Desktop includes voice command support.</p>
+<h3 id="enabling-voice-control">Enabling Voice Control</h3>
+<ol type="1">
+<li>Open Settings (Ctrl+Comma)</li>
+<li>Go to Voice Control tab</li>
+<li>Check “Enable voice commands”</li>
+<li>Configure wake word (default: “ACB Link”)</li>
+</ol>
+<h3 id="commands">Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Say This</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“Play”</td>
+<td>Start playback</td>
+</tr>
+<tr>
+<td>“Pause”</td>
+<td>Pause playback</td>
+</tr>
+<tr>
+<td>“Stop”</td>
+<td>Stop playback</td>
+</tr>
+<tr>
+<td>“Next stream”</td>
+<td>Switch to next stream</td>
+</tr>
+<tr>
+<td>“Previous stream”</td>
+<td>Switch to previous stream</td>
+</tr>
+<tr>
+<td>“Volume up”</td>
+<td>Increase volume</td>
+</tr>
+<tr>
+<td>“Volume down”</td>
+<td>Decrease volume</td>
+</tr>
+<tr>
+<td>“What’s playing?”</td>
+<td>Announce current stream</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="status-announcements">Status Announcements</h2>
+<p>ACB Link Desktop automatically announces important events:</p>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Announcement Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stream connected</td>
+<td>“Now playing ACB Main Audio”</td>
+</tr>
+<tr>
+<td>Stream disconnected</td>
+<td>“Stream disconnected, reconnecting”</td>
+</tr>
+<tr>
+<td>Recording started</td>
+<td>“Recording started”</td>
+</tr>
+<tr>
+<td>Recording stopped</td>
+<td>“Recording saved to Downloads”</td>
+</tr>
+<tr>
+<td>Volume changed</td>
+<td>“Volume 50 percent”</td>
+</tr>
+<tr>
+<td>Error</td>
+<td>“Error: Unable to connect to stream”</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="tips-for-screen-reader-users">Tips for Screen Reader Users</h2>
+<h3 id="efficient-navigation">Efficient Navigation</h3>
+<ol type="1">
+<li><strong>Use Tab</strong> to move between major sections</li>
+<li><strong>Use Arrow keys</strong> within lists</li>
+<li><strong>Use shortcuts</strong> for frequent actions
+(Space=Play/Pause)</li>
+<li><strong>Use the Help menu</strong> to see all shortcuts</li>
+</ol>
+<h3 id="first-time-setup">First Time Setup</h3>
+<ol type="1">
+<li>On first launch, you’ll hear “Welcome to ACB Link Desktop”</li>
+<li>Tab to the Streams list</li>
+<li>Press Down to hear available streams</li>
+<li>Press Enter to play</li>
+</ol>
+<h3 id="finding-streams">Finding Streams</h3>
+<ol type="1">
+<li>Press Ctrl+F to open search</li>
+<li>Type part of the stream name</li>
+<li>Results are announced as you type</li>
+<li>Press Down to move through results</li>
+<li>Press Enter to play</li>
+</ol>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="screen-reader-not-detecting-application">Screen Reader Not
+Detecting Application</h3>
+<p><strong>Windows:</strong> 1. Ensure screen reader is running 2.
+Restart ACB Link Desktop 3. Try running as Administrator</p>
+<p><strong>macOS:</strong> 1. Ensure VoiceOver is enabled (Command+F5)
+2. Check System Preferences &gt; Security &gt; Privacy &gt;
+Accessibility 3. Grant ACB Link Desktop access</p>
+<h3 id="announcements-not-working">Announcements Not Working</h3>
+<ol type="1">
+<li>Open Settings &gt; Accessibility</li>
+<li>Verify “Enable announcements” is checked</li>
+<li>Check your screen reader volume</li>
+</ol>
+<h3 id="focus-problems">Focus Problems</h3>
+<p>If focus seems lost: 1. Press Alt to activate menu bar 2. Press
+Escape to close menus 3. Press Tab to move to a control</p>
+<h3 id="keyboard-shortcuts-not-working">Keyboard Shortcuts Not
+Working</h3>
+<ol type="1">
+<li>Ensure ACB Link Desktop window has focus</li>
+<li>Check that no dialog is open</li>
+<li>Verify shortcut in Help &gt; Keyboard Shortcuts</li>
+</ol>
+<hr />
+<h2 id="compliance">Compliance</h2>
+<p>ACB Link Desktop is designed to meet:</p>
+<ul>
+<li><strong>WCAG 2.2 Level AA</strong> - Web Content Accessibility
+Guidelines</li>
+<li><strong>Section 508</strong> - US accessibility requirements</li>
+<li><strong>EN 301 549</strong> - European accessibility standard</li>
+</ul>
+<h3 id="compliance-checklist">Compliance Checklist</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="" />All functionality
+accessible via keyboard</label></li>
+<li><label><input type="checkbox" checked="" />All images have text
+alternatives</label></li>
+<li><label><input type="checkbox" checked="" />Sufficient color contrast
+(4.5:1 minimum)</label></li>
+<li><label><input type="checkbox" checked="" />Focus visible on all
+interactive elements</label></li>
+<li><label><input type="checkbox" checked="" />Text resizable up to
+200%</label></li>
+<li><label><input type="checkbox" checked="" />Status messages announced
+to screen readers</label></li>
+<li><label><input type="checkbox" checked="" />No keyboard
+traps</label></li>
+<li><label><input type="checkbox" checked="" />Consistent
+navigation</label></li>
+<li><label><input type="checkbox" checked="" />Labels for all form
+controls</label></li>
+<li><label><input type="checkbox" checked="" />Error identification and
+suggestions</label></li>
+</ul>
+<hr />
+<h2 id="feedback">Feedback</h2>
+<p>We welcome feedback on accessibility:</p>
+<ul>
+<li><strong>Email</strong>: <a
+href="mailto:accessibility@acb.org">accessibility@acb.org</a></li>
+<li><strong>GitHub Issues</strong>: <a
+href="https://github.com/acbnational/acb_link_desktop/issues">Report
+accessibility issues</a></li>
+</ul>
+<p>Please include: - Your screen reader and version - Operating system -
+Steps to reproduce any issues - Expected vs. actual behavior</p>
+<hr />
+<p><em>Accessibility Guide Version 1.0</em><br />
+<em>Last Updated: January 2026</em></p>

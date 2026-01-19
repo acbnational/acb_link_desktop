@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Resources>
+<resource name="ACB Radio" url="http://www.acbradio.org" />
+<resource name="ACB Radio Cafe" url="http://acbradio.org/cafe" />
+<resource name="ACB Radio Interactive" url="http://acbradio.org/interactive" />
+<resource name="ACB Radio Mainstream" url="http://acbradio.org/mainstream" />
+<resource name="ACB Radio Live Event" url="http://acbradio.org/live" />
+<resource name="ACB Radio Main Menu" url="http://mainmenu.acbradio.org" />
+<resource name="ACB Radio Special Event" url="http://acbradio.org/special" />
+<resource name="ACB Radio Treasure Trove" url="http://acbradio.org/trove" />
+<resource name="ACB Radio World News and Information" url="http://acbradio.org/news" />
+</Resources>

@@ -1,0 +1,1547 @@
+<h1 id="acb-link-desktop---deployment-guide">ACB Link Desktop -
+Deployment Guide</h1>
+<p><strong>Version:</strong> 1.0.0<br />
+<strong>Last Updated:</strong> January 2026<br />
+<strong>Developed by:</strong> Blind Information Technology Solutions
+(BITS)</p>
+<p>This guide covers building, packaging, and deploying ACB Link Desktop
+for distribution.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#build-process">Build Process</a></li>
+<li><a href="#windows-deployment">Windows Deployment</a></li>
+<li><a href="#macos-deployment">macOS Deployment</a></li>
+<li><a href="#github-releases">GitHub Releases</a></li>
+<li><a href="#version-management">Version Management</a></li>
+<li><a href="#update-infrastructure">Update Infrastructure</a></li>
+<li><a href="#configuration-reference">Configuration Reference</a></li>
+<li><a href="#administrator-management">Administrator
+Management</a></li>
+<li><a href="#quality-assurance">Quality Assurance</a></li>
+<li><a href="#distribution-checklist">Distribution Checklist</a></li>
+</ol>
+<hr />
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="development-environment">Development Environment</h3>
+<p><strong>All Platforms:</strong> - Python 3.9 or higher - Git - Access
+to ACB GitHub organization</p>
+<p><strong>Windows:</strong> - Visual Studio Build Tools 2019 or higher
+- NSIS 3.0 or higher (for installer) - PyInstaller - Code signing
+certificate (optional but recommended)</p>
+<p><strong>macOS:</strong> - Xcode Command Line Tools - create-dmg
+(install via Homebrew) - PyInstaller or py2app - Apple Developer
+certificate (optional but recommended)</p>
+<h3 id="install-build-dependencies">Install Build Dependencies</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone repository</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbnational/acb_link_desktop.git</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> acb_link_desktop</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create virtual environment</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate  <span class="co"># macOS/Linux</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span><span class="dt">\v</span>env<span class="dt">\S</span>cripts<span class="dt">\A</span>ctivate.ps1  <span class="co"># Windows PowerShell</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyinstaller</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows-specific</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install accessible_output2</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS-specific  </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyobjc-framework-Cocoa</span></code></pre></div>
+<hr />
+<h2 id="build-process">Build Process</h2>
+<h3 id="version-update">Version Update</h3>
+<p>Before building, update the version number in these files:</p>
+<ol type="1">
+<li><p><strong>acb_link/<strong>init</strong>.py</strong>:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> <span class="st">&quot;1.0.0&quot;</span></span></code></pre></div></li>
+<li><p><strong>pyproject.toml</strong>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode toml"><code class="sourceCode toml"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">&quot;1.0.0&quot;</span></span></code></pre></div></li>
+<li><p><strong>installer/version_info.txt</strong> (Windows):</p>
+<pre><code>filevers=(1, 0, 0, 0),
+prodvers=(1, 0, 0, 0),</code></pre></li>
+<li><p><strong>installer/acb_link.nsi</strong> (Windows):</p>
+<pre class="nsi"><code>!define VERSION &quot;1.0.0&quot;</code></pre></li>
+</ol>
+<h3 id="build-commands">Build Commands</h3>
+<p><strong>Windows:</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run build script</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\build_windows<span class="op">.</span><span class="fu">ps1</span></span></code></pre></div>
+<p><strong>macOS:</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make executable</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x scripts/build_macos.sh</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run build script</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/build_macos.sh</span></span></code></pre></div>
+<hr />
+<h2 id="windows-deployment">Windows Deployment</h2>
+<h3 id="build-process-1">Build Process</h3>
+<p>The Windows build script performs these steps:</p>
+<ol type="1">
+<li><strong>PyInstaller compilation</strong>: Creates standalone
+executable</li>
+<li><strong>Resource embedding</strong>: Adds version info and icon</li>
+<li><strong>Dependency bundling</strong>: Includes all Python
+packages</li>
+<li><strong>Data file inclusion</strong>: Bundles offline data and
+documentation</li>
+<li><strong>NSIS installer creation</strong>: Builds professional
+installer</li>
+<li><strong>Portable ZIP</strong>: Creates portable version</li>
+</ol>
+<h3 id="build-output">Build Output</h3>
+<p>After successful build:</p>
+<pre><code>dist/
+├── ACBLink/
+│   ├── ACBLink.exe          # Main executable
+│   ├── data/                # Bundled data
+│   ├── docs/                # Documentation
+│   └── [dependencies]       # Python libraries
+├── ACBLink-1.0.0-Setup.exe  # Installer
+├── ACBLink-1.0.0-Portable.zip
+└── checksums.txt            # SHA256 hashes</code></pre>
+<h3 id="nsis-installer-features">NSIS Installer Features</h3>
+<p>The installer provides:</p>
+<ul>
+<li>Modern UI wizard</li>
+<li>License agreement display</li>
+<li>Installation directory selection</li>
+<li>Start Menu shortcuts</li>
+<li>Desktop shortcut (optional)</li>
+<li>Registry entries for Add/Remove Programs</li>
+<li>Uninstaller</li>
+<li>64-bit Windows verification</li>
+</ul>
+<h3 id="code-signing-recommended">Code Signing (Recommended)</h3>
+<p>Sign the executable and installer for trust:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign executable</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>signtool sign <span class="op">/</span>n <span class="st">&quot;Your Certificate Name&quot;</span> <span class="op">/</span>t http<span class="op">://</span>timestamp<span class="op">.</span><span class="fu">digicert</span><span class="op">.</span><span class="fu">com</span> dist\ACBLink\ACBLink<span class="op">.</span><span class="fu">exe</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign installer</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>signtool sign <span class="op">/</span>n <span class="st">&quot;Your Certificate Name&quot;</span> <span class="op">/</span>t http<span class="op">://</span>timestamp<span class="op">.</span><span class="fu">digicert</span><span class="op">.</span><span class="fu">com</span> dist\ACBLink-1<span class="op">.</span><span class="dv">0.0</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span></span></code></pre></div>
+<hr />
+<h2 id="macos-deployment">macOS Deployment</h2>
+<h3 id="build-process-2">Build Process</h3>
+<p>The macOS build script performs these steps:</p>
+<ol type="1">
+<li><strong>py2app or PyInstaller</strong>: Creates app bundle</li>
+<li><strong>Info.plist generation</strong>: Sets app metadata</li>
+<li><strong>Icon embedding</strong>: Adds app icon</li>
+<li><strong>Framework bundling</strong>: Includes dependencies</li>
+<li><strong>DMG creation</strong>: Creates distributable disk image</li>
+</ol>
+<h3 id="build-output-1">Build Output</h3>
+<p>After successful build:</p>
+<pre><code>dist/
+├── ACB Link Desktop.app/    # Application bundle
+├── ACBLink-1.0.0-macOS.dmg  # Disk image
+└── checksums.txt            # SHA256 hashes</code></pre>
+<h3 id="app-bundle-structure">App Bundle Structure</h3>
+<pre><code>ACB Link Desktop.app/
+├── Contents/
+│   ├── Info.plist
+│   ├── MacOS/
+│   │   └── ACBLink         # Main executable
+│   ├── Resources/
+│   │   ├── icon.icns
+│   │   ├── data/
+│   │   └── docs/
+│   └── Frameworks/
+│       └── [dependencies]</code></pre>
+<h3 id="code-signing-and-notarization">Code Signing and
+Notarization</h3>
+<p>For distribution outside the Mac App Store:</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign the app</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">codesign</span> <span class="at">--deep</span> <span class="at">--force</span> <span class="at">--options</span> runtime <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--sign</span> <span class="st">&quot;Developer ID Application: Your Name&quot;</span> <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;dist/ACB Link Desktop.app&quot;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create signed DMG</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="ex">codesign</span> <span class="at">--sign</span> <span class="st">&quot;Developer ID Application: Your Name&quot;</span> <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  dist/ACBLink-1.0.0-macOS.dmg</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Notarize with Apple</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">xcrun</span> notarytool submit dist/ACBLink-1.0.0-macOS.dmg <span class="dt">\</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">--apple-id</span> your@email.com <span class="dt">\</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">--team-id</span> TEAMID <span class="dt">\</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">--password</span> app-specific-password <span class="dt">\</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">--wait</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Staple notarization ticket</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="ex">xcrun</span> stapler staple dist/ACBLink-1.0.0-macOS.dmg</span></code></pre></div>
+<hr />
+<h2 id="github-releases">GitHub Releases</h2>
+<h3 id="creating-a-release">Creating a Release</h3>
+<ol type="1">
+<li><p><strong>Commit version changes</strong>:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Release v1.0.0&quot;</span></span></code></pre></div></li>
+<li><p><strong>Create and push tag</strong>:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag v1.0.0</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="at">--tags</span></span></code></pre></div></li>
+<li><p><strong>Build artifacts</strong> on each platform</p></li>
+<li><p><strong>Create GitHub Release</strong>:</p>
+<ul>
+<li>Go to Releases, then Draft a new release</li>
+<li>Select tag v1.0.0</li>
+<li>Set release title: “ACB Link Desktop v1.0.0”</li>
+<li>Write release notes</li>
+<li>Upload build artifacts</li>
+<li>Publish release</li>
+</ul></li>
+</ol>
+<h3 id="release-notes-template">Release Notes Template</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## ACB Link Desktop v1.0.0</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">### Downloads</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>**Windows:**</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ACBLink-1.0.0-Setup.exe`</span> - Installer (recommended)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ACBLink-1.0.0-Portable.zip`</span> - Portable version</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>**macOS:**</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`ACBLink-1.0.0-macOS.dmg`</span> - macOS installer</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">### What&#39;s New</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Feature 1 description</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Feature 2 description</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bug Fixes</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fix 1 description</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Fix 2 description</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="fu">### Checksums (SHA256)</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>See <span class="in">`checksums.txt`</span> for verification hashes.</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accessibility</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>Full support for:</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>NVDA, JAWS, Narrator (Windows)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>VoiceOver (macOS)</span></code></pre></div>
+<h3 id="github-actions-automation">GitHub Actions Automation</h3>
+<p>The repository includes GitHub Actions workflows that:</p>
+<ol type="1">
+<li><strong>On tag push</strong>: Automatically build for Windows and
+macOS</li>
+<li><strong>Create draft release</strong>: With all artifacts
+attached</li>
+<li><strong>Generate checksums</strong>: For security verification</li>
+</ol>
+<p>See <code>.github/workflows/build.yml</code> for details.</p>
+<hr />
+<h2 id="version-management">Version Management</h2>
+<h3 id="semantic-versioning">Semantic Versioning</h3>
+<p>ACB Link Desktop uses semantic versioning (MAJOR.MINOR.PATCH):</p>
+<ul>
+<li><strong>MAJOR</strong>: Breaking changes or major features</li>
+<li><strong>MINOR</strong>: New features, backwards compatible</li>
+<li><strong>PATCH</strong>: Bug fixes and small improvements</li>
+</ul>
+<h3 id="version-channels">Version Channels</h3>
+<ul>
+<li><strong>Stable</strong>: Production releases (v1.0.0)</li>
+<li><strong>Beta</strong>: Pre-release testing (v1.1.0-beta.1)</li>
+<li><strong>Alpha</strong>: Early development (v1.1.0-alpha.1)</li>
+</ul>
+<h3 id="version-files">Version Files</h3>
+<p>Keep these files synchronized:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Location</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>init</strong>.py</td>
+<td>acb_link/</td>
+<td><code>__version__ = "1.0.0"</code></td>
+</tr>
+<tr>
+<td>pyproject.toml</td>
+<td>root</td>
+<td><code>version = "1.0.0"</code></td>
+</tr>
+<tr>
+<td>version_info.txt</td>
+<td>installer/</td>
+<td><code>filevers=(1, 0, 0, 0)</code></td>
+</tr>
+<tr>
+<td>acb_link.nsi</td>
+<td>installer/</td>
+<td><code>!define VERSION "1.0.0"</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="update-infrastructure">Update Infrastructure</h2>
+<h3 id="github-based-updates">GitHub-Based Updates</h3>
+<p>ACB Link Desktop uses GitHub Releases for free, reliable updates:</p>
+<ol type="1">
+<li><strong>Update check</strong>: Application queries GitHub API</li>
+<li><strong>Version comparison</strong>: Compares current vs latest
+release</li>
+<li><strong>Download</strong>: Fetches installer from release
+assets</li>
+<li><strong>Installation</strong>: Launches installer, app closes</li>
+<li><strong>Restart</strong>: User relaunches updated application</li>
+</ol>
+<h3 id="api-endpoint">API Endpoint</h3>
+<pre><code>GET https://api.github.com/repos/acbnational/acb_link_desktop/releases/latest</code></pre>
+<h3 id="asset-naming-convention">Asset Naming Convention</h3>
+<p>Use consistent names for automatic detection:</p>
+<ul>
+<li>Windows installer: <code>ACBLink-{version}-Setup.exe</code></li>
+<li>Windows portable: <code>ACBLink-{version}-Portable.zip</code></li>
+<li>macOS DMG: <code>ACBLink-{version}-macOS.dmg</code></li>
+<li>Checksums: <code>checksums.txt</code></li>
+</ul>
+<hr />
+<h2 id="configuration-reference">Configuration Reference</h2>
+<p>ACB Link Desktop uses a centralized configuration system defined in
+<code>acb_link/config.py</code>. All settings are stored in JSON files
+that can be modified for custom deployments.</p>
+<h3 id="configuration-file-locations">Configuration File Locations</h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Config Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>%APPDATA%\ACB Link\config.json</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/Library/Application Support/ACB Link/config.json</code></td>
+</tr>
+<tr>
+<td>Linux</td>
+<td><code>~/.acb_link/config.json</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="data-source-configuration">Data Source Configuration</h3>
+<p>The application fetches live data from ACB servers. These URLs can be
+customized for testing or alternative deployments.</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;live_data&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;base_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org&quot;</span><span class="fu">,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;streams&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;streams&quot;</span><span class="fu">,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB Media streaming stations&quot;</span><span class="fu">,</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/streams.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/streams.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;podcasts&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;podcasts&quot;</span><span class="fu">,</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB podcast feeds (OPML)&quot;</span><span class="fu">,</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/link.opml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/link.opml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">24</span><span class="fu">,</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;state_affiliates&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;state_affiliates&quot;</span><span class="fu">,</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;State affiliate organizations&quot;</span><span class="fu">,</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/states.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/states.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;special_interest_groups&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;special_interest_groups&quot;</span><span class="fu">,</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Special interest group affiliates&quot;</span><span class="fu">,</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/sigs.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/sigs.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;publications&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;publications&quot;</span><span class="fu">,</span></span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB publications and resources&quot;</span><span class="fu">,</span></span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/publications.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/publications.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;categories&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;categories&quot;</span><span class="fu">,</span></span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;Content categories&quot;</span><span class="fu">,</span></span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/categories.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/categories.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;acb_sites&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;acb_sites&quot;</span><span class="fu">,</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;description&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB website directory&quot;</span><span class="fu">,</span></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://link.acb.org/acbsites.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;offline_path&quot;</span><span class="fu">:</span> <span class="st">&quot;data/s3/acbsites.xml&quot;</span><span class="fu">,</span></span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;cache_duration_hours&quot;</span><span class="fu">:</span> <span class="dv">168</span><span class="fu">,</span></span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h4 id="data-source-settings">Data Source Settings</h4>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td>string</td>
+<td>-</td>
+<td>Internal identifier for the data source</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>string</td>
+<td>-</td>
+<td>Human-readable description</td>
+</tr>
+<tr>
+<td><code>live_url</code></td>
+<td>string</td>
+<td>-</td>
+<td>URL to fetch live data from</td>
+</tr>
+<tr>
+<td><code>offline_path</code></td>
+<td>string</td>
+<td>-</td>
+<td>Path to bundled offline data (relative to app)</td>
+</tr>
+<tr>
+<td><code>cache_duration_hours</code></td>
+<td>int</td>
+<td>24</td>
+<td>How long to cache data before re-fetching</td>
+</tr>
+<tr>
+<td><code>last_sync</code></td>
+<td>string</td>
+<td>null</td>
+<td>ISO timestamp of last successful sync</td>
+</tr>
+<tr>
+<td><code>enabled</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Whether this data source is active</td>
+</tr>
+</tbody>
+</table>
+<h3 id="update-configuration">Update Configuration</h3>
+<p>Settings for the GitHub-based automatic update system.</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;updates&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;enabled&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;check_on_startup&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;check_interval_hours&quot;</span><span class="fu">:</span> <span class="dv">24</span><span class="fu">,</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;github_repo&quot;</span><span class="fu">:</span> <span class="st">&quot;acbnational/acb_link_desktop&quot;</span><span class="fu">,</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;github_api_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://api.github.com/repos/acbnational/acb_link_desktop/releases/latest&quot;</span><span class="fu">,</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;download_url_template&quot;</span><span class="fu">:</span> <span class="st">&quot;https://github.com/acbnational/acb_link_desktop/releases/download/v{version}/{filename}&quot;</span><span class="fu">,</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;last_check&quot;</span><span class="fu">:</span> <span class="kw">null</span><span class="fu">,</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;skipped_version&quot;</span><span class="fu">:</span> <span class="kw">null</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Enable/disable automatic updates</td>
+</tr>
+<tr>
+<td><code>check_on_startup</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Check for updates when app starts</td>
+</tr>
+<tr>
+<td><code>check_interval_hours</code></td>
+<td>int</td>
+<td>24</td>
+<td>Hours between automatic update checks</td>
+</tr>
+<tr>
+<td><code>github_repo</code></td>
+<td>string</td>
+<td>“acbnational/acb_link_desktop”</td>
+<td>GitHub repository for updates</td>
+</tr>
+<tr>
+<td><code>github_api_url</code></td>
+<td>string</td>
+<td>(see above)</td>
+<td>Full URL to GitHub releases API</td>
+</tr>
+<tr>
+<td><code>download_url_template</code></td>
+<td>string</td>
+<td>(see above)</td>
+<td>Template for download URLs</td>
+</tr>
+<tr>
+<td><code>last_check</code></td>
+<td>string</td>
+<td>null</td>
+<td>ISO timestamp of last update check</td>
+</tr>
+<tr>
+<td><code>skipped_version</code></td>
+<td>string</td>
+<td>null</td>
+<td>Version user chose to skip</td>
+</tr>
+</tbody>
+</table>
+<h3 id="network-configuration">Network Configuration</h3>
+<p>Settings for network requests and connectivity.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;network&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;timeout_seconds&quot;</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">,</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;retry_count&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;retry_delay_seconds&quot;</span><span class="fu">:</span> <span class="dv">5</span><span class="fu">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;user_agent&quot;</span><span class="fu">:</span> <span class="st">&quot;ACBLinkDesktop/1.0&quot;</span><span class="fu">,</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;proxy_enabled&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;proxy_url&quot;</span><span class="fu">:</span> <span class="kw">null</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>timeout_seconds</code></td>
+<td>int</td>
+<td>30</td>
+<td>Network request timeout</td>
+</tr>
+<tr>
+<td><code>retry_count</code></td>
+<td>int</td>
+<td>3</td>
+<td>Number of retry attempts on failure</td>
+</tr>
+<tr>
+<td><code>retry_delay_seconds</code></td>
+<td>int</td>
+<td>5</td>
+<td>Delay between retries</td>
+</tr>
+<tr>
+<td><code>user_agent</code></td>
+<td>string</td>
+<td>“ACBLinkDesktop/1.0”</td>
+<td>HTTP User-Agent header</td>
+</tr>
+<tr>
+<td><code>proxy_enabled</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Enable proxy for network requests</td>
+</tr>
+<tr>
+<td><code>proxy_url</code></td>
+<td>string</td>
+<td>null</td>
+<td>Proxy server URL (e.g., “http://proxy:8080”)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="path-configuration">Path Configuration</h3>
+<p>File and directory paths (auto-configured per platform, but can be
+overridden).</p>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;paths&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;app_data_dir&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link&quot;</span><span class="fu">,</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;cache_dir&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">cache&quot;</span><span class="fu">,</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;logs_dir&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">logs&quot;</span><span class="fu">,</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;downloads_dir&quot;</span><span class="fu">:</span> <span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">{user}</span><span class="ch">\\</span><span class="st">Documents</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">Podcasts&quot;</span><span class="fu">,</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;recordings_dir&quot;</span><span class="fu">:</span> <span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">{user}</span><span class="ch">\\</span><span class="st">Documents</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">Recordings&quot;</span><span class="fu">,</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;settings_file&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">settings.json&quot;</span><span class="fu">,</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;favorites_file&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">favorites.json&quot;</span><span class="fu">,</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;playlists_file&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">playlists.json&quot;</span><span class="fu">,</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;history_file&quot;</span><span class="fu">:</span> <span class="st">&quot;%APPDATA%</span><span class="ch">\\</span><span class="st">ACB Link</span><span class="ch">\\</span><span class="st">history.json&quot;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>app_data_dir</code></td>
+<td>string</td>
+<td>Main application data directory</td>
+</tr>
+<tr>
+<td><code>cache_dir</code></td>
+<td>string</td>
+<td>Cache for downloaded content</td>
+</tr>
+<tr>
+<td><code>logs_dir</code></td>
+<td>string</td>
+<td>Application log files</td>
+</tr>
+<tr>
+<td><code>downloads_dir</code></td>
+<td>string</td>
+<td>Downloaded podcast episodes</td>
+</tr>
+<tr>
+<td><code>recordings_dir</code></td>
+<td>string</td>
+<td>Stream recordings</td>
+</tr>
+<tr>
+<td><code>settings_file</code></td>
+<td>string</td>
+<td>User settings JSON file</td>
+</tr>
+<tr>
+<td><code>favorites_file</code></td>
+<td>string</td>
+<td>Saved favorites</td>
+</tr>
+<tr>
+<td><code>playlists_file</code></td>
+<td>string</td>
+<td>User playlists</td>
+</tr>
+<tr>
+<td><code>history_file</code></td>
+<td>string</td>
+<td>Playback history</td>
+</tr>
+</tbody>
+</table>
+<h3 id="default-values-configuration">Default Values Configuration</h3>
+<p>Application default values that users can override in settings.</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;defaults&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_volume&quot;</span><span class="fu">:</span> <span class="dv">80</span><span class="fu">,</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_playback_speed&quot;</span><span class="fu">:</span> <span class="fl">1.0</span><span class="fu">,</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_skip_forward&quot;</span><span class="fu">:</span> <span class="dv">30</span><span class="fu">,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_skip_backward&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_tab&quot;</span><span class="fu">:</span> <span class="st">&quot;home&quot;</span><span class="fu">,</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_theme&quot;</span><span class="fu">:</span> <span class="st">&quot;system&quot;</span><span class="fu">,</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_font_size&quot;</span><span class="fu">:</span> <span class="dv">12</span><span class="fu">,</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_font_family&quot;</span><span class="fu">:</span> <span class="st">&quot;Segoe UI&quot;</span><span class="fu">,</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;start_minimized&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;minimize_to_tray&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;close_to_tray&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;remember_window_position&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_recording_format&quot;</span><span class="fu">:</span> <span class="st">&quot;mp3&quot;</span><span class="fu">,</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;default_recording_bitrate&quot;</span><span class="fu">:</span> <span class="dv">128</span><span class="fu">,</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;auto_sync_on_startup&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;sync_interval_hours&quot;</span><span class="fu">:</span> <span class="dv">24</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h4 id="audio-settings">Audio Settings</h4>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 13%" />
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Range</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_volume</code></td>
+<td>int</td>
+<td>80</td>
+<td>0-100</td>
+<td>Initial volume level (%)</td>
+</tr>
+<tr>
+<td><code>default_playback_speed</code></td>
+<td>float</td>
+<td>1.0</td>
+<td>0.5-3.0</td>
+<td>Playback speed multiplier</td>
+</tr>
+<tr>
+<td><code>default_skip_forward</code></td>
+<td>int</td>
+<td>30</td>
+<td>1-300</td>
+<td>Forward skip in seconds</td>
+</tr>
+<tr>
+<td><code>default_skip_backward</code></td>
+<td>int</td>
+<td>10</td>
+<td>1-300</td>
+<td>Backward skip in seconds</td>
+</tr>
+</tbody>
+</table>
+<h4 id="ui-settings">UI Settings</h4>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_tab</code></td>
+<td>string</td>
+<td>“home”</td>
+<td>home, streams, podcasts, favorites</td>
+<td>Initial tab on startup</td>
+</tr>
+<tr>
+<td><code>default_theme</code></td>
+<td>string</td>
+<td>“system”</td>
+<td>system, light, dark, high_contrast</td>
+<td>Color theme</td>
+</tr>
+<tr>
+<td><code>default_font_size</code></td>
+<td>int</td>
+<td>12</td>
+<td>8-24</td>
+<td>Base font size in points</td>
+</tr>
+<tr>
+<td><code>default_font_family</code></td>
+<td>string</td>
+<td>“Segoe UI”</td>
+<td>Any system font</td>
+<td>UI font family</td>
+</tr>
+</tbody>
+</table>
+<h4 id="behavior-settings">Behavior Settings</h4>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 16%" />
+<col style="width: 24%" />
+<col style="width: 35%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>start_minimized</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Start app minimized to tray</td>
+</tr>
+<tr>
+<td><code>minimize_to_tray</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Minimize to system tray instead of taskbar</td>
+</tr>
+<tr>
+<td><code>close_to_tray</code></td>
+<td>bool</td>
+<td>false</td>
+<td>Close to tray instead of exiting</td>
+</tr>
+<tr>
+<td><code>remember_window_position</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Save and restore window position</td>
+</tr>
+</tbody>
+</table>
+<h4 id="recording-settings">Recording Settings</h4>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 13%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>default_recording_format</code></td>
+<td>string</td>
+<td>“mp3”</td>
+<td>mp3, wav, ogg, flac</td>
+<td>Recording output format</td>
+</tr>
+<tr>
+<td><code>default_recording_bitrate</code></td>
+<td>int</td>
+<td>128</td>
+<td>64, 128, 192, 256, 320</td>
+<td>MP3 bitrate (kbps)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="sync-settings">Sync Settings</h4>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>auto_sync_on_startup</code></td>
+<td>bool</td>
+<td>true</td>
+<td>Sync data when app starts</td>
+</tr>
+<tr>
+<td><code>sync_interval_hours</code></td>
+<td>int</td>
+<td>24</td>
+<td>Hours between automatic syncs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="application-metadata">Application Metadata</h3>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0.0&quot;</span><span class="fu">,</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;first_run&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;install_date&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-01-19T10:30:00&quot;</span><span class="fu">,</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;last_run&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-01-19T15:45:00&quot;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>version</code></td>
+<td>string</td>
+<td>Application version (read-only)</td>
+</tr>
+<tr>
+<td><code>first_run</code></td>
+<td>bool</td>
+<td>True until first-run wizard completes</td>
+</tr>
+<tr>
+<td><code>install_date</code></td>
+<td>string</td>
+<td>ISO timestamp of first installation</td>
+</tr>
+<tr>
+<td><code>last_run</code></td>
+<td>string</td>
+<td>ISO timestamp of last application launch</td>
+</tr>
+</tbody>
+</table>
+<h3 id="server-side-data-hosting">Server-Side Data Hosting</h3>
+<p>If hosting your own ACB Link data server, ensure these endpoints are
+available:</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/streams.xml</code></td>
+<td>XML</td>
+<td>Streaming station definitions</td>
+</tr>
+<tr>
+<td><code>/link.opml</code></td>
+<td>OPML</td>
+<td>Podcast feed directory</td>
+</tr>
+<tr>
+<td><code>/states.xml</code></td>
+<td>XML</td>
+<td>State affiliate organizations</td>
+</tr>
+<tr>
+<td><code>/sigs.xml</code></td>
+<td>XML</td>
+<td>Special interest groups</td>
+</tr>
+<tr>
+<td><code>/publications.xml</code></td>
+<td>XML</td>
+<td>Publications directory</td>
+</tr>
+<tr>
+<td><code>/categories.xml</code></td>
+<td>XML</td>
+<td>Content categories</td>
+</tr>
+<tr>
+<td><code>/acbsites.xml</code></td>
+<td>XML</td>
+<td>ACB website directory</td>
+</tr>
+</tbody>
+</table>
+<h4 id="server-requirements">Server Requirements</h4>
+<ul>
+<li>HTTPS required for security</li>
+<li>CORS headers if serving to web clients</li>
+<li>Gzip compression recommended</li>
+<li>Cache-Control headers for CDN caching</li>
+</ul>
+<h4 id="custom-server-deployment">Custom Server Deployment</h4>
+<p>To point ACB Link to a custom server:</p>
+<ol type="1">
+<li><p><strong>Edit config.json</strong>:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;live_data&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;base_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://your-server.example.com&quot;</span><span class="fu">,</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;streams&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;live_url&quot;</span><span class="fu">:</span> <span class="st">&quot;https://your-server.example.com/streams.xml&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div></li>
+<li><p><strong>Or set environment variable</strong> (for testing):</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">ACB_LINK_BASE_URL</span><span class="op">=</span>https://your-server.example.com</span></code></pre></div></li>
+<li><p><strong>Distribute custom config</strong> with installer for
+organization-wide deployment</p></li>
+</ol>
+<h3 id="enterprise-deployment">Enterprise Deployment</h3>
+<p>For large-scale deployment with managed settings:</p>
+<ol type="1">
+<li><strong>Create master config.json</strong> with organization
+defaults</li>
+<li><strong>Bundle with installer</strong> to override defaults</li>
+<li><strong>Use Group Policy</strong> (Windows) to deploy config
+file</li>
+<li><strong>Lock settings</strong> by removing write permissions</li>
+</ol>
+<hr />
+<h2 id="administrator-management">Administrator Management</h2>
+<p>ACB Link Desktop includes a role-based administration system for
+managing organization-wide configuration and affiliate data.
+<strong>This system uses GitHub for free, zero-cost
+authentication</strong> - no custom server required!</p>
+<h3 id="why-github-based-authentication">Why GitHub-Based
+Authentication?</h3>
+<p>Using GitHub for admin authentication provides significant
+advantages:</p>
+<ul>
+<li><strong>Completely free</strong>: No server costs, hosting, or
+maintenance</li>
+<li><strong>Battle-tested security</strong>: GitHub’s authentication is
+trusted by millions</li>
+<li><strong>No passwords to manage</strong>: Uses GitHub Personal Access
+Tokens</li>
+<li><strong>Instant provisioning</strong>: Add admins by adding GitHub
+collaborators</li>
+<li><strong>Instant revocation</strong>: Remove access by removing
+collaborators</li>
+<li><strong>Built-in audit trail</strong>: GitHub tracks all permission
+changes</li>
+<li><strong>MFA supported</strong>: If user has GitHub MFA enabled, it’s
+automatically used</li>
+</ul>
+<h3 id="admin-roles">Admin Roles</h3>
+<p>The system maps GitHub repository permissions to admin roles:</p>
+<table>
+<colgroup>
+<col style="width: 36%" />
+<col style="width: 23%" />
+<col style="width: 13%" />
+<col style="width: 26%" />
+</colgroup>
+<thead>
+<tr>
+<th>GitHub Permission</th>
+<th>Admin Role</th>
+<th>Level</th>
+<th>Capabilities</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>None or Read</td>
+<td><code>USER</code></td>
+<td>0</td>
+<td>Standard user - no admin access</td>
+</tr>
+<tr>
+<td>Write/Triage</td>
+<td><code>AFFILIATE_ADMIN</code></td>
+<td>1</td>
+<td>Review and approve affiliate corrections</td>
+</tr>
+<tr>
+<td>Maintain/Admin</td>
+<td><code>CONFIG_ADMIN</code></td>
+<td>2</td>
+<td>Modify data sources, network settings</td>
+</tr>
+<tr>
+<td>Organization Owner</td>
+<td><code>SUPER_ADMIN</code></td>
+<td>3</td>
+<td>All capabilities plus admin management</td>
+</tr>
+</tbody>
+</table>
+<p>Each higher role inherits all capabilities of lower roles.</p>
+<h3 id="how-admins-are-defined">How Admins Are Defined</h3>
+<p>Administrators are defined by their <strong>GitHub permissions on the
+config repository</strong>. To grant someone admin access:</p>
+<ol type="1">
+<li>Add them as a collaborator to the
+<code>acbnational/acb_link_config</code> repository</li>
+<li>Set their permission level:
+<ul>
+<li><strong>Write access</strong> → Affiliate Admin</li>
+<li><strong>Admin access</strong> → Config Admin</li>
+<li><strong>Organization owner</strong> → Super Admin</li>
+</ul></li>
+</ol>
+<p>That’s it! No server configuration, no password management, no
+database.</p>
+<h3 id="setting-up-the-config-repository">Setting Up the Config
+Repository</h3>
+<h4 id="create-the-config-repository">1. Create the Config
+Repository</h4>
+<p>Create a GitHub repository to store organization configuration:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Repository: acbnational/acb_link_config (or your organization)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Can be private for internal configs or public for transparency</span></span></code></pre></div>
+<h4 id="add-the-config-file">2. Add the Config File</h4>
+<p>Create <code>org_config.json</code> in the repository root:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;1.0&quot;</span><span class="fu">,</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;organization&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;American Council of the Blind&quot;</span><span class="fu">,</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;short_name&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB&quot;</span><span class="fu">,</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;support_email&quot;</span><span class="fu">:</span> <span class="st">&quot;support@acb.org&quot;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;settings&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;data_sources&quot;</span><span class="fu">:</span> <span class="fu">{},</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;network&quot;</span><span class="fu">:</span> <span class="fu">{},</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;features&quot;</span><span class="fu">:</span> <span class="fu">{}</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">},</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;updated_at&quot;</span><span class="fu">:</span> <span class="st">&quot;2025-01-15T10:00:00Z&quot;</span><span class="fu">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;updated_by&quot;</span><span class="fu">:</span> <span class="st">&quot;initial-setup&quot;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h4 id="add-admin-collaborators">3. Add Admin Collaborators</h4>
+<p>Go to repository Settings → Collaborators and teams:</p>
+<table>
+<thead>
+<tr>
+<th>User</th>
+<th>Permission</th>
+<th>Resulting Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ceo-github</code></td>
+<td>Admin</td>
+<td>CONFIG_ADMIN</td>
+</tr>
+<tr>
+<td><code>it-staff</code></td>
+<td>Admin</td>
+<td>CONFIG_ADMIN</td>
+</tr>
+<tr>
+<td><code>affiliate-rep</code></td>
+<td>Write</td>
+<td>AFFILIATE_ADMIN</td>
+</tr>
+<tr>
+<td><code>volunteer</code></td>
+<td>Write</td>
+<td>AFFILIATE_ADMIN</td>
+</tr>
+</tbody>
+</table>
+<p>Organization owners automatically have SUPER_ADMIN access.</p>
+<h3 id="authentication-flow">Authentication Flow</h3>
+<p>When an admin action is required:</p>
+<pre><code>1. User attempts admin action (e.g., Advanced Settings)
+2. Application shows GitHub login dialog
+3. User enters their GitHub Personal Access Token (PAT)
+4. Application calls GitHub API to:
+   a. Verify token is valid (GET /user)
+   b. Check user&#39;s repo permission (GET /repos/.../collaborators/.../permission)
+   c. Check if org owner (GET /orgs/.../memberships/...)
+5. Role assigned based on highest permission level
+6. Token stored in memory (NOT on disk) for session
+7. Subsequent admin operations use the same token
+8. Token cleared when app exits</code></pre>
+<h3 id="creating-a-github-personal-access-token">Creating a GitHub
+Personal Access Token</h3>
+<p>Users need to create a PAT to authenticate:</p>
+<ol type="1">
+<li>Go to https://github.com/settings/tokens/new</li>
+<li>Set description: “ACB Link Desktop Admin”</li>
+<li>Select scopes:
+<ul>
+<li><code>read:org</code> (required - to check organization
+membership)</li>
+</ul></li>
+<li>Click “Generate token”</li>
+<li>Copy the token (it won’t be shown again)</li>
+</ol>
+<p>Or use this direct link:</p>
+<pre><code>https://github.com/settings/tokens/new?scopes=read:org&amp;description=ACB%20Link%20Desktop%20Admin</code></pre>
+<p><strong>Note</strong>: The token only needs <code>read:org</code>
+scope. It cannot make changes to repositories - it’s only used to verify
+the user’s identity and permissions.</p>
+<h3 id="configuration-storage">Configuration Storage</h3>
+<p>Organization config is stored directly in the GitHub repository:</p>
+<pre><code>acbnational/acb_link_config/
+├── org_config.json      # Main organization configuration
+├── README.md            # Documentation for admins
+└── .github/
+    └── CODEOWNERS       # Optional: require reviews for config changes</code></pre>
+<h4 id="fetching-config">Fetching Config</h4>
+<p>The app fetches config from GitHub:</p>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Public repo - no auth needed</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>GET https:<span class="op">//</span>api.github.com<span class="op">/</span>repos<span class="op">/</span>acbnational<span class="op">/</span>acb_link_config<span class="op">/</span>contents<span class="op">/</span>org_config.json</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Private repo - needs token</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>GET https:<span class="op">//</span>api.github.com<span class="op">/</span>repos<span class="op">/</span>acbnational<span class="op">/</span>acb_link_config<span class="op">/</span>contents<span class="op">/</span>org_config.json</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>Authorization: Bearer ghp_xxxxx</span></code></pre></div>
+<h4 id="updating-config">Updating Config</h4>
+<p>Config Admins can push changes through the GitHub API:</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>PUT https:<span class="op">//</span>api.github.com<span class="op">/</span>repos<span class="op">/</span>acbnational<span class="op">/</span>acb_link_config<span class="op">/</span>contents<span class="op">/</span>org_config.json</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>Authorization: Bearer ghp_xxxxx</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>Content<span class="op">-</span>Type: application<span class="op">/</span>json</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;message&quot;</span>: <span class="st">&quot;Update network timeout settings&quot;</span>,</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;content&quot;</span>: <span class="st">&quot;base64_encoded_content&quot;</span>,</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sha&quot;</span>: <span class="st">&quot;current_file_sha&quot;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="managing-admins">Managing Admins</h3>
+<h4 id="adding-a-new-admin">Adding a New Admin</h4>
+<ol type="1">
+<li>Go to
+<code>https://github.com/acbnational/acb_link_config/settings/access</code></li>
+<li>Click “Add people” or “Add teams”</li>
+<li>Enter their GitHub username</li>
+<li>Select permission level:
+<ul>
+<li><strong>Write</strong> for Affiliate Admin</li>
+<li><strong>Admin</strong> for Config Admin</li>
+</ul></li>
+<li>Click “Add”</li>
+</ol>
+<p>The user can now authenticate with their GitHub PAT.</p>
+<h4 id="removing-an-admin">Removing an Admin</h4>
+<ol type="1">
+<li>Go to repository settings → Collaborators</li>
+<li>Find the user</li>
+<li>Click “Remove”</li>
+</ol>
+<p>Their access is revoked immediately - their PAT will no longer grant
+admin permissions.</p>
+<h4 id="changing-admin-roles">Changing Admin Roles</h4>
+<ol type="1">
+<li>Go to repository settings → Collaborators</li>
+<li>Find the user</li>
+<li>Change their permission level</li>
+<li>The change takes effect on their next authentication</li>
+</ol>
+<h3 id="github-organization-setup-optional">GitHub Organization Setup
+(Optional)</h3>
+<p>For larger organizations, use GitHub Teams:</p>
+<pre><code>acbnational (organization)
+├── acb_link_config (repository)
+│   └── Teams:
+│       ├── acb-it (Admin access) → CONFIG_ADMIN
+│       ├── affiliate-managers (Write access) → AFFILIATE_ADMIN
+│       └── volunteers (Read access) → USER</code></pre>
+<p>Organization owners automatically have SUPER_ADMIN access to all
+repositories.</p>
+<h3 id="security-features">Security Features</h3>
+<h4 id="built-in-github-security">Built-in GitHub Security</h4>
+<ul>
+<li><strong>Two-factor authentication</strong>: If user has MFA on
+GitHub, it protects their PAT</li>
+<li><strong>Token expiration</strong>: Users can set PAT expiration
+(recommended: 90 days)</li>
+<li><strong>IP restrictions</strong>: GitHub Enterprise allows IP
+allowlists</li>
+<li><strong>Audit logging</strong>: GitHub logs all API access</li>
+<li><strong>Rate limiting</strong>: Protects against abuse</li>
+</ul>
+<h4 id="application-security">Application Security</h4>
+<ul>
+<li><strong>No credential storage</strong>: PATs never saved to
+disk</li>
+<li><strong>Memory-only sessions</strong>: Token cleared on app
+exit</li>
+<li><strong>Minimum scopes</strong>: Only <code>read:org</code> scope
+required</li>
+<li><strong>Permission verification</strong>: Every admin action
+re-checks permissions</li>
+</ul>
+<h3 id="audit-trail">Audit Trail</h3>
+<p>GitHub provides a complete audit trail:</p>
+<ol type="1">
+<li><strong>Repository access log</strong>: Who accessed the config
+repo</li>
+<li><strong>Collaborator changes</strong>: When admins were
+added/removed</li>
+<li><strong>Commit history</strong>: All config changes with author and
+timestamp</li>
+<li><strong>Branch protection</strong>: Optionally require reviews for
+config changes</li>
+</ol>
+<p>To view audit logs: - Repository: Settings → Security → Audit log -
+Organization: Settings → Audit log</p>
+<h3 id="fallback-for-offline-use">Fallback for Offline Use</h3>
+<p>If GitHub is unreachable:</p>
+<ol type="1">
+<li>Config Admin can export current config to local file</li>
+<li>App uses cached config (read-only)</li>
+<li>Admin changes queued until connectivity restored</li>
+<li>Clear indication shown that app is in offline mode</li>
+</ol>
+<h3 id="migration-from-server-based-auth">Migration from Server-Based
+Auth</h3>
+<p>If you previously used a custom server:</p>
+<ol type="1">
+<li>Create the GitHub config repository</li>
+<li>Export existing config to <code>org_config.json</code></li>
+<li>Add collaborators matching previous admin list</li>
+<li>Update app config to use GitHub:</li>
+</ol>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;admin&quot;</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;provider&quot;</span><span class="fu">:</span> <span class="st">&quot;github&quot;</span><span class="fu">,</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;config_repo&quot;</span><span class="fu">:</span> <span class="st">&quot;acbnational/acb_link_config&quot;</span><span class="fu">,</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;config_path&quot;</span><span class="fu">:</span> <span class="st">&quot;org_config.json&quot;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>The <code>admin_config.py</code> module is still available for
+legacy/self-hosted deployments.</p>
+<h3 id="permissions-reference">Permissions Reference</h3>
+<h4 id="affiliate_admin-permissions">AFFILIATE_ADMIN Permissions</h4>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>review_corrections</code></td>
+<td>View pending affiliate corrections</td>
+</tr>
+<tr>
+<td><code>approve_corrections</code></td>
+<td>Approve corrections for application</td>
+</tr>
+<tr>
+<td><code>reject_corrections</code></td>
+<td>Reject corrections with notes</td>
+</tr>
+<tr>
+<td><code>apply_corrections</code></td>
+<td>Apply approved corrections to XML files</td>
+</tr>
+</tbody>
+</table>
+<h4 id="config_admin-permissions">CONFIG_ADMIN Permissions</h4>
+<p>Includes all AFFILIATE_ADMIN permissions, plus:</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>modify_data_sources</code></td>
+<td>Change data source URLs</td>
+</tr>
+<tr>
+<td><code>modify_network_settings</code></td>
+<td>Change timeout, retry, proxy settings</td>
+</tr>
+<tr>
+<td><code>modify_defaults</code></td>
+<td>Change organization default values</td>
+</tr>
+<tr>
+<td><code>modify_update_settings</code></td>
+<td>Change update server configuration</td>
+</tr>
+<tr>
+<td><code>view_audit_log</code></td>
+<td>View admin action history</td>
+</tr>
+</tbody>
+</table>
+<h4 id="super_admin-permissions">SUPER_ADMIN Permissions</h4>
+<p>Includes all permissions, plus:</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>manage_admins</code></td>
+<td>Create, modify, delete admin accounts</td>
+</tr>
+<tr>
+<td><code>modify_signing_keys</code></td>
+<td>Rotate configuration signing keys</td>
+</tr>
+<tr>
+<td><code>export_audit_log</code></td>
+<td>Export full audit history</td>
+</tr>
+<tr>
+<td><code>emergency_rollback</code></td>
+<td>Rollback to previous config versions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quality-assurance">Quality Assurance</h2>
+<h3 id="pre-release-testing">Pre-Release Testing</h3>
+<p>Before each release:</p>
+<ol type="1">
+<li><strong>Functionality testing</strong>: All features work
+correctly</li>
+<li><strong>Accessibility testing</strong>: Screen readers work
+properly</li>
+<li><strong>Platform testing</strong>: Test on Windows 10, 11,
+macOS</li>
+<li><strong>Upgrade testing</strong>: Test upgrade from previous
+version</li>
+<li><strong>Clean install testing</strong>: Test fresh installation</li>
+</ol>
+<h3 id="accessibility-testing-checklist">Accessibility Testing
+Checklist</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />NVDA reads all controls
+correctly</label></li>
+<li><label><input type="checkbox" />JAWS reads all controls
+correctly</label></li>
+<li><label><input type="checkbox" />Narrator reads all controls
+correctly</label></li>
+<li><label><input type="checkbox" />VoiceOver reads all controls
+correctly</label></li>
+<li><label><input type="checkbox" />Keyboard navigation works
+throughout</label></li>
+<li><label><input type="checkbox" />Focus order is logical</label></li>
+<li><label><input type="checkbox" />Status changes are
+announced</label></li>
+<li><label><input type="checkbox" />High contrast themes
+work</label></li>
+</ul>
+<h3 id="automated-testing">Automated Testing</h3>
+<p>Run test suite before release:</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run all tests</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with coverage</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">--cov</span><span class="op">=</span>acb_link <span class="at">--cov-report</span><span class="op">=</span>html</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run accessibility tests</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/test_accessibility.py</span></code></pre></div>
+<hr />
+<h2 id="distribution-checklist">Distribution Checklist</h2>
+<h3 id="pre-release">Pre-Release</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Version numbers updated in all
+files</label></li>
+<li><label><input type="checkbox" />Changelog updated</label></li>
+<li><label><input type="checkbox" />Documentation updated</label></li>
+<li><label><input type="checkbox" />All tests passing</label></li>
+<li><label><input type="checkbox" />Accessibility verified</label></li>
+</ul>
+<h3 id="build">Build</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Windows build
+successful</label></li>
+<li><label><input type="checkbox" />Windows installer
+tested</label></li>
+<li><label><input type="checkbox" />macOS build successful</label></li>
+<li><label><input type="checkbox" />macOS DMG tested</label></li>
+<li><label><input type="checkbox" />Checksums generated</label></li>
+</ul>
+<h3 id="release">Release</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Git tag created</label></li>
+<li><label><input type="checkbox" />GitHub Release drafted</label></li>
+<li><label><input type="checkbox" />Release notes written</label></li>
+<li><label><input type="checkbox" />Artifacts uploaded</label></li>
+<li><label><input type="checkbox" />Release published</label></li>
+</ul>
+<h3 id="post-release">Post-Release</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Update website download
+links</label></li>
+<li><label><input type="checkbox" />Announce on ACB mailing
+lists</label></li>
+<li><label><input type="checkbox" />Monitor for user
+feedback</label></li>
+<li><label><input type="checkbox" />Check auto-update works</label></li>
+</ul>
+<hr />
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="windows-build-issues">Windows Build Issues</h3>
+<p><strong>PyInstaller fails:</strong></p>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean build</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Remove-Item</span> <span class="op">-</span>Recurse <span class="op">-</span>Force build<span class="op">,</span> dist</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>pyinstaller <span class="op">--</span>clean acb_link<span class="op">.</span><span class="fu">spec</span></span></code></pre></div>
+<p><strong>Missing DLLs:</strong> - Ensure Visual C++ Redistributable is
+installed - Check hidden imports in spec file</p>
+<h3 id="macos-build-issues">macOS Build Issues</h3>
+<p><strong>Code signing fails:</strong> - Verify certificate is in
+Keychain - Check certificate name matches exactly</p>
+<p><strong>Notarization fails:</strong> - Enable hardened runtime -
+Check for unsigned frameworks</p>
+<h3 id="update-issues">Update Issues</h3>
+<p><strong>Update not detected:</strong> - Verify release is published
+(not draft) - Check asset naming convention - Test GitHub API endpoint
+manually</p>
+<hr />
+<p><em>Deployment Guide Version 1.0.0</em><br />
+<em>Last Updated: January 2026</em><br />
+<em>Copyright 2026 American Council of the Blind / BITS</em></p>

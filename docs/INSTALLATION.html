@@ -1,0 +1,356 @@
+<h1 id="acb-link-desktop---installation-guide">ACB Link Desktop -
+Installation Guide</h1>
+<h2 id="system-requirements">System Requirements</h2>
+<h3 id="windows">Windows</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Minimum</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>Windows 10 (64-bit)</td>
+<td>Windows 11</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>x64 or ARM64</td>
+<td>x64 or ARM64</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>100 MB</td>
+<td>500 MB (for downloads)</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>Required for streaming</td>
+<td>Broadband</td>
+</tr>
+</tbody>
+</table>
+<h3 id="macos">macOS</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Minimum</th>
+<th>Recommended</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OS</td>
+<td>macOS 10.14 (Mojave)</td>
+<td>macOS 13+</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Intel or Apple Silicon</td>
+<td>Apple Silicon</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>256 MB</td>
+<td>512 MB</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>100 MB</td>
+<td>500 MB (for downloads)</td>
+</tr>
+<tr>
+<td>Internet</td>
+<td>Required for streaming</td>
+<td>Broadband</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="windows-installation">Windows Installation</h2>
+<h3 id="option-1-installer-recommended">Option 1: Installer
+(Recommended)</h3>
+<ol type="1">
+<li><strong>Download</strong> the latest installer:
+<ul>
+<li>Go to <a
+href="https://github.com/acbnational/acb_link_desktop/releases">GitHub
+Releases</a></li>
+<li>Download <code>ACBLink-X.X.X-Setup.exe</code></li>
+</ul></li>
+<li><strong>Verify download</strong> (optional but recommended):
+<ul>
+<li><p>Download <code>ACBLink-X.X.X-SHA256.txt</code></p></li>
+<li><p>Open PowerShell and run:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Get-FileHash ACBLink-X<span class="op">.</span><span class="fu">X</span><span class="op">.</span><span class="fu">X</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>Algorithm SHA256</span></code></pre></div></li>
+<li><p>Compare with the checksum file</p></li>
+</ul></li>
+<li><strong>Run installer</strong>:
+<ul>
+<li>Double-click the downloaded file</li>
+<li>If Windows SmartScreen appears, click “More info” then “Run
+anyway”</li>
+<li>Follow the installation wizard</li>
+<li>Choose installation directory (default:
+<code>C:\Program Files\ACB Link Desktop</code>)</li>
+</ul></li>
+<li><strong>Launch</strong>:
+<ul>
+<li>From Start Menu: “ACB Link Desktop”</li>
+<li>From Desktop shortcut</li>
+<li>Keyboard: <code>Win</code>, type “ACB Link”, press
+<code>Enter</code></li>
+</ul></li>
+</ol>
+<h3 id="option-2-portable-version">Option 2: Portable Version</h3>
+<ol type="1">
+<li><strong>Download</strong> the portable ZIP:
+<ul>
+<li>Download <code>ACBLink-X.X.X-Portable.zip</code></li>
+</ul></li>
+<li><strong>Extract</strong>:
+<ul>
+<li>Right-click the ZIP file</li>
+<li>Select “Extract All…”</li>
+<li>Choose a location (e.g., <code>C:\ACBLink</code>)</li>
+</ul></li>
+<li><strong>Run</strong>:
+<ul>
+<li>Navigate to the extracted folder</li>
+<li>Run <code>ACBLink.exe</code></li>
+</ul></li>
+</ol>
+<h3 id="windows-arm64-notes">Windows ARM64 Notes</h3>
+<p>ACB Link fully supports Windows on ARM devices (Surface Pro X, etc.):
+- Same installer works for x64 and ARM64 - All features available - VLC
+ARM64 builds supported</p>
+<hr />
+<h2 id="macos-installation">macOS Installation</h2>
+<h3 id="option-1-dmg-installer-recommended">Option 1: DMG Installer
+(Recommended)</h3>
+<ol type="1">
+<li><strong>Download</strong> the DMG:
+<ul>
+<li>Go to <a
+href="https://github.com/acbnational/acb_link_desktop/releases">GitHub
+Releases</a></li>
+<li>Download <code>ACBLink-X.X.X-macOS.dmg</code></li>
+</ul></li>
+<li><strong>Install</strong>:
+<ul>
+<li>Double-click the DMG to mount it</li>
+<li>Drag “ACB Link Desktop” to Applications folder</li>
+<li>Eject the DMG</li>
+</ul></li>
+<li><strong>First Launch</strong> (important for unsigned builds):
+<ul>
+<li>Open Finder and go to Applications</li>
+<li>Right-click (or Control-click) “ACB Link Desktop”</li>
+<li>Select “Open”</li>
+<li>Click “Open” in the security dialog</li>
+<li>Subsequent launches work normally</li>
+</ul></li>
+<li><strong>VoiceOver Users</strong>:
+<ul>
+<li>Enable VoiceOver: <code>Command+F5</code></li>
+<li>Navigate with <code>VO+Right/Left</code></li>
+<li>Activate with <code>VO+Space</code></li>
+</ul></li>
+</ol>
+<h3 id="gatekeeper-and-security">Gatekeeper and Security</h3>
+<p>If you see “ACB Link Desktop cannot be opened because the developer
+cannot be verified”:</p>
+<ol type="1">
+<li>Open <strong>System Preferences</strong> &gt; <strong>Security &amp;
+Privacy</strong></li>
+<li>Click the <strong>General</strong> tab</li>
+<li>You’ll see a message about ACB Link being blocked</li>
+<li>Click <strong>Open Anyway</strong></li>
+</ol>
+<h3 id="apple-silicon-notes">Apple Silicon Notes</h3>
+<p>ACB Link runs natively on Apple Silicon (M1, M2, M3): - No Rosetta 2
+required - Full performance - Full VoiceOver support</p>
+<hr />
+<h2 id="installing-from-source">Installing from Source</h2>
+<p>For developers or advanced users:</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Python 3.9 or later</li>
+<li>Git</li>
+<li>pip (Python package manager)</li>
+</ul>
+<h3 id="steps">Steps</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone the repository</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbnational/acb_link_desktop.git</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> acb_link_desktop</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create virtual environment</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate virtual environment</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows:</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span><span class="dt">\v</span>env<span class="dt">\S</span>cripts<span class="dt">\a</span>ctivate</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS/Linux:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows-specific dependencies</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install accessible_output2 pyaudio python-vlc</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS-specific dependencies</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyobjc-framework-Cocoa pyaudio</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link</span></code></pre></div>
+<hr />
+<h2 id="post-installation-setup">Post-Installation Setup</h2>
+<h3 id="first-launch">First Launch</h3>
+<ol type="1">
+<li><strong>Settings</strong>: Press <code>Ctrl+,</code> to open
+Settings</li>
+<li><strong>Theme</strong>: Choose your preferred theme (Appearance
+tab)</li>
+<li><strong>Font Size</strong>: Adjust if needed (8-32pt)</li>
+<li><strong>Default Tab</strong>: Set your preferred startup tab</li>
+<li><strong>System Tray</strong>: Configure tray behavior ###
+Administrator Setup (Optional)</li>
+</ol>
+<p>If you are an ACB administrator who needs to manage application
+configuration:</p>
+<ol type="1">
+<li><strong>Get GitHub Access</strong>: Ensure you have a GitHub account
+with appropriate repository permissions:
+<ul>
+<li>Organization owner → Super Admin access</li>
+<li>Repository admin → Config Admin access</li>
+<li>Repository write → Affiliate Admin access</li>
+</ul></li>
+<li><strong>Create Personal Access Token</strong>:
+<ul>
+<li>Go to GitHub Settings &gt; Developer Settings &gt; Personal Access
+Tokens</li>
+<li>Generate a new token with <code>read:org</code> scope</li>
+<li>Copy the token securely</li>
+</ul></li>
+<li><strong>Login to Admin Features</strong>:
+<ul>
+<li>Access Tools &gt; Advanced Settings or Tools &gt; Affiliate
+Corrections</li>
+<li>Enter your GitHub username and PAT</li>
+<li>Your role is automatically determined from repository
+permissions</li>
+</ul></li>
+</ol>
+<p><strong>Note</strong>: Regular users do not need admin setup. Admin
+features are only for ACB staff managing configuration or affiliate
+data. ### Screen Reader Configuration</p>
+<p><strong>NVDA/JAWS (Windows):</strong> - ACB Link works automatically
+with NVDA and JAWS - All controls are properly labeled - Status changes
+are announced</p>
+<p><strong>VoiceOver (macOS):</strong> - ACB Link integrates deeply with
+VoiceOver - Enable VoiceOver: <code>Command+F5</code> - All controls
+accessible via VoiceOver navigation</p>
+<h3 id="firewall-configuration">Firewall Configuration</h3>
+<p>ACB Link uses a local web server on port 8765. If prompted: -
+<strong>Windows Firewall</strong>: Allow access for “ACB Link Desktop” -
+Only local connections are needed (no internet server)</p>
+<hr />
+<h2 id="updating">Updating</h2>
+<h3 id="automatic-updates">Automatic Updates</h3>
+<ol type="1">
+<li>ACB Link checks for updates on startup</li>
+<li>If an update is available, you’ll be notified</li>
+<li>Click “Download &amp; Install” to update</li>
+<li>The app will restart after installation</li>
+</ol>
+<h3 id="manual-update-check">Manual Update Check</h3>
+<ol type="1">
+<li>Go to <strong>Help &gt; Check for Updates</strong></li>
+<li>Follow the prompts if an update is available</li>
+</ol>
+<h3 id="manual-update">Manual Update</h3>
+<ol type="1">
+<li>Download the new version from GitHub Releases</li>
+<li>Run the installer (it will upgrade in place)</li>
+<li>Your settings and data are preserved</li>
+</ol>
+<hr />
+<h2 id="uninstalling">Uninstalling</h2>
+<h3 id="windows-1">Windows</h3>
+<p><strong>Via Control Panel:</strong> 1. Open <strong>Settings &gt;
+Apps &gt; Apps &amp; Features</strong> 2. Find “ACB Link Desktop” 3.
+Click “Uninstall”</p>
+<p><strong>Via Start Menu:</strong> 1. Open Start Menu 2. Find “ACB Link
+Desktop” 3. Right-click &gt; “Uninstall”</p>
+<p><strong>User data</strong> is preserved in
+<code>%USERPROFILE%\.acb_link</code>. Delete this folder to remove all
+data.</p>
+<h3 id="macos-1">macOS</h3>
+<ol type="1">
+<li>Open Finder</li>
+<li>Go to Applications</li>
+<li>Drag “ACB Link Desktop” to Trash</li>
+<li>Empty Trash</li>
+</ol>
+<p><strong>User data</strong> is preserved in <code>~/.acb_link</code>.
+Delete this folder to remove all data.</p>
+<hr />
+<h2 id="troubleshooting-installation">Troubleshooting Installation</h2>
+<h3 id="windows-windows-protected-your-pc">Windows: “Windows protected
+your PC”</h3>
+<ol type="1">
+<li>Click “More info”</li>
+<li>Click “Run anyway”</li>
+<li>This is normal for unsigned applications</li>
+</ol>
+<h3 id="windows-missing-dlls">Windows: Missing DLLs</h3>
+<p>Install the Visual C++ Redistributable: - Download from <a
+href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Microsoft</a>
+- Install and restart</p>
+<h3 id="macos-app-is-damaged-and-cant-be-opened">macOS: “App is damaged
+and can’t be opened”</h3>
+<p>Run in Terminal:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xattr</span> <span class="at">-cr</span> /Applications/ACB\ Link\ Desktop.app</span></code></pre></div>
+<h3 id="macos-voiceover-not-announcing">macOS: VoiceOver not
+announcing</h3>
+<ol type="1">
+<li>Check System Preferences &gt; Security &amp; Privacy &gt;
+Accessibility</li>
+<li>Ensure ACB Link Desktop has accessibility permissions</li>
+</ol>
+<h3 id="general-application-wont-start">General: Application won’t
+start</h3>
+<ol type="1">
+<li>Check the log file:
+<ul>
+<li>Windows: <code>%USERPROFILE%\.acb_link\logs\acb_link.log</code></li>
+<li>macOS: <code>~/.acb_link/logs/acb_link.log</code></li>
+</ul></li>
+<li>Report the error to support</li>
+</ol>
+<hr />
+<h2 id="getting-help">Getting Help</h2>
+<ul>
+<li><strong>Email</strong>: bits@acb.org</li>
+<li><strong>GitHub Issues</strong>: <a
+href="https://github.com/acbnational/acb_link_desktop/issues">Report a
+bug</a></li>
+<li><strong>Phone</strong>: 1-800-424-8666</li>
+</ul>
+<hr />
+<p><em>Installation Guide Version 1.0</em><br />
+<em>Last Updated: January 2026</em></p>

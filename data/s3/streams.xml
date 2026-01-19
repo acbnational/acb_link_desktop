@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ACBRadioStreams>
+<Stream name="ACB Media 1" WebSiteAddress="http://www.acbradio.org/mainstream" ListenURL="https://link.acb.org/a11911.pls" />
+<Stream name="ACB Media 2" WebSiteAddress="http://www.acbradio.org/mainstream" ListenURL="https://link.acb.org/a27778.pls" />
+<Stream name="ACB Media 3" WebSiteAddress="http://acbradio.org/trove" ListenURL="https://link.acb.org/a17972.pls" />
+<Stream name="ACB Media 4" WebSiteAddress="http://acbradio.org/cafe" ListenURL="https://link.acb.org/a89697.pls" />
+<Stream name="ACB Media 5" WebSiteAddress="http://acbradio.org/community" ListenURL="https://link.acb.org/a46090.pls" />
+<Stream name="ACB Media 6" WebSiteAddress="http://acbradio.org/live" ListenURL="https://link.acb.org/a36240.pls" />
+<Stream name="ACB Media 7" WebSiteAddress="http://acbradio.org/special" ListenURL="https://link.acb.org/a95398.pls" />
+<Stream name="ACB Media 8" WebSiteAddress="http://acbmedia.org" ListenURL="https://link.acb.org/a18975.pls" />
+<Stream name="ACB Media 9" WebSiteAddress="http://acbmedia.org" ListenURL="https://link.acb.org/a44175.pls" />
+<Stream name="ACB Media 10" WebSiteAddress="http://acbmedia.org" ListenURL="https://link.acb.org/a85327.pls" />
+</ACBRadioStreams>

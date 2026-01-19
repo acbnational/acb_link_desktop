@@ -1,0 +1,187 @@
+<h1 id="acb-link-desktop---future-roadmap">ACB Link Desktop - Future
+Roadmap</h1>
+<p><strong>Version:</strong> 1.0<br />
+<strong>Last Updated:</strong> January 2026<br />
+<strong>Developed by:</strong> Blind Information Technology Solutions
+(BITS)<br />
+<strong>For:</strong> American Council of the Blind (ACB)</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>This document outlines future enhancements planned for ACB Link
+Desktop beyond the current version 1.0 release. For a complete list of
+implemented features, see <a href="FEATURES.md">FEATURES.md</a>.</p>
+<p>All features in version 1.0 have been completed, including:</p>
+<ul>
+<li>Cross-platform support (Windows and macOS)</li>
+<li>WCAG 2.2 AA accessibility compliance</li>
+<li>VoiceOver deep integration for macOS</li>
+<li>GitHub-based automatic updates</li>
+<li>System-level scheduling (Windows Task Scheduler, macOS launchd)</li>
+<li>Live data synchronization from ACB servers</li>
+<li><strong>GitHub-based admin authentication</strong> (zero
+infrastructure cost)</li>
+<li>Centralized configuration management with role-based access</li>
+<li>Affiliate correction workflow with admin review</li>
+</ul>
+<hr />
+<h2 id="completed-features-v1.0">Completed Features (v1.0)</h2>
+<h3 id="administration-system-implemented-january-2025">Administration
+System ✓ (Implemented January 2025)</h3>
+<p><strong>GitHub-Based Authentication:</strong> - Zero infrastructure
+cost (uses GitHub as identity provider) - Automatic role assignment from
+repository permissions - Secure Personal Access Token authentication -
+Session management with automatic expiry</p>
+<p><strong>Role-Based Access Control:</strong> - SUPER_ADMIN: Full
+configuration access (organization owners) - CONFIG_ADMIN: Settings
+management (repository admins) - AFFILIATE_ADMIN: Affiliate data
+corrections (repository contributors) - USER: Standard read-only access
+(all users)</p>
+<p><strong>Affiliate Correction Workflow:</strong> - User-submitted
+corrections with documentation - Admin review queue with approve/reject
+actions - Audit trail for all administrative changes - Real-time sync of
+approved corrections</p>
+<hr />
+<h2 id="future-enhancements">Future Enhancements</h2>
+<h3 id="cloud-sync-and-accounts-planned-q3-2025">Cloud Sync and Accounts
+(Planned: Q3 2025)</h3>
+<p><strong>Priority:</strong> Medium<br />
+<strong>Complexity:</strong> High</p>
+<ul>
+<li>ACB member login integration</li>
+<li>Cross-device sync of favorites and playlists</li>
+<li>Cloud playlist backup and restore</li>
+<li>Listening history and statistics</li>
+<li>Sync settings across devices</li>
+</ul>
+<h3 id="ai-powered-features-planned-q4-2025">AI-Powered Features
+(Planned: Q4 2025)</h3>
+<p><strong>Priority:</strong> Medium<br />
+<strong>Complexity:</strong> High</p>
+<ul>
+<li>Automatic podcast transcription</li>
+<li>Searchable transcript database</li>
+<li>Episode summarization</li>
+<li>Personalized content recommendations</li>
+<li>Smart content discovery based on listening patterns</li>
+</ul>
+<h3 id="linux-support-planned-2026">Linux Support (Planned: 2026)</h3>
+<p><strong>Priority:</strong> Low<br />
+<strong>Complexity:</strong> Medium</p>
+<ul>
+<li>Linux native application (GTK or Qt)</li>
+<li>Orca screen reader support</li>
+<li>Flatpak and Snap packaging</li>
+<li>Ubuntu, Debian, and Fedora packages</li>
+</ul>
+<h3 id="mobile-companion-apps-planned-2027">Mobile Companion Apps
+(Planned: 2027)</h3>
+<p><strong>Priority:</strong> Low<br />
+<strong>Complexity:</strong> Very High</p>
+<ul>
+<li>iOS companion app</li>
+<li>Android companion app</li>
+<li>Remote control via mobile</li>
+<li>Push notifications on mobile</li>
+<li>Mobile-to-desktop sync</li>
+</ul>
+<h3 id="additional-languages-ongoing">Additional Languages
+(Ongoing)</h3>
+<p><strong>Priority:</strong> Medium<br />
+<strong>Complexity:</strong> Medium</p>
+<ul>
+<li>French translation</li>
+<li>German translation</li>
+<li>Portuguese translation</li>
+<li>Right-to-left language support (Arabic, Hebrew)</li>
+</ul>
+<h3 id="advanced-audio-features-future">Advanced Audio Features
+(Future)</h3>
+<p><strong>Priority:</strong> Low<br />
+<strong>Complexity:</strong> Medium</p>
+<ul>
+<li>Bluetooth device management</li>
+<li>Audio device selection per stream</li>
+<li>Surround sound support</li>
+<li>Audio effects and filters</li>
+</ul>
+<h3 id="social-features-future">Social Features (Future)</h3>
+<p><strong>Priority:</strong> Low<br />
+<strong>Complexity:</strong> Medium</p>
+<ul>
+<li>Share favorite episodes</li>
+<li>Community playlists</li>
+<li>Listener chat during live events</li>
+<li>Episode comments and ratings</li>
+</ul>
+<hr />
+<h2 id="technical-improvements">Technical Improvements</h2>
+<h3 id="code-quality">Code Quality</h3>
+<ul>
+<li>Unit test coverage (target: 80%)</li>
+<li>Integration test suite</li>
+<li>CI/CD pipeline with automated testing</li>
+<li>Code coverage reporting</li>
+<li>Automated accessibility testing</li>
+</ul>
+<h3 id="performance-optimization">Performance Optimization</h3>
+<ul>
+<li>Lazy module loading</li>
+<li>Memory usage optimization</li>
+<li>Startup time reduction</li>
+<li>Background task optimization</li>
+</ul>
+<h3 id="security-enhancements">Security Enhancements</h3>
+<ul>
+<li>✓ Secure credential storage (GitHub PAT in memory only)</li>
+<li>✓ GitHub-based authentication for admin features</li>
+<li>Regular security audits</li>
+<li>Encrypted local storage option</li>
+</ul>
+<hr />
+<h2 id="infrastructure">Infrastructure</h2>
+<h3 id="distribution-implemented-january-2025">Distribution ✓
+(Implemented January 2025)</h3>
+<ul>
+<li>Microsoft Store submission support</li>
+<li>Mac App Store submission support</li>
+<li>Delta updates (patch-only downloads)</li>
+</ul>
+<h3 id="analytics-privacy-respecting-implemented-january-2025">Analytics
+(Privacy-Respecting) ✓ (Implemented January 2025)</h3>
+<ul>
+<li>Opt-in usage statistics</li>
+<li>Crash reporting</li>
+<li>Feature usage tracking</li>
+<li>Performance monitoring</li>
+</ul>
+<p>All analytics are: - <strong>Disabled by default</strong> - requires
+explicit user consent - <strong>Privacy-first</strong> - no personally
+identifiable information collected - <strong>Transparent</strong> -
+users can view exactly what data is collected -
+<strong>User-controlled</strong> - data can be cleared at any time</p>
+<hr />
+<h2 id="community-requests">Community Requests</h2>
+<p>This section will be updated based on user feedback and community
+requests.</p>
+<p>Have a feature request? Contact us:</p>
+<ul>
+<li><strong>Email</strong>: bits@acb.org</li>
+<li><strong>GitHub Issues</strong>: <a
+href="https://github.com/acbnational/acb_link_desktop/issues">github.com/acbnational/acb_link_desktop/issues</a></li>
+<li><strong>Phone</strong>: 1-800-424-8666</li>
+</ul>
+<hr />
+<h2 id="contributing">Contributing</h2>
+<p>ACB Link Desktop is developed by BITS. We welcome contributions:</p>
+<ul>
+<li><strong>Bug Reports</strong>: Help us find and fix issues</li>
+<li><strong>Feature Requests</strong>: Suggest improvements</li>
+<li><strong>Code Contributions</strong>: Submit pull requests</li>
+<li><strong>Translations</strong>: Help localize the app</li>
+<li><strong>Testing</strong>: Report accessibility issues</li>
+</ul>
+<p>See <a href="../CONTRIBUTING.md">CONTRIBUTING.md</a> for details.</p>
+<hr />
+<p><em>Roadmap Version 1.0</em><br />
+<em>Last Updated: January 2026</em><br />
+<em>Copyright 2026 American Council of the Blind / BITS</em></p>

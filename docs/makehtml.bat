@@ -1,0 +1,13 @@
+@echo off
+cls
+Pandoc ACCESSIBILITY.md -o ACCESSIBILITY.html
+Pandoc ANNOUNCEMENT.md -o ANNOUNCEMENT.html
+Pandoc CHANGELOG.md -o CHANGELOG.html
+Pandoc DEPLOYMENT.md -o DEPLOYMENT.html
+Pandoc DEVELOPMENT.md -o DEVELOPMENT.html
+Pandoc FEATURES.md -o FEATURES.html
+Pandoc INSTALLATION.md -o INSTALLATION.html
+Pandoc PRD.md -o prd.html
+Pandoc ROADMAP.md -o ROADMAP.html
+Pandoc TECHNICAL_REFERENCE.md -o TECHNICAL_REFERENCE.html
+Pandoc USER_GUIDE.md -o USER_GUIDE.html

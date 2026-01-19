@@ -1,0 +1,416 @@
+<h1 id="acb-link-desktop---development-guide">ACB Link Desktop -
+Development Guide</h1>
+<p>This guide covers setting up a development environment for ACB Link
+Desktop.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<h3 id="required-software">Required Software</h3>
+<ul>
+<li><strong>Python 3.9+</strong> - <a
+href="https://www.python.org/downloads/">Download</a></li>
+<li><strong>Git</strong> - <a
+href="https://git-scm.com/">Download</a></li>
+<li><strong>VS Code</strong> (recommended) - <a
+href="https://code.visualstudio.com/">Download</a></li>
+</ul>
+<h3 id="windows-specific">Windows-Specific</h3>
+<ul>
+<li><strong>Visual Studio Build Tools</strong> - For compiling certain
+dependencies</li>
+<li><strong>VLC 3.0+</strong> (optional) - For VLC audio backend</li>
+</ul>
+<h3 id="macos-specific">macOS-Specific</h3>
+<ul>
+<li><strong>Xcode Command Line Tools</strong> -
+<code>xcode-select --install</code></li>
+<li><strong>Homebrew</strong> (recommended) - <a
+href="https://brew.sh/">Install</a></li>
+</ul>
+<hr />
+<h2 id="environment-setup">Environment Setup</h2>
+<h3 id="clone-the-repository">Clone the Repository</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbnational/acb_link_desktop.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> acb_link_desktop</span></code></pre></div>
+<h3 id="create-virtual-environment">Create Virtual Environment</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create venv</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate (Windows PowerShell)</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span><span class="dt">\v</span>env<span class="dt">\S</span>cripts<span class="dt">\A</span>ctivate.ps1</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate (Windows CMD)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">.</span><span class="dt">\v</span>env<span class="dt">\S</span>cripts<span class="dt">\a</span>ctivate.bat</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate (macOS/Linux)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> venv/bin/activate</span></code></pre></div>
+<h3 id="install-dependencies">Install Dependencies</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Core dependencies</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Development dependencies</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-e</span> <span class="st">&quot;.[dev]&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Windows-specific</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install accessible_output2 pyaudio python-vlc</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS-specific</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyobjc-framework-Cocoa pyaudio</span></code></pre></div>
+<hr />
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>acb_link_desktop/
+├── acb_link/                 # Main application package
+│   ├── __init__.py          # Package init, version info, exports
+│   ├── accessibility.py      # Screen reader &amp; WCAG 2.2 AA support
+│   ├── advanced_playback.py  # Bookmarks, A-B repeat
+│   ├── advanced_settings.py  # Admin-only advanced settings dialog
+│   ├── admin_auth_ui.py      # GitHub-based admin login UI
+│   ├── admin_config.py       # Legacy server-based admin config
+│   ├── affiliate_admin.py    # Affiliate correction admin panel
+│   ├── affiliate_feedback.py # Affiliate correction submission
+│   ├── analytics.py          # Privacy-respecting analytics
+│   ├── app_enhancements.py   # Performance, notifications, state
+│   ├── calendar_integration.py # Calendar sync
+│   ├── config.py             # Application configuration
+│   ├── data_sync.py          # Data synchronization
+│   ├── data.py               # Data structures, constants
+│   ├── dialogs.py            # Settings and dialogs
+│   ├── distribution.py       # Distribution channels, delta updates
+│   ├── enhanced_voice.py     # Advanced voice control
+│   ├── event_scheduler.py    # Event scheduling
+│   ├── favorites.py          # Favorites management
+│   ├── feedback.py           # User feedback system
+│   ├── github_admin.py       # GitHub-based admin authentication (NEW)
+│   ├── localization.py       # Multi-language support
+│   ├── main_frame.py         # Main application window
+│   ├── main.py               # Entry point
+│   ├── media_player.py       # Audio playback
+│   ├── native_player.py      # VLC/system audio backend
+│   ├── new_panels.py         # Feature panels (favorites, etc)
+│   ├── offline.py            # Offline mode support
+│   ├── panels.py             # UI panels
+│   ├── playback_enhancements.py # Sleep timer, ducking, etc
+│   ├── playlists.py          # Playlist management
+│   ├── podcast_manager.py    # Podcast downloads
+│   ├── scheduled_recording.py # Stream recording
+│   ├── scheduler.py          # System-level scheduling
+│   ├── search.py             # Search functionality
+│   ├── server.py             # Local web server
+│   ├── settings.py           # Settings management
+│   ├── shortcuts.py          # Keyboard shortcuts config
+│   ├── styles.py             # Theme and styling
+│   ├── system_tray.py        # System tray
+│   ├── updater.py            # GitHub update system
+│   ├── user_experience.py    # UX enhancements
+│   ├── utils.py              # Utilities
+│   ├── view_settings.py      # View/pane configuration
+│   └── voice_control.py      # Voice commands
+├── data/                     # Data files
+│   └── s3/                   # ACB data (XML, OPML, PLS)
+├── docs/                     # Documentation
+├── installer/                # Installer scripts
+├── scripts/                  # Build scripts
+├── tests/                    # Unit tests
+├── requirements.txt          # Production dependencies
+├── pyproject.toml            # Project configuration
+├── acb_link.spec             # PyInstaller spec (Windows)
+└── README.md                 # Project readme</code></pre>
+<hr />
+<h2 id="running-the-application">Running the Application</h2>
+<h3 id="development-mode">Development Mode</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with Python</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with debug logging</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link <span class="at">--debug</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with specific log level</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link <span class="at">--log-level</span> DEBUG</span></code></pre></div>
+<h3 id="vs-code-launch-configuration">VS Code Launch Configuration</h3>
+<p>Create <code>.vscode/launch.json</code>:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;0.2.0&quot;</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;configurations&quot;</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">{</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;ACB Link&quot;</span><span class="fu">,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;debugpy&quot;</span><span class="fu">,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;module&quot;</span><span class="fu">:</span> <span class="st">&quot;acb_link&quot;</span><span class="fu">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;args&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;--debug&quot;</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="ot">]</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<hr />
+<h2 id="code-style">Code Style</h2>
+<h3 id="formatting">Formatting</h3>
+<p>We use <strong>Black</strong> for code formatting:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Format all files</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">black</span> acb_link/</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Check without modifying</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">black</span> <span class="at">--check</span> acb_link/</span></code></pre></div>
+<h3 id="linting">Linting</h3>
+<p>We use <strong>flake8</strong> for linting:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">flake8</span> acb_link/</span></code></pre></div>
+<h3 id="type-checking">Type Checking</h3>
+<p>We use <strong>mypy</strong> for type checking:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mypy</span> acb_link/</span></code></pre></div>
+<h3 id="pre-commit-configuration">Pre-commit Configuration</h3>
+<p>Create <code>.pre-commit-config.yaml</code>:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">repos</span><span class="kw">:</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">repo</span><span class="kw">:</span><span class="at"> https://github.com/psf/black</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">rev</span><span class="kw">:</span><span class="at"> </span><span class="fl">23.0.0</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">hooks</span><span class="kw">:</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> black</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">repo</span><span class="kw">:</span><span class="at"> https://github.com/pycqa/flake8</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">rev</span><span class="kw">:</span><span class="at"> </span><span class="fl">6.0.0</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">hooks</span><span class="kw">:</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">id</span><span class="kw">:</span><span class="at"> flake8</span></span></code></pre></div>
+<p>Install:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pre-commit</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pre-commit</span> install</span></code></pre></div>
+<hr />
+<h2 id="testing">Testing</h2>
+<h3 id="running-tests">Running Tests</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run all tests</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with coverage</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">--cov</span><span class="op">=</span>acb_link <span class="at">--cov-report</span><span class="op">=</span>html</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run specific test file</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/test_accessibility.py</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with verbose output</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">-v</span></span></code></pre></div>
+<h3 id="writing-tests">Writing Tests</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tests/test_example.py</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> acb_link.accessibility <span class="im">import</span> announce, make_accessible</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_announce_does_not_raise():</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Test that announce doesn&#39;t raise exceptions.&quot;&quot;&quot;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Should not raise even if no screen reader</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    announce(<span class="st">&quot;Test message&quot;</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_make_accessible_sets_name():</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Test that make_accessible sets control name.&quot;&quot;&quot;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> wx</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    app <span class="op">=</span> wx.App()</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    frame <span class="op">=</span> wx.Frame(<span class="va">None</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    button <span class="op">=</span> wx.Button(frame, label<span class="op">=</span><span class="st">&quot;Test&quot;</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    make_accessible(button, <span class="st">&quot;Test Button&quot;</span>, <span class="st">&quot;A test button&quot;</span>)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> button.GetName() <span class="op">==</span> <span class="st">&quot;Test Button&quot;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    frame.Destroy()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    app.Destroy()</span></code></pre></div>
+<hr />
+<h2 id="accessibility-development">Accessibility Development</h2>
+<h3 id="required-practices">Required Practices</h3>
+<ol type="1">
+<li><p><strong>All controls must have accessible names</strong>:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .accessibility <span class="im">import</span> make_accessible</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>button <span class="op">=</span> wx.Button(parent, label<span class="op">=</span><span class="st">&quot;▶&quot;</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>make_accessible(button, <span class="st">&quot;Play&quot;</span>, <span class="st">&quot;Start playback&quot;</span>)</span></code></pre></div></li>
+<li><p><strong>List controls need descriptions</strong>:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .accessibility <span class="im">import</span> make_list_accessible</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>list_ctrl <span class="op">=</span> wx.ListCtrl(parent)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>make_list_accessible(list_ctrl, <span class="st">&quot;Streams list&quot;</span>, <span class="st">&quot;Select a stream&quot;</span>)</span></code></pre></div></li>
+<li><p><strong>Status changes must be announced</strong>:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> .accessibility <span class="im">import</span> announce</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> on_play(<span class="va">self</span>):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.player.play()</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    announce(<span class="ss">f&quot;Playing </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>current_stream<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+</ol>
+<h3 id="testing-accessibility">Testing Accessibility</h3>
+<ol type="1">
+<li><strong>With NVDA (Windows)</strong>:
+<ul>
+<li>Install NVDA (free): https://www.nvaccess.org/</li>
+<li>Run ACB Link</li>
+<li>Navigate with Tab, Arrow keys</li>
+<li>Verify all controls are announced</li>
+</ul></li>
+<li><strong>With VoiceOver (macOS)</strong>:
+<ul>
+<li>Enable: Command+F5</li>
+<li>Navigate with VO+Arrow keys</li>
+<li>Verify all controls are accessible</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="admin-module-development">Admin Module Development</h2>
+<h3 id="github-based-authentication">GitHub-Based Authentication</h3>
+<p>The admin system uses GitHub as an identity provider. Key
+modules:</p>
+<ul>
+<li><code>github_admin.py</code> - Core authentication and role
+management</li>
+<li><code>admin_auth_ui.py</code> - Login dialogs and session
+display</li>
+<li><code>advanced_settings.py</code> - Admin-only settings dialog</li>
+<li><code>affiliate_admin.py</code> - Affiliate correction review
+panel</li>
+</ul>
+<h3 id="testing-admin-features">Testing Admin Features</h3>
+<p>To test admin features locally:</p>
+<ol type="1">
+<li><p><strong>Create a GitHub PAT</strong> with <code>read:org</code>
+scope</p></li>
+<li><p><strong>Set up test roles</strong> by adjusting repository
+permissions:</p>
+<ul>
+<li>Organization owner → SUPER_ADMIN</li>
+<li>Repository admin → CONFIG_ADMIN<br />
+</li>
+<li>Repository write → AFFILIATE_ADMIN</li>
+</ul></li>
+<li><p><strong>Mock authentication</strong> for unit tests:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> acb_link.github_admin <span class="im">import</span> AdminRole, AdminSession</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create mock session for testing</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>mock_session <span class="op">=</span> AdminSession(</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    user_id<span class="op">=</span><span class="st">&quot;test_user&quot;</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    username<span class="op">=</span><span class="st">&quot;testuser&quot;</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    role<span class="op">=</span>AdminRole.CONFIG_ADMIN,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    permissions<span class="op">=</span>{<span class="st">&quot;advanced_settings&quot;</span>, <span class="st">&quot;view_audit_log&quot;</span>},</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    authenticated_at<span class="op">=</span>datetime.now(),</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    expires_at<span class="op">=</span>datetime.now() <span class="op">+</span> timedelta(hours<span class="op">=</span><span class="dv">8</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div></li>
+<li><p><strong>Test role requirements</strong>:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> acb_link.github_admin <span class="im">import</span> GitHubAdminManager</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>manager <span class="op">=</span> GitHubAdminManager()</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Test that unauthorized access is blocked</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pytest.raises(<span class="pp">PermissionError</span>):</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    manager.require_role(AdminRole.SUPER_ADMIN)</span></code></pre></div></li>
+</ol>
+<h3 id="adding-new-admin-features">Adding New Admin Features</h3>
+<ol type="1">
+<li>Define required role/permission in <code>github_admin.py</code></li>
+<li>Add UI in appropriate dialog module</li>
+<li>Use <code>require_role()</code> or <code>require_permission()</code>
+decorators</li>
+<li>Ensure all controls are accessible</li>
+<li>Add audit logging for sensitive operations</li>
+</ol>
+<hr />
+<h2 id="building-installers">Building Installers</h2>
+<h3 id="windows">Windows</h3>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build executable</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\build_windows<span class="op">.</span><span class="fu">ps1</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build with installer</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\build_windows<span class="op">.</span><span class="fu">ps1</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Skip installer (just executable)</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\scripts\build_windows<span class="op">.</span><span class="fu">ps1</span> <span class="op">-</span>SkipInstaller</span></code></pre></div>
+<p>Output: - <code>dist/ACBLink/ACBLink.exe</code> - Executable -
+<code>dist/ACBLink-X.X.X-Setup.exe</code> - Installer -
+<code>dist/ACBLink-X.X.X-Portable.zip</code> - Portable ZIP</p>
+<h3 id="macos">macOS</h3>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make script executable</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x scripts/build_macos.sh</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/build_macos.sh</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Build with specific version</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">./scripts/build_macos.sh</span> 1.0.0</span></code></pre></div>
+<p>Output: - <code>dist/ACB Link Desktop.app</code> - Application bundle
+- <code>dist/ACBLink-X.X.X-macOS.dmg</code> - DMG installer</p>
+<hr />
+<h2 id="release-process">Release Process</h2>
+<h3 id="version-bump">Version Bump</h3>
+<ol type="1">
+<li><p>Update version in <code>acb_link/__init__.py</code>:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>__version__ <span class="op">=</span> <span class="st">&quot;1.0.0&quot;</span></span></code></pre></div></li>
+<li><p>Update version in <code>pyproject.toml</code>:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode toml"><code class="sourceCode toml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">&quot;1.0.0&quot;</span></span></code></pre></div></li>
+<li><p>Update CHANGELOG.md</p></li>
+</ol>
+<h3 id="create-release">Create Release</h3>
+<ol type="1">
+<li><p>Commit version changes:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Release v1.0.0&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> tag v1.0.0</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin main <span class="at">--tags</span></span></code></pre></div></li>
+<li><p>Build installers for all platforms</p></li>
+<li><p>Create GitHub Release:</p>
+<ul>
+<li>Go to Releases &gt; Draft new release</li>
+<li>Select tag v1.0.0</li>
+<li>Add release notes</li>
+<li>Upload installer files</li>
+<li>Publish release</li>
+</ul></li>
+</ol>
+<hr />
+<h2 id="debugging">Debugging</h2>
+<h3 id="log-files">Log Files</h3>
+<p>Logs are stored in: - Windows:
+<code>%USERPROFILE%\.acb_link\logs\</code> - macOS:
+<code>~/.acb_link/logs/</code></p>
+<h3 id="debug-mode">Debug Mode</h3>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link <span class="at">--debug</span></span></code></pre></div>
+<p>This enables: - Verbose logging - Debug menu - Error dialogs with
+stack traces</p>
+<h3 id="common-issues">Common Issues</h3>
+<p><strong>wxPython not found</strong>:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install wxPython</span></code></pre></div>
+<p><strong>accessible_output2 import error (Windows)</strong>:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install accessible_output2</span></code></pre></div>
+<p><strong>pyaudio build fails</strong>: - Windows: Install from wheel -
+macOS:
+<code>brew install portaudio &amp;&amp; pip install pyaudio</code></p>
+<hr />
+<h2 id="contributing">Contributing</h2>
+<p>See <a href="../CONTRIBUTING.md">CONTRIBUTING.md</a> for contribution
+guidelines.</p>
+<h3 id="quick-checklist">Quick Checklist</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Code follows style guidelines
+(Black, flake8)</label></li>
+<li><label><input type="checkbox" />Type hints added for new
+functions</label></li>
+<li><label><input type="checkbox" />Tests added for new
+functionality</label></li>
+<li><label><input type="checkbox" />Accessibility
+maintained/improved</label></li>
+<li><label><input type="checkbox" />Documentation updated</label></li>
+<li><label><input type="checkbox" />Changelog updated</label></li>
+</ul>
+<hr />
+<p><em>Development Guide Version 1.0</em><br />
+<em>Last Updated: January 2026</em></p>
