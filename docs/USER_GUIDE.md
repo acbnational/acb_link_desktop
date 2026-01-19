@@ -1,7 +1,7 @@
 # ACB Link Desktop User Guide
 
-**Version:** 1.0.0  
-**Last Updated:** January 2026  
+**Version:** 1.0.0
+**Last Updated:** January 2026
 **Developed by:** Blind Information Technology Solutions (BITS)
 
 Welcome to ACB Link Desktop, your accessible gateway to the American Council of the Blind media network. This guide explains how to use every feature of the application.
@@ -622,14 +622,18 @@ Say Hey ACB Link, then Search for followed by your query. For example, Search fo
 
 ### Activating Voice Control
 
-Wake Word Method:
-Say Hey Link clearly and wait for the listening indicator sound. Then speak your command. You can customize the wake word in Settings.
+**Keyboard Shortcut Method (Default):**
+Press `Ctrl+Shift+V` to toggle voice control, then speak your command. This method works immediately without any additional setup.
 
-Manual Method:
-Press the voice control keyboard shortcut, then speak your command.
+**Wake Word Method (Optional - Requires Additional Download):**
+Say your configured wake word (default: \"Hey Link\") and wait for the listening indicator sound. Then speak your command.
 
-Continuous Mode:
+> **Note:** Wake word detection requires optional AI/ML components (~5GB) that are not included in the standard installer. See \"Installing Wake Word Support\" below for setup instructions.
+
+**Continuous Mode:**
 If you disable the wake word requirement in Settings, you can speak commands continuously without saying the wake word first.
+
+### Installing Wake Word Support (Optional)\n\nThe wake word feature allows hands-free activation by saying a phrase like \"Hey ACB Link\". This requires additional AI/ML libraries that are downloaded separately to keep the main installer small.\n\n**To install wake word support:**\n\n1. Open Command Prompt (Windows) or Terminal (macOS)\n2. Run: `pip install openwakeword torch torchaudio`\n3. Wait for download to complete (~5GB, may take several minutes)\n4. Restart ACB Link Desktop\n5. Go to Settings > Voice Control to configure your wake word\n\n**Without wake word support**, voice control still works fully:\n- Press `Ctrl+Shift+V` to activate voice listening\n- Speak your command\n- All voice commands function normally\n\nThe only difference is you activate by keyboard instead of by speaking a wake phrase.
 
 ### Voice Commands
 
@@ -869,7 +873,7 @@ Quiet hours automatically activate during the specified times every day.
 Audio ducking temporarily lowers the volume when system sounds play, so you do not miss important notifications.
 
 To toggle audio ducking:
-Enable audio ducking from Tools, then check Audio Ducking in the menu. 
+Enable audio ducking from Tools, then check Audio Ducking in the menu.
 
 To configure audio ducking settings:
 1. Go to Tools, then Audio Ducking Settings
@@ -1693,7 +1697,7 @@ ACB Link Desktop is free software distributed under the MIT License.
 
 ---
 
-User Guide Version 1.0  
+User Guide Version 1.0
 Last Updated: January 2026
 
 This guide was written to be fully accessible to screen reader and low vision users. If you have suggestions for improving the accessibility of this documentation, please contact bits@acb.org.

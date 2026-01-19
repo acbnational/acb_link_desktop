@@ -125,6 +125,41 @@ black acb_link/
 black --check acb_link/
 ```
 
+#### Pre-commit, formatting, and Markdown → HTML
+
+We use `pre-commit` to enforce formatting and run linters locally and in CI. The repository also automatically converts changed Markdown files to HTML during pre-commit checks.
+
+Local setup (one-time per developer):
+
+```powershell
+# create and activate a venv
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# install development dependencies (includes pypandoc)
+pip install -r requirements-dev.txt
+
+# install and enable pre-commit hook
+pre-commit install
+# run once to format and convert all files
+pre-commit run --all-files
+```
+
+What happens:
+- `black`, `isort`, and `ruff` auto-format/fix Python files where possible.
+- `mdformat` formats Markdown files.
+- A small local hook runs `scripts/convert_md_to_html.py` to create/update `.html` files alongside changed `.md` files (CI requires `pandoc` or `pypandoc`).
+
+CI behavior:
+- The `Lint & Format` workflow runs `pre-commit run --all-files` on PRs and pushes to `main`.
+- If formatting or lint checks fail, the workflow will fail and block merging until fixed.
+
+Guidance for contributors:
+- Run `pre-commit run --all-files` before opening a PR to avoid CI failures.
+- If many files change purely due to formatting, prefer a dedicated "formatting" PR so maintainers can review it separately.
+- The generated `.html` files are committed to the repository to make docs easily viewable; if you prefer not to include an output HTML file for a given Markdown change, note that in your PR description.
+
+
 ### Linting
 
 We use [flake8](https://flake8.pycqa.org/) for linting:
@@ -160,21 +195,21 @@ from .accessibility import announce, make_accessible
 class ExamplePanel(wx.Panel):
     """
     Example panel demonstrating code style.
-    
+
     This panel follows WCAG 2.2 AA guidelines for accessibility.
-    
+
     Attributes:
         on_action: Callback function when action is triggered.
     """
-    
+
     def __init__(
-        self, 
-        parent: wx.Window, 
+        self,
+        parent: wx.Window,
         on_action: Callable[[str], None]
     ) -> None:
         """
         Initialize the example panel.
-        
+
         Args:
             parent: Parent window.
             on_action: Callback for action events.
@@ -182,23 +217,23 @@ class ExamplePanel(wx.Panel):
         super().__init__(parent)
         self.on_action = on_action
         self._build_ui()
-    
+
     def _build_ui(self) -> None:
         """Build the panel UI with accessibility support."""
         sizer = wx.BoxSizer(wx.VERTICAL)
-        
+
         # Create button with accessible name
         self.btn_action = wx.Button(self, label="Perform Action")
         make_accessible(
-            self.btn_action, 
-            "Perform Action", 
+            self.btn_action,
+            "Perform Action",
             "Triggers the example action"
         )
         self.btn_action.Bind(wx.EVT_BUTTON, self._on_action_click)
         sizer.Add(self.btn_action, 0, wx.ALL, 10)
-        
+
         self.SetSizer(sizer)
-    
+
     def _on_action_click(self, event: wx.CommandEvent) -> None:
         """Handle action button click."""
         announce("Action performed")

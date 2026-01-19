@@ -1,7 +1,7 @@
 # ACB Link Desktop - Complete Feature List
 
-**Version 1.0.0 - Initial Release**  
-**Last Updated:** January 2026  
+**Version 1.0.0 - Initial Release**
+**Last Updated:** January 2026
 **WCAG 2.2 AA Compliant | Windows and macOS | Screen Reader Optimized**
 
 This document provides a comprehensive list of all features available in ACB Link Desktop.
@@ -220,8 +220,20 @@ Stay connected with ACB events.
 
 Hands-free operation with fully configurable voice commands.
 
-### Wake Word Activation
+### Activation Methods
 
+**Keyboard Shortcut (Default):**
+Press `Ctrl+Shift+V` to toggle voice control on/off. This method works out of the box with no additional setup.
+
+**Wake Word Activation (Optional - Requires Additional Download):**
+
+> **Note:** Wake word detection requires AI/ML components (~5GB) not included in the standard installer. To enable "Hey ACB Link" style activation:
+> ```bash
+> pip install openwakeword torch torchaudio
+> ```
+> Restart ACB Link after installation. The app automatically detects and enables wake word support.
+
+When installed, wake word features include:
 - **Customizable wake word**: Change from default "hey link" to any phrase you prefer
 - **Examples**: "hey link", "ok link", "computer", "hey radio"
 - **Optional wake word**: Disable wake word for continuous command listening
@@ -481,7 +493,7 @@ Help keep affiliate data accurate by suggesting corrections to state affiliate a
    - **Submit via GitHub**: Open a GitHub issue (requires account)
    - **Copy to Clipboard**: For email submission
 
-**Access:** 
+**Access:**
 - Affiliates tab context menu (right-click)
 - Affiliates tab "Suggest Correction" button
 - Help menu, Suggest Affiliate Correction (Ctrl+Shift+E)
@@ -714,7 +726,7 @@ Access: Tools menu, Quiet Hours
 - **Toggle**: Enable/disable from Tools menu checkbox
 - **Settings dialog**: Full configuration via Tools menu
 
-Access: 
+Access:
 - Tools menu, Audio Ducking (checkbox to toggle)
 - Tools menu, Audio Ducking Settings... (full configuration dialog)
 
@@ -1353,6 +1365,6 @@ All configuration is stored in JSON files:
 
 ---
 
-*Feature List Version 1.0*  
-*Last Updated: January 2026*  
+*Feature List Version 1.0*
+*Last Updated: January 2026*
 *Copyright 2026 American Council of the Blind / BITS*

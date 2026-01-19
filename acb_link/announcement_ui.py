@@ -15,28 +15,42 @@ from datetime import datetime
 from typing import List, Optional
 
 import wx
-import wx.html2
 import wx.adv
+import wx.html2
 
 from .announcements import (
+    CATEGORY_ICONS,
+    CATEGORY_LABELS,
+    PRIORITY_LABELS,
     Announcement,
     AnnouncementCategory,
     AnnouncementManager,
     AnnouncementPriority,
     AnnouncementSettings,
-    CATEGORY_LABELS,
-    CATEGORY_ICONS,
-    PRIORITY_LABELS,
     get_announcement_manager,
 )
 
 try:
-    from .accessibility import make_accessible, make_button_accessible, make_list_accessible, announce
+    from .accessibility import (
+        announce,
+        make_accessible,
+        make_button_accessible,
+        make_list_accessible,
+    )
 except ImportError:
-    def make_accessible(ctrl, name, desc=""): pass
-    def make_button_accessible(btn, name, desc=""): pass
-    def make_list_accessible(lst, name, desc=""): pass
-    def announce(msg): pass
+
+    def make_accessible(ctrl, name, desc=""):
+        pass
+
+    def make_button_accessible(btn, name, desc=""):
+        pass
+
+    def make_list_accessible(lst, name, desc=""):
+        pass
+
+    def announce(msg):
+        pass
+
 
 logger = logging.getLogger(__name__)
 
@@ -84,15 +98,11 @@ class AnnouncementWidget(wx.Panel):
         header_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         self.header_icon = wx.StaticText(self, label="📢")
-        self.header_icon.SetFont(
-            self.header_icon.GetFont().Larger().Larger()
-        )
+        self.header_icon.SetFont(self.header_icon.GetFont().Larger().Larger())
         header_sizer.Add(self.header_icon, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 8)
 
         self.header_label = wx.StaticText(self, label="Announcements")
-        self.header_label.SetFont(
-            self.header_label.GetFont().Bold().Larger()
-        )
+        self.header_label.SetFont(self.header_label.GetFont().Bold().Larger())
         header_sizer.Add(self.header_label, 1, wx.ALIGN_CENTER_VERTICAL)
 
         # Unread count badge
@@ -104,9 +114,7 @@ class AnnouncementWidget(wx.Panel):
         # View all button
         self.view_all_btn = wx.Button(self, label="View All")
         make_button_accessible(
-            self.view_all_btn,
-            "View all announcements",
-            "Opens the announcement history dialog"
+            self.view_all_btn, "View all announcements", "Opens the announcement history dialog"
         )
         header_sizer.Add(self.view_all_btn, 0, wx.ALIGN_CENTER_VERTICAL)
 
@@ -115,7 +123,7 @@ class AnnouncementWidget(wx.Panel):
         make_button_accessible(
             self.mark_read_btn,
             "Mark all announcements as read",
-            "Marks all current announcements as read"
+            "Marks all current announcements as read",
         )
         header_sizer.Add(self.mark_read_btn, 0, wx.ALIGN_CENTER_VERTICAL | wx.LEFT, 4)
 
@@ -155,11 +163,7 @@ class AnnouncementWidget(wx.Panel):
         self.SetSizer(main_sizer)
 
         # Accessibility
-        make_accessible(
-            self,
-            "Announcements widget",
-            "Shows recent announcements from ACB Link"
-        )
+        make_accessible(self, "Announcements widget", "Shows recent announcements from ACB Link")
 
     def _bind_events(self):
         """Bind event handlers."""
@@ -341,9 +345,7 @@ class AnnouncementDetailDialog(wx.Dialog):
             header_panel,
             label=self.announcement.age_display,
         )
-        date_label.SetForegroundColour(
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
-        )
+        date_label.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT))
         meta_sizer.Add(date_label, 0, wx.ALIGN_CENTER_VERTICAL)
 
         header_sizer.Add(meta_sizer, 0, wx.EXPAND | wx.BOTTOM, 8)
@@ -358,9 +360,7 @@ class AnnouncementDetailDialog(wx.Dialog):
             header_panel,
             label=f"By {self.announcement.author}",
         )
-        author_label.SetForegroundColour(
-            wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT)
-        )
+        author_label.SetForegroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_GRAYTEXT))
         header_sizer.Add(author_label, 0, wx.EXPAND)
 
         header_panel.SetSizer(header_sizer)
@@ -563,8 +563,7 @@ class AnnouncementHistoryDialog(wx.Dialog):
         )
 
         categories = ["All Categories"] + [
-            f"{CATEGORY_ICONS[cat]} {CATEGORY_LABELS[cat]}"
-            for cat in AnnouncementCategory
+            f"{CATEGORY_ICONS[cat]} {CATEGORY_LABELS[cat]}" for cat in AnnouncementCategory
         ]
         self.category_choice = wx.Choice(self, choices=categories)
         self.category_choice.SetSelection(0)
@@ -616,17 +615,23 @@ class AnnouncementHistoryDialog(wx.Dialog):
         action_sizer.Add(self.view_btn, 0, wx.RIGHT, 8)
 
         self.mark_read_btn = wx.Button(self, label="Mark as Read")
-        make_button_accessible(self.mark_read_btn, "Mark as read", "Mark selected announcement as read")
+        make_button_accessible(
+            self.mark_read_btn, "Mark as read", "Mark selected announcement as read"
+        )
         action_sizer.Add(self.mark_read_btn, 0, wx.RIGHT, 8)
 
         self.mark_unread_btn = wx.Button(self, label="Mark as Unread")
-        make_button_accessible(self.mark_unread_btn, "Mark as unread", "Mark selected announcement as unread")
+        make_button_accessible(
+            self.mark_unread_btn, "Mark as unread", "Mark selected announcement as unread"
+        )
         action_sizer.Add(self.mark_unread_btn, 0)
 
         action_sizer.AddStretchSpacer()
 
         self.mark_all_btn = wx.Button(self, label="Mark All as Read")
-        make_button_accessible(self.mark_all_btn, "Mark all as read", "Mark all announcements as read")
+        make_button_accessible(
+            self.mark_all_btn, "Mark all as read", "Mark all announcements as read"
+        )
         action_sizer.Add(self.mark_all_btn, 0)
 
         main_sizer.Add(action_sizer, 0, wx.EXPAND | wx.ALL, 12)
@@ -700,9 +705,7 @@ class AnnouncementHistoryDialog(wx.Dialog):
             return
 
         announcement_id = self.list_ctrl.GetItemData(selected)
-        announcement = self.manager.get_announcement_by_id(
-            self._announcements[announcement_id].id
-        )
+        announcement = self.manager.get_announcement_by_id(self._announcements[announcement_id].id)
 
         if announcement:
             dialog = AnnouncementDetailDialog(self, announcement, self.manager)
@@ -766,9 +769,7 @@ class AnnouncementHistoryDialog(wx.Dialog):
             all_announcements = self.manager.get_all_announcements(
                 include_expired=True, include_read=True
             )
-            announcements = [
-                a for a in all_announcements if self.manager.is_read(a.id)
-            ]
+            announcements = [a for a in all_announcements if self.manager.is_read(a.id)]
         else:  # All
             announcements = self.manager.get_all_announcements(
                 include_expired=True, include_read=True
@@ -792,8 +793,7 @@ class AnnouncementHistoryDialog(wx.Dialog):
 
             # Category
             self.list_ctrl.SetItem(
-                index, 2,
-                f"{announcement.category_icon} {announcement.category_label}"
+                index, 2, f"{announcement.category_icon} {announcement.category_label}"
             )
 
             # Priority
@@ -872,9 +872,7 @@ class CriticalAnnouncementDialog(wx.Dialog):
         header_sizer = wx.BoxSizer(wx.HORIZONTAL)
 
         warning_label = wx.StaticText(self, label="🚨")
-        warning_label.SetFont(
-            warning_label.GetFont().Larger().Larger().Larger()
-        )
+        warning_label.SetFont(warning_label.GetFont().Larger().Larger().Larger())
         header_sizer.Add(warning_label, 0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 12)
 
         header_text = wx.BoxSizer(wx.VERTICAL)
@@ -949,8 +947,7 @@ class CriticalAnnouncementDialog(wx.Dialog):
 
         # Announce for screen readers
         announce(
-            f"Critical announcement: {self.announcement.title}. "
-            f"{self.announcement.summary}"
+            f"Critical announcement: {self.announcement.title}. " f"{self.announcement.summary}"
         )
 
     def _bind_events(self):
@@ -1020,7 +1017,9 @@ class AdminAnnouncementDialog(wx.Dialog):
         # Title
         form_sizer.Add(wx.StaticText(scroll, label="Title:"), 0, wx.BOTTOM, 4)
         self.title_ctrl = wx.TextCtrl(scroll)
-        make_accessible(self.title_ctrl, "Announcement title", "Enter the title for this announcement")
+        make_accessible(
+            self.title_ctrl, "Announcement title", "Enter the title for this announcement"
+        )
         form_sizer.Add(self.title_ctrl, 0, wx.EXPAND | wx.BOTTOM, 12)
 
         # Summary
@@ -1030,9 +1029,13 @@ class AdminAnnouncementDialog(wx.Dialog):
         form_sizer.Add(self.summary_ctrl, 0, wx.EXPAND | wx.BOTTOM, 12)
 
         # Content
-        form_sizer.Add(wx.StaticText(scroll, label="Content (Markdown supported):"), 0, wx.BOTTOM, 4)
+        form_sizer.Add(
+            wx.StaticText(scroll, label="Content (Markdown supported):"), 0, wx.BOTTOM, 4
+        )
         self.content_ctrl = wx.TextCtrl(scroll, style=wx.TE_MULTILINE, size=(-1, 150))
-        make_accessible(self.content_ctrl, "Content", "Full announcement content with Markdown formatting")
+        make_accessible(
+            self.content_ctrl, "Content", "Full announcement content with Markdown formatting"
+        )
         form_sizer.Add(self.content_ctrl, 0, wx.EXPAND | wx.BOTTOM, 12)
 
         # Category and Priority row
@@ -1044,8 +1047,7 @@ class AdminAnnouncementDialog(wx.Dialog):
         self.category_choice = wx.Choice(
             scroll,
             choices=[
-                f"{CATEGORY_ICONS[cat]} {CATEGORY_LABELS[cat]}"
-                for cat in AnnouncementCategory
+                f"{CATEGORY_ICONS[cat]} {CATEGORY_LABELS[cat]}" for cat in AnnouncementCategory
             ],
         )
         self.category_choice.SetSelection(0)
@@ -1074,9 +1076,13 @@ class AdminAnnouncementDialog(wx.Dialog):
         form_sizer.Add(self.author_ctrl, 0, wx.EXPAND | wx.BOTTOM, 12)
 
         # Version (optional)
-        form_sizer.Add(wx.StaticText(scroll, label="Version (optional, for updates):"), 0, wx.BOTTOM, 4)
+        form_sizer.Add(
+            wx.StaticText(scroll, label="Version (optional, for updates):"), 0, wx.BOTTOM, 4
+        )
         self.version_ctrl = wx.TextCtrl(scroll)
-        make_accessible(self.version_ctrl, "Version", "Associated app version for update announcements")
+        make_accessible(
+            self.version_ctrl, "Version", "Associated app version for update announcements"
+        )
         form_sizer.Add(self.version_ctrl, 0, wx.EXPAND | wx.BOTTOM, 12)
 
         # Link row
@@ -1133,7 +1139,9 @@ class AdminAnnouncementDialog(wx.Dialog):
 
         self.show_in_widget_checkbox = wx.CheckBox(scroll, label="Show in home widget")
         self.show_in_widget_checkbox.SetValue(True)
-        make_accessible(self.show_in_widget_checkbox, "Show in widget", "Display in home page widget")
+        make_accessible(
+            self.show_in_widget_checkbox, "Show in widget", "Display in home page widget"
+        )
         form_sizer.Add(self.show_in_widget_checkbox, 0, wx.BOTTOM, 12)
 
         scroll.SetSizer(form_sizer)
@@ -1333,8 +1341,12 @@ class AnnouncementSettingsPanel(wx.Panel):
             wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
             8,
         )
-        self.interval_spin = wx.SpinCtrl(self, min=0, max=1440, initial=self.settings.check_interval_minutes)
-        make_accessible(self.interval_spin, "Check interval", "How often to check for announcements in minutes")
+        self.interval_spin = wx.SpinCtrl(
+            self, min=0, max=1440, initial=self.settings.check_interval_minutes
+        )
+        make_accessible(
+            self.interval_spin, "Check interval", "How often to check for announcements in minutes"
+        )
         interval_row.Add(self.interval_spin, 0)
         check_sizer.Add(interval_row, 0, wx.ALL, 8)
 
@@ -1353,7 +1365,9 @@ class AnnouncementSettingsPanel(wx.Panel):
         )
         notif_sizer.Add(self.native_notif_cb, 0, wx.ALL, 8)
 
-        self.critical_dialog_cb = wx.CheckBox(self, label="Show popup dialog for critical announcements")
+        self.critical_dialog_cb = wx.CheckBox(
+            self, label="Show popup dialog for critical announcements"
+        )
         self.critical_dialog_cb.SetValue(self.settings.show_critical_dialogs)
         make_accessible(
             self.critical_dialog_cb,
@@ -1364,7 +1378,9 @@ class AnnouncementSettingsPanel(wx.Panel):
 
         self.sound_cb = wx.CheckBox(self, label="Play sound for notifications")
         self.sound_cb.SetValue(self.settings.notification_sound)
-        make_accessible(self.sound_cb, "Notification sound", "Play a sound when new announcements arrive")
+        make_accessible(
+            self.sound_cb, "Notification sound", "Play a sound when new announcements arrive"
+        )
         notif_sizer.Add(self.sound_cb, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
 
         # Minimum priority for notification
@@ -1396,7 +1412,9 @@ class AnnouncementSettingsPanel(wx.Panel):
 
         self.show_widget_cb = wx.CheckBox(self, label="Show announcements widget on home page")
         self.show_widget_cb.SetValue(self.settings.show_widget)
-        make_accessible(self.show_widget_cb, "Show widget", "Display the announcements widget on the home page")
+        make_accessible(
+            self.show_widget_cb, "Show widget", "Display the announcements widget on the home page"
+        )
         widget_sizer.Add(self.show_widget_cb, 0, wx.ALL, 8)
 
         max_row = wx.BoxSizer(wx.HORIZONTAL)
@@ -1406,8 +1424,12 @@ class AnnouncementSettingsPanel(wx.Panel):
             wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
             8,
         )
-        self.max_items_spin = wx.SpinCtrl(self, min=1, max=20, initial=self.settings.widget_max_items)
-        make_accessible(self.max_items_spin, "Max widget items", "Maximum announcements to show in the widget")
+        self.max_items_spin = wx.SpinCtrl(
+            self, min=1, max=20, initial=self.settings.widget_max_items
+        )
+        make_accessible(
+            self.max_items_spin, "Max widget items", "Maximum announcements to show in the widget"
+        )
         max_row.Add(self.max_items_spin, 0)
         widget_sizer.Add(max_row, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 8)
 
@@ -1424,8 +1446,12 @@ class AnnouncementSettingsPanel(wx.Panel):
             wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
             8,
         )
-        self.history_days_spin = wx.SpinCtrl(self, min=7, max=365, initial=self.settings.keep_history_days)
-        make_accessible(self.history_days_spin, "History retention", "How long to keep read announcements")
+        self.history_days_spin = wx.SpinCtrl(
+            self, min=7, max=365, initial=self.settings.keep_history_days
+        )
+        make_accessible(
+            self.history_days_spin, "History retention", "How long to keep read announcements"
+        )
         days_row.Add(self.history_days_spin, 0)
         history_sizer.Add(days_row, 0, wx.ALL, 8)
 

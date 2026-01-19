@@ -5,14 +5,15 @@ Handles all user settings, themes, and accessibility options.
 
 import json
 import os
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Any, Dict, Optional
 
 
 @dataclass
 class ThemeSettings:
     """Visual theme settings for low vision accessibility."""
+
     name: str = "system"  # system, light, dark, high_contrast_light, high_contrast_dark
     font_size: int = 12
     font_family: str = "Segoe UI"
@@ -91,6 +92,7 @@ THEMES: Dict[str, ThemeSettings] = {
 @dataclass
 class PlaybackSettings:
     """Audio playback settings."""
+
     default_speed: float = 1.0
     skip_forward_seconds: int = 30
     skip_backward_seconds: int = 10
@@ -108,13 +110,14 @@ class PlaybackSettings:
 @dataclass
 class StorageSettings:
     """File storage settings."""
+
     podcast_download_path: str = ""
     recording_path: str = ""
     max_cache_size_mb: int = 500
     auto_delete_played: bool = False
     recording_format: str = "mp3"  # mp3, wav, ogg
     recording_bitrate: int = 128  # kbps
-    
+
     def __post_init__(self):
         if not self.podcast_download_path:
             self.podcast_download_path = str(Path.home() / "Documents" / "ACB Link" / "Podcasts")
@@ -125,6 +128,7 @@ class StorageSettings:
 @dataclass
 class HomeTabSettings:
     """Home tab customization settings."""
+
     show_streams: bool = True
     show_podcasts: bool = True
     show_affiliates: bool = True
@@ -133,9 +137,10 @@ class HomeTabSettings:
     max_recent: int = 10
 
 
-@dataclass 
+@dataclass
 class SystemTraySettings:
     """System tray behavior settings."""
+
     enabled: bool = True
     minimize_to_tray: bool = True
     close_to_tray: bool = False
@@ -151,6 +156,7 @@ class SystemTraySettings:
 @dataclass
 class StartupSettings:
     """Application startup behavior settings."""
+
     run_at_login: bool = False
     start_minimized: bool = False
     start_minimized_to_tray: bool = False
@@ -165,6 +171,7 @@ class StartupSettings:
 @dataclass
 class PlaybackBehaviorSettings:
     """Advanced playback behavior settings."""
+
     remember_volume: bool = True
     remember_speed: bool = True
     remember_position: bool = True
@@ -180,6 +187,7 @@ class PlaybackBehaviorSettings:
 @dataclass
 class NotificationSettings:
     """Notification behavior settings."""
+
     enabled: bool = True
     sound_enabled: bool = True
     show_now_playing: bool = True
@@ -195,13 +203,14 @@ class NotificationSettings:
 @dataclass
 class KeyboardSettings:
     """Keyboard shortcut and navigation settings."""
+
     enable_global_hotkeys: bool = False
     enable_media_keys: bool = True
     vim_style_navigation: bool = False
     escape_minimizes: bool = False
     space_toggles_playback: bool = True
     custom_shortcuts: dict = None
-    
+
     def __post_init__(self):
         if self.custom_shortcuts is None:
             self.custom_shortcuts = {}
@@ -210,6 +219,7 @@ class KeyboardSettings:
 @dataclass
 class PrivacySettings:
     """Privacy and data collection settings."""
+
     remember_search_history: bool = True
     remember_listening_history: bool = True
     max_history_items: int = 100
@@ -222,6 +232,7 @@ class PrivacySettings:
 @dataclass
 class PerformanceSettings:
     """Performance and resource usage settings."""
+
     low_memory_mode: bool = False
     max_concurrent_downloads: int = 3
     cache_podcast_artwork: bool = True
@@ -235,6 +246,7 @@ class PerformanceSettings:
 @dataclass
 class AccessibilitySettings:
     """Accessibility-specific settings."""
+
     screen_reader_announcements: bool = True
     audio_feedback: bool = True
     keyboard_only_mode: bool = False
@@ -246,6 +258,7 @@ class AccessibilitySettings:
 @dataclass
 class AnalyticsSettings:
     """Privacy-respecting analytics settings (all opt-in)."""
+
     analytics_enabled: bool = False
     consent_level: str = "none"  # none, basic, standard, full
     crash_reporting: bool = False
@@ -258,6 +271,7 @@ class AnalyticsSettings:
 @dataclass
 class VoiceSettings:
     """Voice control configuration settings."""
+
     enabled: bool = False
     wake_word: str = "hey link"
     wake_word_enabled: bool = True
@@ -271,7 +285,7 @@ class VoiceSettings:
     ambient_noise_adjustment: bool = True
     command_confirmation: bool = True  # Speak confirmation after commands
     custom_triggers: dict = None  # Command name -> list of custom triggers
-    
+
     def __post_init__(self):
         if self.custom_triggers is None:
             self.custom_triggers = {}
@@ -280,12 +294,13 @@ class VoiceSettings:
 @dataclass
 class AppSettings:
     """Main application settings container."""
+
     # General
     preferred_browser: str = "edge"
     default_tab: str = "home"
     check_updates: bool = True
     language: str = "en"
-    
+
     # Sub-settings
     theme: ThemeSettings = None
     playback: PlaybackSettings = None
@@ -301,7 +316,7 @@ class AppSettings:
     accessibility: AccessibilitySettings = None
     analytics: AnalyticsSettings = None
     voice: VoiceSettings = None
-    
+
     def __post_init__(self):
         if self.theme is None:
             self.theme = ThemeSettings()
@@ -331,12 +346,12 @@ class AppSettings:
             self.analytics = AnalyticsSettings()
         if self.voice is None:
             self.voice = VoiceSettings()
-    
+
     @staticmethod
     def get_settings_path() -> str:
         """Get the settings file path."""
         return str(Path.home() / ".acb_link_settings.json")
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert settings to dictionary."""
         return {
@@ -359,7 +374,7 @@ class AppSettings:
             "analytics": asdict(self.analytics),
             "voice": asdict(self.voice),
         }
-    
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "AppSettings":
         """Create settings from dictionary."""
@@ -369,7 +384,7 @@ class AppSettings:
             check_updates=data.get("check_updates", True),
             language=data.get("language", "en"),
         )
-        
+
         if "theme" in data:
             settings.theme = ThemeSettings(**data["theme"])
         if "playback" in data:
@@ -406,26 +421,26 @@ class AppSettings:
             if "custom_triggers" not in voice_data:
                 voice_data["custom_triggers"] = {}
             settings.voice = VoiceSettings(**voice_data)
-        
+
         return settings
-    
+
     def save(self, filepath: Optional[str] = None):
         """Save settings to JSON file."""
         if filepath is None:
             filepath = self.get_settings_path()
-        
+
         # Ensure directory exists
         Path(filepath).parent.mkdir(parents=True, exist_ok=True)
-        
+
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(self.to_dict(), f, indent=2)
-    
+
     @classmethod
     def load(cls, filepath: Optional[str] = None) -> "AppSettings":
         """Load settings from JSON file."""
         if filepath is None:
             filepath = cls.get_settings_path()
-        
+
         if os.path.exists(filepath):
             try:
                 with open(filepath, "r", encoding="utf-8") as f:
@@ -433,9 +448,9 @@ class AppSettings:
                 return cls.from_dict(data)
             except Exception:
                 pass
-        
+
         return cls()
-    
+
     def apply_theme(self, theme_name: str):
         """Apply a preset theme."""
         if theme_name in THEMES:
@@ -444,7 +459,7 @@ class AppSettings:
             # Detect system theme (simplified - always light for now)
             self.theme = THEMES["light"]
             self.theme.name = "system"
-    
+
     def ensure_directories(self):
         """Ensure storage directories exist."""
         Path(self.storage.podcast_download_path).mkdir(parents=True, exist_ok=True)

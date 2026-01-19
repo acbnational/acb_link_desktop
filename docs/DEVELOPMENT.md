@@ -61,7 +61,13 @@ pip install accessible_output2 pyaudio python-vlc
 
 # macOS-specific
 pip install pyobjc-framework-Cocoa pyaudio
+
+# Optional: Wake word support (~5GB download)
+# Enables "Hey ACB Link" activation instead of keyboard shortcut
+pip install openwakeword torch torchaudio
 ```
+
+> **Note:** Wake word support (openwakeword + torch) adds ~5GB of ML dependencies. The standard installer excludes these to keep the download size manageable. Voice control works without them using the `Ctrl+Shift+V` keyboard shortcut.
 
 ---
 
@@ -256,11 +262,11 @@ def test_make_accessible_sets_name():
     app = wx.App()
     frame = wx.Frame(None)
     button = wx.Button(frame, label="Test")
-    
+
     make_accessible(button, "Test Button", "A test button")
-    
+
     assert button.GetName() == "Test Button"
-    
+
     frame.Destroy()
     app.Destroy()
 ```
@@ -274,7 +280,7 @@ def test_make_accessible_sets_name():
 1. **All controls must have accessible names**:
    ```python
    from .accessibility import make_accessible
-   
+
    button = wx.Button(parent, label="▶")
    make_accessible(button, "Play", "Start playback")
    ```
@@ -282,7 +288,7 @@ def test_make_accessible_sets_name():
 2. **List controls need descriptions**:
    ```python
    from .accessibility import make_list_accessible
-   
+
    list_ctrl = wx.ListCtrl(parent)
    make_list_accessible(list_ctrl, "Streams list", "Select a stream")
    ```
@@ -290,7 +296,7 @@ def test_make_accessible_sets_name():
 3. **Status changes must be announced**:
    ```python
    from .accessibility import announce
-   
+
    def on_play(self):
        self.player.play()
        announce(f"Playing {self.current_stream}")
@@ -329,13 +335,13 @@ To test admin features locally:
 1. **Create a GitHub PAT** with `read:org` scope
 2. **Set up test roles** by adjusting repository permissions:
    - Organization owner → SUPER_ADMIN
-   - Repository admin → CONFIG_ADMIN  
+   - Repository admin → CONFIG_ADMIN
    - Repository write → AFFILIATE_ADMIN
 
 3. **Mock authentication** for unit tests:
    ```python
    from acb_link.github_admin import AdminRole, AdminSession
-   
+
    # Create mock session for testing
    mock_session = AdminSession(
        user_id="test_user",
@@ -350,9 +356,9 @@ To test admin features locally:
 4. **Test role requirements**:
    ```python
    from acb_link.github_admin import GitHubAdminManager
-   
+
    manager = GitHubAdminManager()
-   
+
    # Test that unauthorized access is blocked
    with pytest.raises(PermissionError):
        manager.require_role(AdminRole.SUPER_ADMIN)
@@ -496,5 +502,5 @@ See [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines.
 
 ---
 
-*Development Guide Version 1.0*  
+*Development Guide Version 1.0*
 *Last Updated: January 2026*

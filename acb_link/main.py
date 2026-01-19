@@ -21,6 +21,7 @@ Usage:
 """
 
 import sys
+
 import wx
 
 from acb_link.main_frame import MainFrame
@@ -30,20 +31,20 @@ def main():
     """Main entry point for ACB Link."""
     # Create application
     app = wx.App(redirect=False)
-    
+
     # Set app name for accessibility
     app.SetAppName("ACB Link")
     app.SetVendorName("American Council of the Blind")
-    
+
     # Create and show main frame
     frame = MainFrame()
-    
+
     # Set as top window
     app.SetTopWindow(frame)
-    
+
     # Run event loop
     app.MainLoop()
-    
+
     return 0
 
 

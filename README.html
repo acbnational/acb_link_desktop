@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="acb-link-desktop">ACB Link Desktop</h1>
+<p><strong>Your Gateway to ACB Media Content</strong></p>
+<p>A fully accessible desktop application for streaming ACB Radio,
+podcasts, and connecting with the American Council of the Blind
+community.</p>
+<hr />
+<h2 id="about">About</h2>
+<p>ACB Link Desktop is a cross-platform desktop application developed by
+BITS (Blind Information Technology Specialists) for the American Council
+of the Blind. It provides easy access to ACB’s streaming audio content,
+podcasts, and organizational resources with full accessibility support
+for screen readers.</p>
+<h3 id="why-acb-link-desktop">Why ACB Link Desktop</h3>
+<ul>
+<li>Cross-Platform: Native support for Windows and macOS</li>
+<li>Screen Reader First: Designed for NVDA, JAWS, Narrator, and
+VoiceOver</li>
+<li>WCAG 2.2 AA Compliant: Meets or exceeds web accessibility
+guidelines</li>
+<li>System Scheduling: Record streams even when the app is not
+running</li>
+<li>Auto-Updates: Automatic updates via GitHub Releases</li>
+<li>Offline Capable: Download podcasts for offline listening</li>
+<li>Voice Control: Hands-free operation with wake word activation</li>
+</ul>
+<hr />
+<h2 id="features">Features</h2>
+<h3 id="streaming">Streaming</h3>
+<ul>
+<li>10 ACB Media Streams including Main, Treasure Trove, and Cafe</li>
+<li>One-click playback with keyboard shortcuts</li>
+<li>Stream recording with multiple format options</li>
+<li>Background playback with system tray integration</li>
+</ul>
+<h3 id="podcasts">Podcasts</h3>
+<ul>
+<li>Over 37 ACB Podcasts organized by category</li>
+<li>Episode downloads for offline listening</li>
+<li>Playback position memory</li>
+<li>Variable speed playback from 0.5x to 2.0x</li>
+</ul>
+<h3 id="favorites-and-playlists">Favorites and Playlists</h3>
+<ul>
+<li>Save favorite streams and podcast episodes</li>
+<li>Create custom playlists</li>
+<li>Quick access from the home screen</li>
+</ul>
+<h3 id="search">Search</h3>
+<ul>
+<li>Global search across all content</li>
+<li>Filter by streams, podcasts, affiliates, or resources</li>
+<li>Keyboard-accessible results</li>
+</ul>
+<h3 id="calendar-integration">Calendar Integration</h3>
+<ul>
+<li>ACB events and conventions calendar</li>
+<li>Add events to your calendar with iCal export</li>
+<li>Event reminders</li>
+</ul>
+<h3 id="voice-control">Voice Control</h3>
+<ul>
+<li>Wake word activation with “Hey ACB Link”</li>
+<li>Voice commands for hands-free operation</li>
+<li>Natural language understanding</li>
+<li>Customizable voice feedback</li>
+</ul>
+<h3 id="accessibility">Accessibility</h3>
+<ul>
+<li>Full screen reader support for NVDA, JAWS, Narrator, and
+VoiceOver</li>
+<li>WCAG 2.2 AA compliant</li>
+<li>High contrast themes</li>
+<li>Keyboard-only navigation</li>
+<li>Customizable focus indicators</li>
+</ul>
+<h3 id="scheduling">Scheduling</h3>
+<ul>
+<li>Schedule recordings when app is closed</li>
+<li>Windows Task Scheduler integration</li>
+<li>macOS launchd integration</li>
+<li>Podcast sync scheduling</li>
+</ul>
+<h3 id="auto-updates">Auto-Updates</h3>
+<ul>
+<li>Check for updates via GitHub Releases</li>
+<li>Automatic download and installation</li>
+<li>Update notifications</li>
+</ul>
+<h3 id="data-synchronization">Data Synchronization</h3>
+<ul>
+<li>Live sync with ACB servers</li>
+<li>Automatic data updates on startup</li>
+<li>Offline fallback with bundled data</li>
+<li>Manual sync from Tools menu</li>
+</ul>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="supported-platforms">Supported Platforms</h3>
+<ul>
+<li>Windows 10 and Windows 11 (x64 or ARM64)</li>
+<li>macOS 11 and later (Intel and Apple Silicon)</li>
+<li>Python 3.9 or higher for development</li>
+</ul>
+<h3 id="quick-install">Quick Install</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone the repository</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>git clone https<span class="op">://</span>github<span class="op">.</span><span class="fu">com</span><span class="op">/</span>acbnational<span class="op">/</span>acb_link_desktop<span class="op">.</span><span class="fu">git</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> acb_link_desktop</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create virtual environment</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv venv</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\venv\Scripts\activate</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>pip install <span class="op">-</span>r requirements<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m acb_link</span></code></pre></div>
+<h3 id="from-release">From Release</h3>
+<p>Download the latest installer from the Releases page:
+https://github.com/acbnational/acb_link_desktop/releases</p>
+<hr />
+<h2 id="usage">Usage</h2>
+<h3 id="keyboard-shortcuts">Keyboard Shortcuts</h3>
+<p>Playback Controls: - Space or Ctrl+P: Play or Pause - Ctrl+S: Stop -
+Ctrl+Up: Volume Up - Ctrl+Down: Volume Down - Ctrl+M: Mute - Ctrl+Right:
+Skip Forward - Ctrl+Left: Skip Backward</p>
+<p>Navigation: - Ctrl+1 through Ctrl+9: Switch tabs - Alt+1 through
+Alt+0: Play streams 1 through 10 - Ctrl+F: Search - Ctrl+Comma: Settings
+- F1: Help - Alt+F4: Quit</p>
+<h3 id="voice-commands">Voice Commands</h3>
+<p>When voice control is enabled, say “Hey ACB Link” then: - “Play
+stream one” through “Play stream ten” - “Pause” or “Stop” - “Volume up”
+or “Volume down” - “Search for” followed by your query - “Go to streams”
+or other tab names</p>
+<h3 id="screen-reader-tips">Screen Reader Tips</h3>
+<ul>
+<li>Use Tab and Shift+Tab to navigate between controls</li>
+<li>Use Arrow keys to navigate within lists and trees</li>
+<li>Press Enter to activate buttons and play items</li>
+<li>All controls have accessible names and descriptions</li>
+<li>Status changes are announced automatically</li>
+</ul>
+<hr />
+<h2 id="accessibility-1">Accessibility</h2>
+<p>ACB Link Desktop is built with accessibility as a core requirement,
+not an afterthought.</p>
+<h3 id="wcag-2.2-aa-compliance">WCAG 2.2 AA Compliance</h3>
+<p>All major WCAG 2.2 AA guidelines are met: - 1.1 Text Alternatives:
+Complete - 1.3 Adaptable: Complete - 1.4 Distinguishable: Complete - 2.1
+Keyboard Accessible: Complete - 2.4 Navigable: Complete - 3.2
+Predictable: Complete - 4.1 Compatible: Complete</p>
+<h3 id="screen-reader-support">Screen Reader Support</h3>
+<ul>
+<li>NVDA: Full support via accessible_output2</li>
+<li>JAWS: Full support via accessible_output2</li>
+<li>Narrator: Native Windows accessibility support</li>
+<li>VoiceOver: Full macOS support via AppleScript integration</li>
+</ul>
+<h3 id="visual-accessibility">Visual Accessibility</h3>
+<ul>
+<li>High contrast themes in light and dark variants</li>
+<li>Configurable font sizes from 8 to 32 points</li>
+<li>Customizable focus ring width</li>
+<li>Reduced motion option</li>
+</ul>
+<hr />
+<h2 id="project-structure">Project Structure</h2>
+<pre><code>acb_link_desktop/
+├── acb_link/              Main application package
+│   ├── __init__.py        Package initialization
+│   ├── accessibility.py   WCAG 2.2 AA compliance module
+│   ├── config.py          Centralized configuration management
+│   ├── data.py            Data structures and constants
+│   ├── data_sync.py       Live data synchronization
+│   ├── dialogs.py         Settings and other dialogs
+│   ├── enhanced_voice.py  Wake word and voice control
+│   ├── main_frame.py      Main application window
+│   ├── main.py            Application entry point
+│   ├── media_player.py    Audio playback engine
+│   ├── panels.py          UI panels for Home, Streams, etc.
+│   ├── scheduler.py       System-level task scheduling
+│   ├── server.py          Local web server
+│   ├── settings.py        Settings management
+│   ├── styles.py          Theme and styling
+│   ├── system_tray.py     System tray integration
+│   ├── updater.py         GitHub-based auto-updates
+│   ├── utils.py           Utility functions
+│   └── voice_control.py   Voice command processing
+├── data/                  Data files
+│   └── s3/               ACB data including streams and affiliates
+├── docs/                  Documentation
+├── installer/             Windows NSIS installer scripts
+├── scripts/               Build scripts for Windows and macOS
+├── tests/                 Unit tests
+├── requirements.txt       Python dependencies
+├── requirements-dev.txt   Development dependencies
+├── pyproject.toml         Project configuration
+├── acb_link.spec          PyInstaller spec for Windows
+└── README.md              This file</code></pre>
+<hr />
+<h2 id="documentation">Documentation</h2>
+<p>Comprehensive documentation is available in the docs folder:</p>
+<ul>
+<li>User Guide: docs/USER_GUIDE.md - Complete user manual</li>
+<li>Features: docs/FEATURES.md - Detailed feature list</li>
+<li>Installation: docs/INSTALLATION.md - Installation instructions</li>
+<li>Accessibility: docs/ACCESSIBILITY.md - Accessibility guide</li>
+<li>Development: docs/DEVELOPMENT.md - Developer guide</li>
+<li>Deployment: docs/DEPLOYMENT.md - Build and release procedures</li>
+<li>Changelog: docs/CHANGELOG.md - Version history</li>
+<li>Roadmap: docs/ROADMAP.md - Future plans</li>
+<li>Announcement: docs/ANNOUNCEMENT.md - Release announcement</li>
+<li>PRD: docs/PRD.md - Product requirements</li>
+<li>Technical Reference: docs/TECHNICAL_REFERENCE.md - Technical
+documentation</li>
+</ul>
+<hr />
+<h2 id="development">Development</h2>
+<h3 id="setting-up-development-environment">Setting Up Development
+Environment</h3>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone and setup</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>git clone https<span class="op">://</span>github<span class="op">.</span><span class="fu">com</span><span class="op">/</span>acbnational<span class="op">/</span>acb_link_desktop<span class="op">.</span><span class="fu">git</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cd</span> acb_link_desktop</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m venv venv</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">.</span>\venv\Scripts\activate</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Install all dependencies including development tools</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>pip install <span class="op">-</span>r requirements<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>pip install <span class="op">-</span>r requirements-dev<span class="op">.</span><span class="fu">txt</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Run tests</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>pytest</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with verbose logging</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>python <span class="op">-</span>m acb_link <span class="op">--</span>debug</span></code></pre></div>
+<h3 id="code-style">Code Style</h3>
+<ul>
+<li>Follow PEP 8 guidelines</li>
+<li>Use type hints for all function signatures</li>
+<li>Document all public functions and classes</li>
+<li>Ensure all UI elements have accessible names</li>
+</ul>
+<h3 id="testing">Testing</h3>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run all tests</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pytest</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run with coverage</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pytest <span class="op">--</span>cov<span class="op">=</span>acb_link</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Run accessibility tests</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>pytest tests<span class="op">/</span>test_accessibility<span class="op">.</span><span class="fu">py</span></span></code></pre></div>
+<hr />
+<h2 id="contributing">Contributing</h2>
+<p>We welcome contributions from the community. Please read the
+Contributing Guide in CONTRIBUTING.md before submitting a pull
+request.</p>
+<h3 id="how-to-contribute">How to Contribute</h3>
+<ol type="1">
+<li>Fork the repository</li>
+<li>Create a feature branch: git checkout -b
+feature/amazing-feature</li>
+<li>Make your changes</li>
+<li>Run tests: pytest</li>
+<li>Commit your changes: git commit -m “Add amazing feature”</li>
+<li>Push to the branch: git push origin feature/amazing-feature</li>
+<li>Open a Pull Request</li>
+</ol>
+<h3 id="reporting-issues">Reporting Issues</h3>
+<p>Please use the GitHub Issues page to report bugs or request features:
+https://github.com/acbnational/acb_link_desktop/issues</p>
+<p>When reporting bugs, please include: - Your operating system and
+version - Your Python version - Your screen reader if applicable - Steps
+to reproduce the issue</p>
+<hr />
+<h2 id="license">License</h2>
+<p>This project is licensed under the MIT License. See the LICENSE file
+for details.</p>
+<hr />
+<h2 id="acknowledgments">Acknowledgments</h2>
+<ul>
+<li>American Council of the Blind for their mission and support</li>
+<li>BITS (Blind Information Technology Specialists) for development</li>
+<li>The accessibility community for feedback and testing</li>
+<li>Contributors and testers who helped make this project
+accessible</li>
+</ul>
+<hr />
+<h2 id="contact">Contact</h2>
+<ul>
+<li>ACB Website: https://acb.org</li>
+<li>BITS: https://acb.org/bits</li>
+<li>Email: bits@acb.org</li>
+</ul>
+<hr />
+<p>Made with care for the blind and low vision community.</p>
+<p>Copyright 2026 American Council of the Blind</p>
+</body>
+</html>

@@ -1,0 +1,31 @@
+repos:
+- repo: https://github.com/psf/black
+  rev: 24.1.0
+  hooks:
+  - id: black
+    language_version: python3
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+
+- repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: v0.3.0
+  hooks:
+  - id: ruff
+    args: [--fix]
+
+# mdformat hook removed due to upstream repo URL mismatch.
+# To re-enable Markdown formatting via pre-commit, add a valid mdformat
+# hook entry here (example repo: https://github.com/executablebooks/mdformat)
+# and pin a stable rev/tag. Alternatively install and run mdformat locally.
+
+- repo: local
+  hooks:
+  - id: convert-md
+    name: Convert changed Markdown to HTML
+    entry: python scripts/convert_md_to_html.py
+    language: system
+    pass_filenames: true
+    files: '\.md$'

@@ -3,8 +3,7 @@ ACB Link - Data Constants
 Stream and podcast data, affiliate information, and other constants.
 """
 
-from typing import List, Dict
-
+from typing import Dict, List
 
 # ACB Media Streams with Live365 station IDs
 STREAMS: List[Dict] = [
@@ -26,23 +25,38 @@ PODCASTS: Dict[str, List[Dict]] = {
         {"name": "ACB Reports", "feed": "https://pinecast.com/feed/acb-reports"},
         {"name": "Braille Forum", "feed": "https://pinecast.com/feed/braille-forum"},
         {"name": "ACB Next Generation", "feed": "https://pinecast.com/feed/acb-next-generation"},
-        {"name": "ACB Legislative Updates", "feed": "https://pinecast.com/feed/acb-legislative-updates"},
+        {
+            "name": "ACB Legislative Updates",
+            "feed": "https://pinecast.com/feed/acb-legislative-updates",
+        },
     ],
     "Technology": [
         {"name": "BITS Tech Talk", "feed": "https://pinecast.com/feed/bits-tech-talk"},
-        {"name": "Accessibility Matters", "feed": "https://pinecast.com/feed/accessibility-matters"},
-        {"name": "Screen Reader Roundup", "feed": "https://pinecast.com/feed/screen-reader-roundup"},
+        {
+            "name": "Accessibility Matters",
+            "feed": "https://pinecast.com/feed/accessibility-matters",
+        },
+        {
+            "name": "Screen Reader Roundup",
+            "feed": "https://pinecast.com/feed/screen-reader-roundup",
+        },
         {"name": "iOS Accessibility", "feed": "https://pinecast.com/feed/ios-accessibility"},
         {"name": "Android Access", "feed": "https://pinecast.com/feed/android-access"},
     ],
     "Entertainment": [
         {"name": "Blind Movie Critics", "feed": "https://pinecast.com/feed/blind-movie-critics"},
-        {"name": "Audio Description Review", "feed": "https://pinecast.com/feed/audio-description-review"},
+        {
+            "name": "Audio Description Review",
+            "feed": "https://pinecast.com/feed/audio-description-review",
+        },
         {"name": "Book Talk", "feed": "https://pinecast.com/feed/book-talk"},
         {"name": "Music Spotlight", "feed": "https://pinecast.com/feed/music-spotlight"},
     ],
     "Lifestyle": [
-        {"name": "Cooking Without Looking", "feed": "https://pinecast.com/feed/cooking-without-looking"},
+        {
+            "name": "Cooking Without Looking",
+            "feed": "https://pinecast.com/feed/cooking-without-looking",
+        },
         {"name": "Travel Tales", "feed": "https://pinecast.com/feed/travel-tales"},
         {"name": "Health & Wellness", "feed": "https://pinecast.com/feed/health-wellness"},
         {"name": "Career Corner", "feed": "https://pinecast.com/feed/career-corner"},
