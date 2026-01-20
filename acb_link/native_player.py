@@ -20,13 +20,27 @@ try:
 except ImportError:
     HAS_WX_MEDIA = False
 
-# Try VLC as a fallback
-try:
-    import vlc  # type: ignore[import-untyped]
+# VLC is imported lazily to avoid import errors in environments without VLC
+# The actual import happens in _init_vlc() when VLC backend is needed
+_vlc_module = None  # Will hold the vlc module once imported
 
-    HAS_VLC = True
-except ImportError:
-    HAS_VLC = False
+
+def _get_vlc_module():
+    """
+    Lazily import the VLC module.
+    Returns the vlc module if available, None otherwise.
+    """
+    global _vlc_module
+    if _vlc_module is None:
+        try:
+            import vlc  # type: ignore[import-untyped]
+
+            _vlc_module = vlc
+        except (ImportError, FileNotFoundError, OSError):
+            # VLC not available - ImportError for missing package,
+            # FileNotFoundError/OSError for missing libvlc.dll
+            _vlc_module = False  # Mark as unavailable
+    return _vlc_module if _vlc_module else None
 
 
 class PlayerState(Enum):
@@ -181,17 +195,21 @@ class NativeAudioPlayer:
         """Initialize the audio backend."""
         if self._backend == AudioBackend.AUTO:
             # Try VLC first (better streaming support)
-            if HAS_VLC:
+            if _get_vlc_module() is not None:
                 self._init_vlc()
             elif HAS_WX_MEDIA and self.parent:
                 self._init_wx_media()
-        elif self._backend == AudioBackend.VLC and HAS_VLC:
+        elif self._backend == AudioBackend.VLC and _get_vlc_module() is not None:
             self._init_vlc()
         elif self._backend == AudioBackend.WMF and HAS_WX_MEDIA:
             self._init_wx_media()
 
     def _init_vlc(self):
         """Initialize VLC backend."""
+        vlc = _get_vlc_module()
+        if vlc is None:
+            return
+
         try:
             # VLC options for better streaming
             vlc_args = [

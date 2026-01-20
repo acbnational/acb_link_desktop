@@ -173,10 +173,9 @@
 </head>
 <body>
 <h1 id="acb-link-desktop-user-guide">ACB Link Desktop User Guide</h1>
-<p><strong>Version:</strong> 1.0.0<br />
-<strong>Last Updated:</strong> January 2026<br />
-<strong>Developed by:</strong> Blind Information Technology Solutions
-(BITS)</p>
+<p><strong>Version:</strong> 1.0.0 <strong>Last Updated:</strong>
+January 2026 <strong>Developed by:</strong> Blind Information Technology
+Solutions (BITS)</p>
 <p>Welcome to ACB Link Desktop, your accessible gateway to the American
 Council of the Blind media network. This guide explains how to use every
 feature of the application.</p>
@@ -731,14 +730,34 @@ example, Search for audio description.</p>
 <hr />
 <h2 id="voice-control">Voice Control</h2>
 <h3 id="activating-voice-control">Activating Voice Control</h3>
-<p>Wake Word Method: Say Hey Link clearly and wait for the listening
-indicator sound. Then speak your command. You can customize the wake
-word in Settings.</p>
-<p>Manual Method: Press the voice control keyboard shortcut, then speak
-your command.</p>
-<p>Continuous Mode: If you disable the wake word requirement in
-Settings, you can speak commands continuously without saying the wake
-word first.</p>
+<p><strong>Keyboard Shortcut Method (Default):</strong> Press
+<code>Ctrl+Shift+V</code> to toggle voice control, then speak your
+command. This method works immediately without any additional setup.</p>
+<p><strong>Wake Word Method (Optional - Requires Additional
+Download):</strong> Say your configured wake word (default: "Hey Link")
+and wait for the listening indicator sound. Then speak your command.</p>
+<blockquote>
+<p><strong>Note:</strong> Wake word detection requires optional AI/ML
+components (~5GB) that are not included in the standard installer. See
+"Installing Wake Word Support" below for setup instructions.</p>
+</blockquote>
+<p><strong>Continuous Mode:</strong> If you disable the wake word
+requirement in Settings, you can speak commands continuously without
+saying the wake word first.</p>
+<h3
+id="installing-wake-word-support-optionalwake-word-feature-allows-hands-free-activation-by-saying-a-phrase-like-hey-acb-link.-this-requires-additional-aiml-libraries-that-are-downloaded-separately-to-keep-the-main-installer-small.to-install-wake-word-support.-open-command-prompt-windows-or-terminal-macos.-run-pip-install-openwakeword-torch-torchaudio.-wait-for-download-to-complete-5gb-may-take-several-minutes.-restart-acb-link-desktop.-go-to-settings-voice-control-to-configure-your-wake-wordwithout-wake-word-support-voice-control-still-works-fully--press-ctrlshiftv-to-activate-voice-listening--speak-your-command--all-voice-commands-function-normallyonly-difference-is-you-activate-by-keyboard-instead-of-by-speaking-a-wake-phrase.">Installing
+Wake Word Support (Optional)wake word feature allows hands-free
+activation by saying a phrase like "Hey ACB Link". This requires
+additional AI/ML libraries that are downloaded separately to keep the
+main installer small.*To install wake word support:**. Open Command
+Prompt (Windows) or Terminal (macOS). Run:
+<code>pip install openwakeword torch torchaudio</code>. Wait for
+download to complete (~5GB, may take several minutes). Restart ACB Link
+Desktop. Go to Settings &gt; Voice Control to configure your wake
+word*Without wake word support**, voice control still works fully:-
+Press <code>Ctrl+Shift+V</code> to activate voice listening- Speak your
+command- All voice commands function normallyonly difference is you
+activate by keyboard instead of by speaking a wake phrase.</h3>
 <h3 id="voice-commands">Voice Commands</h3>
 <p>Playback Commands: - Play: Resume playback - Pause: Pause playback -
 Stop: Stop playback completely - Volume up: Increase volume - Volume
@@ -1739,8 +1758,7 @@ of the American Council of the Blind</p>
 <p>ACB Link Desktop is free software distributed under the MIT
 License.</p>
 <hr />
-<p>User Guide Version 1.0<br />
-Last Updated: January 2026</p>
+<p>User Guide Version 1.0 Last Updated: January 2026</p>
 <p>This guide was written to be fully accessible to screen reader and
 low vision users. If you have suggestions for improving the
 accessibility of this documentation, please contact bits@acb.org.</p>

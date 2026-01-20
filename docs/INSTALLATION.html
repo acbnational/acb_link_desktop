@@ -268,7 +268,7 @@ Installation Guide</h1>
 <tr>
 <td>Storage</td>
 <td>100 MB</td>
-<td>500 MB (for downloads)</td>
+<td>500 MB (+ 5GB for optional wake word)</td>
 </tr>
 <tr>
 <td>Internet</td>
@@ -305,7 +305,7 @@ Installation Guide</h1>
 <tr>
 <td>Storage</td>
 <td>100 MB</td>
-<td>500 MB (for downloads)</td>
+<td>500 MB (+ 5GB for optional wake word)</td>
 </tr>
 <tr>
 <td>Internet</td>
@@ -464,9 +464,33 @@ Settings</li>
 tab)</li>
 <li><strong>Font Size</strong>: Adjust if needed (8-32pt)</li>
 <li><strong>Default Tab</strong>: Set your preferred startup tab</li>
-<li><strong>System Tray</strong>: Configure tray behavior ###
-Administrator Setup (Optional)</li>
+<li><strong>System Tray</strong>: Configure tray behavior</li>
 </ol>
+<h3 id="optional-wake-word-support">Optional: Wake Word Support</h3>
+<p>ACB Link supports hands-free activation with a customizable wake word
+(e.g., “Hey ACB Link”). This feature requires additional AI/ML
+components (~5GB download) that are <strong>not included</strong> in the
+standard installer to keep the download size manageable.</p>
+<p><strong>Default behavior without wake word support:</strong> - Voice
+control still works fully via keyboard shortcut
+(<code>Ctrl+Shift+V</code>) - Say commands directly after activating
+voice control - All voice commands function normally</p>
+<p><strong>To enable wake word detection:</strong></p>
+<ol type="1">
+<li><p>Open a command prompt or terminal</p></li>
+<li><p>Run the following command:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install openwakeword torch torchaudio</span></code></pre></div></li>
+<li><p>Restart ACB Link Desktop</p></li>
+<li><p>The app will automatically detect and enable wake word
+support</p></li>
+<li><p>Configure your preferred wake word in Settings &gt; Voice
+Control</p></li>
+</ol>
+<p><strong>Note:</strong> Wake word support requires approximately 5GB
+of disk space and may take several minutes to download. It includes
+PyTorch and OpenWakeWord libraries for local, privacy-respecting wake
+word detection. ### Administrator Setup (Optional)</p>
 <p>If you are an ACB administrator who needs to manage application
 configuration:</p>
 <ol type="1">
@@ -562,8 +586,8 @@ href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">
 <h3 id="macos-app-is-damaged-and-cant-be-opened">macOS: “App is damaged
 and can’t be opened”</h3>
 <p>Run in Terminal:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xattr</span> <span class="at">-cr</span> /Applications/ACB\ Link\ Desktop.app</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xattr</span> <span class="at">-cr</span> /Applications/ACB\ Link\ Desktop.app</span></code></pre></div>
 <h3 id="macos-voiceover-not-announcing">macOS: VoiceOver not
 announcing</h3>
 <ol type="1">
@@ -591,7 +615,7 @@ bug</a></li>
 <li><strong>Phone</strong>: 1-800-424-8666</li>
 </ul>
 <hr />
-<p><em>Installation Guide Version 1.0</em><br />
-<em>Last Updated: January 2026</em></p>
+<p><em>Installation Guide Version 1.0</em> <em>Last Updated: January
+2026</em></p>
 </body>
 </html>

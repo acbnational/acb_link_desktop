@@ -295,7 +295,17 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install accessible_output2 pyaudio python-vlc</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># macOS-specific</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyobjc-framework-Cocoa pyaudio</span></code></pre></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyobjc-framework-Cocoa pyaudio</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Wake word support (~5GB download)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enables &quot;Hey ACB Link&quot; activation instead of keyboard shortcut</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install openwakeword torch torchaudio</span></code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> Wake word support (openwakeword + torch) adds
+~5GB of ML dependencies. The standard installer excludes these to keep
+the download size manageable. Voice control works without them using the
+<code>Ctrl+Shift+V</code> keyboard shortcut.</p>
+</blockquote>
 <hr />
 <h2 id="project-structure">Project Structure</h2>
 <pre><code>acb_link_desktop/
@@ -449,11 +459,11 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a h
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    app <span class="op">=</span> wx.App()</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    frame <span class="op">=</span> wx.Frame(<span class="va">None</span>)</span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    button <span class="op">=</span> wx.Button(frame, label<span class="op">=</span><span class="st">&quot;Test&quot;</span>)</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    make_accessible(button, <span class="st">&quot;Test Button&quot;</span>, <span class="st">&quot;A test button&quot;</span>)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> button.GetName() <span class="op">==</span> <span class="st">&quot;Test Button&quot;</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    frame.Destroy()</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    app.Destroy()</span></code></pre></div>
 <hr />
@@ -519,8 +529,7 @@ scope</p></li>
 permissions:</p>
 <ul>
 <li>Organization owner → SUPER_ADMIN</li>
-<li>Repository admin → CONFIG_ADMIN<br />
-</li>
+<li>Repository admin → CONFIG_ADMIN</li>
 <li>Repository write → AFFILIATE_ADMIN</li>
 </ul></li>
 <li><p><strong>Mock authentication</strong> for unit tests:</p>
@@ -651,7 +660,7 @@ maintained/improved</label></li>
 <li><label><input type="checkbox" />Changelog updated</label></li>
 </ul>
 <hr />
-<p><em>Development Guide Version 1.0</em><br />
-<em>Last Updated: January 2026</em></p>
+<p><em>Development Guide Version 1.0</em> <em>Last Updated: January
+2026</em></p>
 </body>
 </html>
