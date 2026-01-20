@@ -12,31 +12,31 @@ on:
 jobs:
   test-windows:
     runs-on: windows-latest
-    
+
     strategy:
       matrix:
         python-version: ['3.9', '3.10', '3.11', '3.12']
-        
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-          
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest pytest-cov accessible_output2
-          
+
       - name: Run tests
         run: |
           pytest --cov=acb_link --cov-report=xml -v
-          
+
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
@@ -45,33 +45,39 @@ jobs:
 
   test-macos:
     runs-on: macos-latest
-    
+
     strategy:
       matrix:
         python-version: ['3.9', '3.10', '3.11', '3.12']
-        
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-          
+
+      - name: Install PortAudio
+        run: |
+          brew install portaudio
+
       - name: Install dependencies
+        env:
+          CFLAGS: -I/opt/homebrew/include -I/usr/local/include
+          LDFLAGS: -L/opt/homebrew/lib -L/usr/local/lib
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest pytest-cov
-          brew install portaudio
-          pip install pyaudio || true
-          
+          pip install pyaudio
+
       - name: Run tests
         run: |
           pytest --cov=acb_link --cov-report=xml -v
-          
+
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
@@ -80,24 +86,24 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          
+
       - name: Install linters
         run: |
           pip install black flake8 mypy
-          
+
       - name: Check formatting with Black
         run: |
           black --check acb_link/
-          
+
       - name: Lint with flake8
         run: |
           flake8 acb_link/ --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -105,26 +111,26 @@ jobs:
 
   accessibility-check:
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-          
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install pytest accessible_output2
-          
+
       - name: Run accessibility tests
         run: |
           pytest tests/test_accessibility.py -v || echo "No accessibility tests found yet"
-          
+
       - name: Check accessible names
         run: |
           # Simple check that all UI files use make_accessible
