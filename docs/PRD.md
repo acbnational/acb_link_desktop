@@ -187,9 +187,12 @@ acb_link/
 ### 3.9 Voice Control
 
 #### Activation
-- Wake word: "Hey ACB Link"
+- **Keyboard Shortcut** (Default): `Ctrl+Shift+V` toggle
+- **Wake Word** (Optional): "Hey ACB Link" - requires optional ~5GB download
 - Continuous listening mode
 - Manual push-to-talk option
+
+> **Note:** Wake word detection requires `openwakeword` + `torch` packages (~5GB), not included in the standard installer to keep download size manageable. Voice control works without these via keyboard shortcut.
 
 #### Natural Language Processing
 - Intent recognition
@@ -664,6 +667,6 @@ Items not yet implemented:
 
 ---
 
-*Document Version: 1.0*  
-*Last Updated: January 2026*  
+*Document Version: 1.0*
+*Last Updated: January 2026*
 *Copyright © 2026 American Council of the Blind*

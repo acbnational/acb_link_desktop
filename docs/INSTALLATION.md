@@ -9,7 +9,7 @@
 | OS | Windows 10 (64-bit) | Windows 11 |
 | Architecture | x64 or ARM64 | x64 or ARM64 |
 | RAM | 256 MB | 512 MB |
-| Storage | 100 MB | 500 MB (for downloads) |
+| Storage | 100 MB | 500 MB (+ 5GB for optional wake word) |
 | Internet | Required for streaming | Broadband |
 
 ### macOS
@@ -19,7 +19,7 @@
 | OS | macOS 10.14 (Mojave) | macOS 13+ |
 | Architecture | Intel or Apple Silicon | Apple Silicon |
 | RAM | 256 MB | 512 MB |
-| Storage | 100 MB | 500 MB (for downloads) |
+| Storage | 100 MB | 500 MB (+ 5GB for optional wake word) |
 | Internet | Required for streaming | Broadband |
 
 ---
@@ -167,6 +167,28 @@ python -m acb_link
 3. **Font Size**: Adjust if needed (8-32pt)
 4. **Default Tab**: Set your preferred startup tab
 5. **System Tray**: Configure tray behavior
+
+### Optional: Wake Word Support
+
+ACB Link supports hands-free activation with a customizable wake word (e.g., "Hey ACB Link"). This feature requires additional AI/ML components (~5GB download) that are **not included** in the standard installer to keep the download size manageable.
+
+**Default behavior without wake word support:**
+- Voice control still works fully via keyboard shortcut (`Ctrl+Shift+V`)
+- Say commands directly after activating voice control
+- All voice commands function normally
+
+**To enable wake word detection:**
+
+1. Open a command prompt or terminal
+2. Run the following command:
+   ```bash
+   pip install openwakeword torch torchaudio
+   ```
+3. Restart ACB Link Desktop
+4. The app will automatically detect and enable wake word support
+5. Configure your preferred wake word in Settings > Voice Control
+
+**Note:** Wake word support requires approximately 5GB of disk space and may take several minutes to download. It includes PyTorch and OpenWakeWord libraries for local, privacy-respecting wake word detection.
 ### Administrator Setup (Optional)
 
 If you are an ACB administrator who needs to manage application configuration:
@@ -299,5 +321,5 @@ xattr -cr /Applications/ACB\ Link\ Desktop.app
 
 ---
 
-*Installation Guide Version 1.0*  
+*Installation Guide Version 1.0*
 *Last Updated: January 2026*

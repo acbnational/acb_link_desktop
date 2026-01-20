@@ -65,7 +65,7 @@ windows = [
     "pyaudio>=0.2.13",
     "python-vlc>=3.0.18121",
 ]
-# macOS-specific dependencies  
+# macOS-specific dependencies
 macos = [
     "pyobjc-framework-Cocoa>=9.0",
     "pyaudio>=0.2.13",
@@ -123,6 +123,11 @@ exclude = '''
     | dist
 )/
 '''
+
+[tool.isort]
+profile = "black"
+line_length = 100
+skip_gitignore = true
 
 [tool.mypy]
 python_version = "3.9"

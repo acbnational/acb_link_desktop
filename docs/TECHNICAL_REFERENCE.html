@@ -1,8 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TECHNICAL_REFERENCE</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
 <h1 id="acb-link-desktop---technical-reference">ACB Link Desktop -
 Technical Reference</h1>
-<p><strong>Version:</strong> 1.0.0<br />
-<strong>Last Updated:</strong> January 2025<br />
-<strong>Audience:</strong> Developers, Contributors, System
+<p><strong>Version:</strong> 1.0.0 <strong>Last Updated:</strong>
+January 2025 <strong>Audience:</strong> Developers, Contributors, System
 Administrators</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
@@ -321,7 +559,7 @@ internet</li>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MainFrame(wx.Frame):</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Main application window for ACB Link.&quot;&quot;&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Initialize managers</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.podcast_manager <span class="op">=</span> PodcastManager()</span>
@@ -332,7 +570,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a hr
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.calendar_manager <span class="op">=</span> CalendarManager()</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.shortcut_manager <span class="op">=</span> ShortcutManager()</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.voice_controller <span class="op">=</span> EnhancedVoiceController()</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _build_menubar(<span class="va">self</span>): ...</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _build_ui(<span class="va">self</span>): ...</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _setup_accelerators(<span class="va">self</span>): ...</span></code></pre></div>
@@ -347,7 +585,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a hr
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    home_tab: HomeTabSettings</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    system_tray: SystemTraySettings</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    accessibility: AccessibilitySettings</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> load(cls) <span class="op">-&gt;</span> <span class="st">&#39;AppSettings&#39;</span>: ...</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> save(<span class="va">self</span>): ...</span></code></pre></div>
@@ -362,7 +600,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a hr
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        on_error: Callable <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    ):</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.backend <span class="op">=</span> <span class="va">self</span>._detect_backend()  <span class="co"># VLC or WMF</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> play(<span class="va">self</span>, url: <span class="bu">str</span>): ...</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> pause(<span class="va">self</span>): ...</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> stop(<span class="va">self</span>): ...</span>
@@ -375,7 +613,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a hr
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.shortcuts: Dict[<span class="bu">str</span>, Shortcut] <span class="op">=</span> {}</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._load_config()</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_shortcut(<span class="va">self</span>, shortcut_id: <span class="bu">str</span>) <span class="op">-&gt;</span> Optional[Shortcut]: ...</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_shortcut(<span class="va">self</span>, shortcut_id: <span class="bu">str</span>, key: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_shortcut_by_key(<span class="va">self</span>, key: <span class="bu">str</span>) <span class="op">-&gt;</span> Optional[Shortcut]: ...</span>
@@ -533,7 +771,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a h
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">&quot;vlc&quot;</span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">ImportError</span>:</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">pass</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Fall back to Windows Media Foundation</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;wmf&quot;</span></span></code></pre></div>
 <h3 id="playback-states">Playback States</h3>
@@ -562,19 +800,19 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a h
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, player):</span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.player <span class="op">=</span> player</span>
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.settings <span class="op">=</span> <span class="va">self</span>._load_settings()</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> duck_percentage(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>: ...</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">@duck_percentage.setter</span></span>
 <span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> duck_percentage(<span class="va">self</span>, value: <span class="bu">int</span>): ...  <span class="co"># Clamps to 10-90</span></span>
-<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> restore_delay(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>: ...</span>
-<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">@restore_delay.setter</span></span>
 <span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> restore_delay(<span class="va">self</span>, value: <span class="bu">float</span>): ...  <span class="co"># Clamps to 0.5-10.0</span></span>
-<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> start_ducking(<span class="va">self</span>): ...</span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> stop_ducking(<span class="va">self</span>): ...</span>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _on_system_sound(<span class="va">self</span>): ...</span></code></pre></div>
@@ -595,60 +833,82 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a h
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, parent, view_settings: ViewSettings): ...</span></code></pre></div>
 <hr />
 <h2 id="voice-control">Voice Control</h2>
+<h3 id="dependencies">Dependencies</h3>
+<p>Voice control has two operational modes:</p>
+<p><strong>Core Dependencies (Always Included):</strong> -
+<code>SpeechRecognition</code> - Google Speech Recognition API -
+<code>pyttsx3</code> - Text-to-speech engine - Activated via keyboard
+shortcut (<code>Ctrl+Shift+V</code>)</p>
+<p><strong>Optional Wake Word Dependencies (~5GB download):</strong></p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install openwakeword torch torchaudio</span></code></pre></div>
+<p>The application automatically detects available components:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> openwakeword</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    HAS_OPENWAKEWORD <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ImportError</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    HAS_OPENWAKEWORD <span class="op">=</span> <span class="va">False</span></span></code></pre></div>
 <h3 id="configuration">Configuration</h3>
 <p>Voice control settings are stored in <code>VoiceSettings</code>
 dataclass:</p>
-<div class="sourceCode" id="cb18"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VoiceSettings:</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    wake_word: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;hey link&quot;</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    wake_word_enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    continuous_listening: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    voice_feedback: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    tts_enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    tts_rate: <span class="bu">int</span> <span class="op">=</span> <span class="dv">175</span>  <span class="co"># Words per minute (100-300)</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    tts_volume: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.9</span>  <span class="co"># 0.0-1.0</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    tts_voice: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;&quot;</span>  <span class="co"># Empty = system default</span></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    recognition_timeout: <span class="bu">float</span> <span class="op">=</span> <span class="fl">5.0</span>  <span class="co"># Seconds</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    command_confirmation: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    custom_triggers: <span class="bu">dict</span> <span class="op">=</span> <span class="va">None</span>  <span class="co"># Command name -&gt; list of triggers</span></span></code></pre></div>
-<h3 id="wake-word-activation">Wake Word Activation</h3>
-<div class="sourceCode" id="cb19"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VoiceController:</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    DEFAULT_WAKE_WORD <span class="op">=</span> <span class="st">&quot;hey link&quot;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_wake_word(<span class="va">self</span>, wake_word: <span class="bu">str</span>, enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>):</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Set custom wake word.&quot;&quot;&quot;</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wake_word <span class="op">=</span> wake_word.lower().strip()</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wake_word_enabled <span class="op">=</span> enabled</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _handle_recognized_text(<span class="va">self</span>, text: <span class="bu">str</span>):</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Handle recognized speech, checking wake word first.&quot;&quot;&quot;</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wake_word_enabled <span class="kw">and</span> <span class="kw">not</span> <span class="va">self</span>.wake_word_active:</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="va">self</span>.wake_word.lower() <span class="kw">in</span> text:</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.wake_word_active <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>._reset_wake_word_timer()</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.speak_async(<span class="st">&quot;Listening&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VoiceSettings:</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    wake_word: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;hey link&quot;</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    wake_word_enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    continuous_listening: <span class="bu">bool</span> <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    voice_feedback: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    tts_enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    tts_rate: <span class="bu">int</span> <span class="op">=</span> <span class="dv">175</span>  <span class="co"># Words per minute (100-300)</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    tts_volume: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.9</span>  <span class="co"># 0.0-1.0</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    tts_voice: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;&quot;</span>  <span class="co"># Empty = system default</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    recognition_timeout: <span class="bu">float</span> <span class="op">=</span> <span class="fl">5.0</span>  <span class="co"># Seconds</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    command_confirmation: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    custom_triggers: <span class="bu">dict</span> <span class="op">=</span> <span class="va">None</span>  <span class="co"># Command name -&gt; list of triggers</span></span></code></pre></div>
+<h3 id="wake-word-activation-optional">Wake Word Activation
+(Optional)</h3>
+<blockquote>
+<p><strong>Note:</strong> Requires <code>openwakeword</code> package.
+Without it, <code>wake_word_enabled</code> is ignored and voice control
+uses keyboard activation only.</p>
+</blockquote>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> VoiceController:</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    DEFAULT_WAKE_WORD <span class="op">=</span> <span class="st">&quot;hey link&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> set_wake_word(<span class="va">self</span>, wake_word: <span class="bu">str</span>, enabled: <span class="bu">bool</span> <span class="op">=</span> <span class="va">True</span>):</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Set custom wake word.&quot;&quot;&quot;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wake_word <span class="op">=</span> wake_word.lower().strip()</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.wake_word_enabled <span class="op">=</span> enabled</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _handle_recognized_text(<span class="va">self</span>, text: <span class="bu">str</span>):</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Handle recognized speech, checking wake word first.&quot;&quot;&quot;</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.wake_word_enabled <span class="kw">and</span> <span class="kw">not</span> <span class="va">self</span>.wake_word_active:</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="va">self</span>.wake_word.lower() <span class="kw">in</span> text:</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.wake_word_active <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>._reset_wake_word_timer()</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.speak_async(<span class="st">&quot;Listening&quot;</span>)</span></code></pre></div>
 <h3 id="custom-command-triggers">Custom Command Triggers</h3>
 <p>Users can customize trigger phrases for any command:</p>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default triggers for built-in commands</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>DEFAULT_TRIGGERS <span class="op">=</span> {</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;play&quot;</span>: [<span class="st">&quot;play&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;resume&quot;</span>, <span class="st">&quot;continue&quot;</span>],</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pause&quot;</span>: [<span class="st">&quot;pause&quot;</span>, <span class="st">&quot;wait&quot;</span>, <span class="st">&quot;hold&quot;</span>],</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stop&quot;</span>: [<span class="st">&quot;stop&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;halt&quot;</span>],</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volume_up&quot;</span>: [<span class="st">&quot;volume up&quot;</span>, <span class="st">&quot;louder&quot;</span>, <span class="st">&quot;increase volume&quot;</span>],</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volume_down&quot;</span>: [<span class="st">&quot;volume down&quot;</span>, <span class="st">&quot;quieter&quot;</span>, <span class="st">&quot;decrease volume&quot;</span>],</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... more commands</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply custom triggers from settings</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_settings(<span class="va">self</span>, voice_settings):</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> voice_settings.custom_triggers:</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cmd_name, triggers <span class="kw">in</span> voice_settings.custom_triggers.items():</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> cmd_name <span class="kw">in</span> <span class="va">self</span>.commands <span class="kw">and</span> triggers:</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.commands[cmd_name].triggers <span class="op">=</span> <span class="bu">list</span>(triggers)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Default triggers for built-in commands</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>DEFAULT_TRIGGERS <span class="op">=</span> {</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;play&quot;</span>: [<span class="st">&quot;play&quot;</span>, <span class="st">&quot;start&quot;</span>, <span class="st">&quot;resume&quot;</span>, <span class="st">&quot;continue&quot;</span>],</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;pause&quot;</span>: [<span class="st">&quot;pause&quot;</span>, <span class="st">&quot;wait&quot;</span>, <span class="st">&quot;hold&quot;</span>],</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stop&quot;</span>: [<span class="st">&quot;stop&quot;</span>, <span class="st">&quot;end&quot;</span>, <span class="st">&quot;halt&quot;</span>],</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volume_up&quot;</span>: [<span class="st">&quot;volume up&quot;</span>, <span class="st">&quot;louder&quot;</span>, <span class="st">&quot;increase volume&quot;</span>],</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;volume_down&quot;</span>: [<span class="st">&quot;volume down&quot;</span>, <span class="st">&quot;quieter&quot;</span>, <span class="st">&quot;decrease volume&quot;</span>],</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... more commands</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply custom triggers from settings</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> apply_settings(<span class="va">self</span>, voice_settings):</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> voice_settings.custom_triggers:</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> cmd_name, triggers <span class="kw">in</span> voice_settings.custom_triggers.items():</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> cmd_name <span class="kw">in</span> <span class="va">self</span>.commands <span class="kw">and</span> triggers:</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.commands[cmd_name].triggers <span class="op">=</span> <span class="bu">list</span>(triggers)</span></code></pre></div>
 <h3 id="supported-intents">Supported Intents</h3>
 <table>
 <colgroup>
@@ -747,59 +1007,59 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a h
 </tbody>
 </table>
 <h3 id="text-to-speech">Text-to-Speech</h3>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_rate(<span class="va">self</span>, rate: <span class="bu">int</span>):</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set speaking rate (100-300 words per minute).&quot;&quot;&quot;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.tts_engine:</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;rate&#39;</span>, rate)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_volume(<span class="va">self</span>, volume: <span class="bu">float</span>):</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set TTS volume (0.0 to 1.0).&quot;&quot;&quot;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.tts_engine:</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;volume&#39;</span>, <span class="bu">max</span>(<span class="fl">0.0</span>, <span class="bu">min</span>(<span class="fl">1.0</span>, volume)))</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_voice(<span class="va">self</span>, voice_name: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set TTS voice by name.&quot;&quot;&quot;</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    voices <span class="op">=</span> <span class="va">self</span>.tts_engine.getProperty(<span class="st">&#39;voices&#39;</span>)</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> voice <span class="kw">in</span> voices:</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> voice_name.lower() <span class="kw">in</span> voice.name.lower():</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;voice&#39;</span>, voice.<span class="bu">id</span>)</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">False</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_rate(<span class="va">self</span>, rate: <span class="bu">int</span>):</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set speaking rate (100-300 words per minute).&quot;&quot;&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.tts_engine:</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;rate&#39;</span>, rate)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_volume(<span class="va">self</span>, volume: <span class="bu">float</span>):</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set TTS volume (0.0 to 1.0).&quot;&quot;&quot;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.tts_engine:</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;volume&#39;</span>, <span class="bu">max</span>(<span class="fl">0.0</span>, <span class="bu">min</span>(<span class="fl">1.0</span>, volume)))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_tts_voice(<span class="va">self</span>, voice_name: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Set TTS voice by name.&quot;&quot;&quot;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    voices <span class="op">=</span> <span class="va">self</span>.tts_engine.getProperty(<span class="st">&#39;voices&#39;</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> voice <span class="kw">in</span> voices:</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> voice_name.lower() <span class="kw">in</span> voice.name.lower():</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.tts_engine.setProperty(<span class="st">&#39;voice&#39;</span>, voice.<span class="bu">id</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">True</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">False</span></span></code></pre></div>
 <hr />
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <h3 id="default-shortcuts">Default Shortcuts</h3>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>DEFAULT_SHORTCUTS <span class="op">=</span> {</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;play_pause&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;play_pause&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Space&quot;</span>, ...),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stop&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stop&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+Shift+S&quot;</span>, ...),</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stream_1&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stream_1&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Alt+1&quot;</span>, ...),</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stream_2&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stream_2&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Alt+2&quot;</span>, ...),</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... streams 3-10</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tab_home&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;tab_home&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+1&quot;</span>, ...),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tab_streams&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;tab_streams&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+2&quot;</span>, ...),</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... more shortcuts</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h3 id="shortcut-categories">Shortcut Categories</h3>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ShortcutCategory(Enum):</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    PLAYBACK <span class="op">=</span> <span class="st">&quot;playback&quot;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    NAVIGATION <span class="op">=</span> <span class="st">&quot;navigation&quot;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    STREAMS <span class="op">=</span> <span class="st">&quot;streams&quot;</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    GENERAL <span class="op">=</span> <span class="st">&quot;general&quot;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    RECORDING <span class="op">=</span> <span class="st">&quot;recording&quot;</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    VOLUME <span class="op">=</span> <span class="st">&quot;volume&quot;</span></span></code></pre></div>
-<h3 id="conflict-detection">Conflict Detection</h3>
 <div class="sourceCode" id="cb24"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_shortcut(<span class="va">self</span>, shortcut_id: <span class="bu">str</span>, new_key: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check for conflicts</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    existing <span class="op">=</span> <span class="va">self</span>.get_shortcut_by_key(new_key)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> existing <span class="kw">and</span> existing.<span class="bu">id</span> <span class="op">!=</span> shortcut_id:</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span>  <span class="co"># Conflict detected</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.shortcuts[shortcut_id].current_key <span class="op">=</span> new_key</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>._save_config()</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">True</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>DEFAULT_SHORTCUTS <span class="op">=</span> {</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;play_pause&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;play_pause&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Space&quot;</span>, ...),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stop&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stop&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+Shift+S&quot;</span>, ...),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stream_1&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stream_1&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Alt+1&quot;</span>, ...),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;stream_2&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;stream_2&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Alt+2&quot;</span>, ...),</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... streams 3-10</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tab_home&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;tab_home&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+1&quot;</span>, ...),</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;tab_streams&quot;</span>: Shortcut(<span class="bu">id</span><span class="op">=</span><span class="st">&quot;tab_streams&quot;</span>, default_key<span class="op">=</span><span class="st">&quot;Ctrl+2&quot;</span>, ...),</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... more shortcuts</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="shortcut-categories">Shortcut Categories</h3>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ShortcutCategory(Enum):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    PLAYBACK <span class="op">=</span> <span class="st">&quot;playback&quot;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    NAVIGATION <span class="op">=</span> <span class="st">&quot;navigation&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    STREAMS <span class="op">=</span> <span class="st">&quot;streams&quot;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    GENERAL <span class="op">=</span> <span class="st">&quot;general&quot;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    RECORDING <span class="op">=</span> <span class="st">&quot;recording&quot;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    VOLUME <span class="op">=</span> <span class="st">&quot;volume&quot;</span></span></code></pre></div>
+<h3 id="conflict-detection">Conflict Detection</h3>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_shortcut(<span class="va">self</span>, shortcut_id: <span class="bu">str</span>, new_key: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Check for conflicts</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    existing <span class="op">=</span> <span class="va">self</span>.get_shortcut_by_key(new_key)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> existing <span class="kw">and</span> existing.<span class="bu">id</span> <span class="op">!=</span> shortcut_id:</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">False</span>  <span class="co"># Conflict detected</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.shortcuts[shortcut_id].current_key <span class="op">=</span> new_key</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>._save_config()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">True</span></span></code></pre></div>
 <hr />
 <h2 id="event-system">Event System</h2>
 <h3 id="calendar-event-flow">Calendar Event Flow</h3>
@@ -822,40 +1082,40 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a h
       │                    Start Time │
       │                    ───────────┼──►  on_auto_tune / on_auto_record</code></pre>
 <h3 id="event-callbacks">Event Callbacks</h3>
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>event_scheduler <span class="op">=</span> EventScheduler(</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    on_alert<span class="op">=</span><span class="kw">lambda</span> event: show_notification(event),</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    on_auto_tune<span class="op">=</span><span class="kw">lambda</span> name, url: player.play(url),</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    on_auto_record<span class="op">=</span><span class="kw">lambda</span> event: recorder.start(event)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>event_scheduler <span class="op">=</span> EventScheduler(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    on_alert<span class="op">=</span><span class="kw">lambda</span> event: show_notification(event),</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    on_auto_tune<span class="op">=</span><span class="kw">lambda</span> name, url: player.play(url),</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    on_auto_record<span class="op">=</span><span class="kw">lambda</span> event: recorder.start(event)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <hr />
 <h2 id="localization">Localization</h2>
 <h3 id="translation-keys">Translation Keys</h3>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TranslationKey(Enum):</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    APP_NAME <span class="op">=</span> <span class="st">&quot;app_name&quot;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    MENU_FILE <span class="op">=</span> <span class="st">&quot;menu_file&quot;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    MENU_PLAYBACK <span class="op">=</span> <span class="st">&quot;menu_playback&quot;</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span></code></pre></div>
-<h3 id="adding-languages">Adding Languages</h3>
-<div class="sourceCode" id="cb28"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>TRANSLATIONS <span class="op">=</span> {</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    Language.ENGLISH: {</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        TranslationKey.APP_NAME: <span class="st">&quot;ACB Link&quot;</span>,</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>        TranslationKey.MENU_FILE: <span class="st">&quot;File&quot;</span>,</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ...</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    Language.SPANISH: {</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        TranslationKey.APP_NAME: <span class="st">&quot;ACB Link&quot;</span>,</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>        TranslationKey.MENU_FILE: <span class="st">&quot;Archivo&quot;</span>,</span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ...</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    },</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h3 id="usage">Usage</h3>
 <div class="sourceCode" id="cb29"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> acb_link.localization <span class="im">import</span> _</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> _(TranslationKey.MENU_FILE)  <span class="co"># Returns translated string</span></span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TranslationKey(Enum):</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    APP_NAME <span class="op">=</span> <span class="st">&quot;app_name&quot;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    MENU_FILE <span class="op">=</span> <span class="st">&quot;menu_file&quot;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    MENU_PLAYBACK <span class="op">=</span> <span class="st">&quot;menu_playback&quot;</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span></code></pre></div>
+<h3 id="adding-languages">Adding Languages</h3>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>TRANSLATIONS <span class="op">=</span> {</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    Language.ENGLISH: {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>        TranslationKey.APP_NAME: <span class="st">&quot;ACB Link&quot;</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>        TranslationKey.MENU_FILE: <span class="st">&quot;File&quot;</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ...</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    Language.SPANISH: {</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        TranslationKey.APP_NAME: <span class="st">&quot;ACB Link&quot;</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>        TranslationKey.MENU_FILE: <span class="st">&quot;Archivo&quot;</span>,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># ...</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 id="usage">Usage</h3>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> acb_link.localization <span class="im">import</span> _</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>label <span class="op">=</span> _(TranslationKey.MENU_FILE)  <span class="co"># Returns translated string</span></span></code></pre></div>
 <hr />
 <h2 id="platform-support">Platform Support</h2>
 <h3 id="windows-x64">Windows x64</h3>
@@ -910,34 +1170,34 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a h
 <hr />
 <h2 id="build-deployment">Build &amp; Deployment</h2>
 <h3 id="development-setup">Development Setup</h3>
-<div class="sourceCode" id="cb30"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone repository</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbnational/acb_link_desktop.git</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> acb_link_desktop</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create virtual environment</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="ex">venv\Scripts\activate</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run application</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link</span></code></pre></div>
-<h3 id="building-executable">Building Executable</h3>
-<div class="sourceCode" id="cb31"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install PyInstaller</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyinstaller</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pyinstaller</span> <span class="at">--onedir</span> <span class="at">--windowed</span> <span class="at">--name</span> <span class="st">&quot;ACB Link&quot;</span> acb_link/main.py</span></code></pre></div>
-<h3 id="testing">Testing</h3>
 <div class="sourceCode" id="cb32"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run tests</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># With coverage</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">--cov</span><span class="op">=</span>acb_link tests/</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clone repository</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/acbnational/acb_link_desktop.git</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> acb_link_desktop</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create virtual environment</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv venv</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="ex">venv\Scripts\activate</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run application</span></span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> acb_link</span></code></pre></div>
+<h3 id="building-executable">Building Executable</h3>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Install PyInstaller</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pyinstaller</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Build</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pyinstaller</span> <span class="at">--onedir</span> <span class="at">--windowed</span> <span class="at">--name</span> <span class="st">&quot;ACB Link&quot;</span> acb_link/main.py</span></code></pre></div>
+<h3 id="testing">Testing</h3>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run tests</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> tests/</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># With coverage</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">--cov</span><span class="op">=</span>acb_link tests/</span></code></pre></div>
 <hr />
 <h2 id="api-reference">API Reference</h2>
 <h3 id="local-web-server">Local Web Server</h3>
@@ -995,52 +1255,52 @@ changes</li>
 </ul>
 <h4 id="role-mapping-from-github-permissions">Role Mapping from GitHub
 Permissions</h4>
-<div class="sourceCode" id="cb33"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminRole(Enum):</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    USER <span class="op">=</span> <span class="dv">0</span>              <span class="co"># No repo access or read-only</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    AFFILIATE_ADMIN <span class="op">=</span> <span class="dv">1</span>   <span class="co"># Write/Triage permission on config repo</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    CONFIG_ADMIN <span class="op">=</span> <span class="dv">2</span>      <span class="co"># Maintain/Admin permission on config repo</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    SUPER_ADMIN <span class="op">=</span> <span class="dv">3</span>       <span class="co"># Organization owner</span></span></code></pre></div>
-<h4 id="admin-session">Admin Session</h4>
-<div class="sourceCode" id="cb34"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminSession:</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    username: <span class="bu">str</span>           <span class="co"># GitHub username</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    display_name: <span class="bu">str</span>       <span class="co"># GitHub display name</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    role: AdminRole         <span class="co"># Determined from repo permissions</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    permissions: List[AdminPermission]</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    github_token: <span class="bu">str</span>       <span class="co"># PAT (memory only, never saved)</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    authenticated_at: datetime</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_permission(<span class="va">self</span>, perm: AdminPermission) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span></code></pre></div>
-<h4 id="github-admin-manager">GitHub Admin Manager</h4>
 <div class="sourceCode" id="cb35"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GitHubAdminManager:</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Central manager for GitHub-based admin authentication.&quot;&quot;&quot;</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> authenticate(<span class="va">self</span>, github_token: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>, Optional[AdminSession]]:</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Authenticate with GitHub PAT.</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a><span class="co">        1. Validate token via GET /user</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a><span class="co">        2. Check repo permissions via GitHub API</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a><span class="co">        3. Check org ownership if applicable</span></span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a><span class="co">        4. Create session with appropriate role</span></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> require_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Check if current session has required role.&quot;&quot;&quot;</span></span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fetch_org_config(<span class="va">self</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>, Optional[Dict]]:</span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Fetch org config from GitHub repository.&quot;&quot;&quot;</span></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_org_config(<span class="va">self</span>, config: Dict, commit_message: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Push config changes to GitHub (requires CONFIG_ADMIN).&quot;&quot;&quot;</span></span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminRole(Enum):</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    USER <span class="op">=</span> <span class="dv">0</span>              <span class="co"># No repo access or read-only</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    AFFILIATE_ADMIN <span class="op">=</span> <span class="dv">1</span>   <span class="co"># Write/Triage permission on config repo</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    CONFIG_ADMIN <span class="op">=</span> <span class="dv">2</span>      <span class="co"># Maintain/Admin permission on config repo</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    SUPER_ADMIN <span class="op">=</span> <span class="dv">3</span>       <span class="co"># Organization owner</span></span></code></pre></div>
+<h4 id="admin-session">Admin Session</h4>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminSession:</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    username: <span class="bu">str</span>           <span class="co"># GitHub username</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    display_name: <span class="bu">str</span>       <span class="co"># GitHub display name</span></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>    role: AdminRole         <span class="co"># Determined from repo permissions</span></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    permissions: List[AdminPermission]</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    github_token: <span class="bu">str</span>       <span class="co"># PAT (memory only, never saved)</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    authenticated_at: datetime</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_permission(<span class="va">self</span>, perm: AdminPermission) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span></code></pre></div>
+<h4 id="github-admin-manager">GitHub Admin Manager</h4>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> GitHubAdminManager:</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Central manager for GitHub-based admin authentication.&quot;&quot;&quot;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> authenticate(<span class="va">self</span>, github_token: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>, Optional[AdminSession]]:</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co">        Authenticate with GitHub PAT.</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="co">        1. Validate token via GET /user</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="co">        2. Check repo permissions via GitHub API</span></span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a><span class="co">        3. Check org ownership if applicable</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a><span class="co">        4. Create session with appropriate role</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> require_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Check if current session has required role.&quot;&quot;&quot;</span></span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> fetch_org_config(<span class="va">self</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>, Optional[Dict]]:</span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Fetch org config from GitHub repository.&quot;&quot;&quot;</span></span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_org_config(<span class="va">self</span>, config: Dict, commit_message: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Push config changes to GitHub (requires CONFIG_ADMIN).&quot;&quot;&quot;</span></span>
+<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
 <h4 id="configuration-storage">Configuration Storage</h4>
 <p>Organization config is stored in a GitHub repository:</p>
 <pre><code>acbnational/acb_link_config/
@@ -1053,117 +1313,117 @@ Configuration (<code>admin_config.py</code>)</h3>
 <p>For organizations preferring self-hosted servers, the legacy system
 remains available.</p>
 <h4 id="admin-token-legacy">Admin Token (Legacy)</h4>
-<div class="sourceCode" id="cb37"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminToken:</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    token_id: <span class="bu">str</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    username: <span class="bu">str</span></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    role: AdminRole</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>    permissions: List[AdminPermission]</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    issued_at: datetime</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>    expires_at: datetime</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> is_valid(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_permission(<span class="va">self</span>, perm: AdminPermission) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AdminToken:</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    token_id: <span class="bu">str</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    username: <span class="bu">str</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    role: AdminRole</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    permissions: List[AdminPermission]</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    issued_at: datetime</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    expires_at: datetime</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> is_valid(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_permission(<span class="va">self</span>, perm: AdminPermission) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> has_role(<span class="va">self</span>, required_role: AdminRole) <span class="op">-&gt;</span> <span class="bu">bool</span>: ...</span></code></pre></div>
 <h4 id="organization-configuration">Organization Configuration</h4>
 <p>Server-synced configuration that applies to all installations:</p>
-<div class="sourceCode" id="cb38"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OrganizationConfig:</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Data source URLs</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    base_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;https://acb.org/acblink&quot;</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    streams_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/streams.xml&quot;</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    podcasts_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/podcasts.xml&quot;</span></span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    affiliates_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/states.xml&quot;</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Network settings</span></span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    timeout_seconds: <span class="bu">int</span> <span class="op">=</span> <span class="dv">30</span></span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    retry_count: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update settings</span></span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    update_server: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;https://github.com/acb-org/acb-link/releases&quot;</span></span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Organization defaults</span></span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    default_theme: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;system&quot;</span></span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    default_volume: <span class="bu">int</span> <span class="op">=</span> <span class="dv">100</span></span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> OrganizationConfig:</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Data source URLs</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    base_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;https://acb.org/acblink&quot;</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    streams_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/streams.xml&quot;</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    podcasts_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/podcasts.xml&quot;</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    affiliates_url: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;</span><span class="sc">{base_url}</span><span class="st">/states.xml&quot;</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Network settings</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    timeout_seconds: <span class="bu">int</span> <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    retry_count: <span class="bu">int</span> <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update settings</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    update_server: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;https://github.com/acb-org/acb-link/releases&quot;</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Organization defaults</span></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    default_theme: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;system&quot;</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    default_volume: <span class="bu">int</span> <span class="op">=</span> <span class="dv">100</span></span></code></pre></div>
 <h3 id="affiliate-correction-admin-affiliate_admin.py">Affiliate
 Correction Admin (<code>affiliate_admin.py</code>)</h3>
 <p>Secure workflow for reviewing and applying affiliate data
 corrections.</p>
 <h4 id="correction-queue">Correction Queue</h4>
-<div class="sourceCode" id="cb39"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AffiliateCorrection:</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>: <span class="bu">str</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>    affiliate_name: <span class="bu">str</span></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    affiliate_type: <span class="bu">str</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    state_code: <span class="bu">str</span></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    corrections: Dict[<span class="bu">str</span>, <span class="bu">str</span>]  <span class="co"># field -&gt; new_value</span></span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    original_values: Dict[<span class="bu">str</span>, <span class="bu">str</span>]</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    status: <span class="bu">str</span>  <span class="co"># pending, approved, rejected, applied</span></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    submitted_at: <span class="bu">str</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    reviewed_by: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    reviewed_at: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    applied_at: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span></code></pre></div>
-<h4 id="correction-manager">Correction Manager</h4>
-<div class="sourceCode" id="cb40"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CorrectionManager:</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> submit_correction(<span class="va">self</span>, correction: AffiliateCorrection) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Queue a correction for review.&quot;&quot;&quot;</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> approve_correction(<span class="va">self</span>, correction_id: <span class="bu">str</span>, </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>                          admin_name: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Approve a pending correction (requires AFFILIATE_ADMIN).&quot;&quot;&quot;</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> apply_correction(<span class="va">self</span>, correction_id: <span class="bu">str</span>,</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>                        admin_name: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Apply approved correction to XML (with backup).&quot;&quot;&quot;</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
-<h4 id="xml-updater">XML Updater</h4>
 <div class="sourceCode" id="cb41"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> XMLUpdater:</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Safely update affiliate XML files.&quot;&quot;&quot;</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_affiliate(<span class="va">self</span>, xml_file: <span class="bu">str</span>, </span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>                        changes: Dict[<span class="bu">str</span>, <span class="bu">str</span>]) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Update affiliate data with automatic backup.</span></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">        </span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co">        1. Create backup of original file</span></span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">        2. Parse and validate XML</span></span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">        3. Apply changes</span></span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">        4. Validate result</span></span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co">        5. Write atomically</span></span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>        ...</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rollback(<span class="va">self</span>, backup_file: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Restore from backup if issues detected.&quot;&quot;&quot;</span></span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> AffiliateCorrection:</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span>: <span class="bu">str</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    affiliate_name: <span class="bu">str</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    affiliate_type: <span class="bu">str</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    state_code: <span class="bu">str</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>    corrections: Dict[<span class="bu">str</span>, <span class="bu">str</span>]  <span class="co"># field -&gt; new_value</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>    original_values: Dict[<span class="bu">str</span>, <span class="bu">str</span>]</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>    status: <span class="bu">str</span>  <span class="co"># pending, approved, rejected, applied</span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>    submitted_at: <span class="bu">str</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>    reviewed_by: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    reviewed_at: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    applied_at: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span></code></pre></div>
+<h4 id="correction-manager">Correction Manager</h4>
+<div class="sourceCode" id="cb42"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> CorrectionManager:</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> submit_correction(<span class="va">self</span>, correction: AffiliateCorrection) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Queue a correction for review.&quot;&quot;&quot;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> approve_correction(<span class="va">self</span>, correction_id: <span class="bu">str</span>,</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>                          admin_name: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Approve a pending correction (requires AFFILIATE_ADMIN).&quot;&quot;&quot;</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> apply_correction(<span class="va">self</span>, correction_id: <span class="bu">str</span>,</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>                        admin_name: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Apply approved correction to XML (with backup).&quot;&quot;&quot;</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
+<h4 id="xml-updater">XML Updater</h4>
+<div class="sourceCode" id="cb43"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> XMLUpdater:</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Safely update affiliate XML files.&quot;&quot;&quot;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_affiliate(<span class="va">self</span>, xml_file: <span class="bu">str</span>,</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                        changes: Dict[<span class="bu">str</span>, <span class="bu">str</span>]) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="co">        Update affiliate data with automatic backup.</span></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co">        1. Create backup of original file</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a><span class="co">        2. Parse and validate XML</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a><span class="co">        3. Apply changes</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a><span class="co">        4. Validate result</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a><span class="co">        5. Write atomically</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a><span class="co">        &quot;&quot;&quot;</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>        ...</span>
+<span id="cb43-16"><a href="#cb43-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-17"><a href="#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> rollback(<span class="va">self</span>, backup_file: <span class="bu">str</span>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, <span class="bu">str</span>]:</span>
+<span id="cb43-18"><a href="#cb43-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Restore from backup if issues detected.&quot;&quot;&quot;</span></span>
+<span id="cb43-19"><a href="#cb43-19" aria-hidden="true" tabindex="-1"></a>        ...</span></code></pre></div>
 <h3 id="admin-authentication-ui-admin_auth_ui.py">Admin Authentication
 UI (<code>admin_auth_ui.py</code>)</h3>
 <p>WCAG 2.2 AA compliant admin login dialogs using GitHub PAT.</p>
-<div class="sourceCode" id="cb42"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> require_admin_login(</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    parent: wx.Window,</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    required_role: AdminRole,</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    context: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;Admin Access&quot;</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, Optional[AdminSession]]:</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Show GitHub PAT login dialog if needed.</span></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="co">        parent: Parent window for dialog</span></span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="co">        required_role: Minimum role required (mapped from GitHub permissions)</span></span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co">        context: Description of what requires admin access</span></span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a><span class="co">        (success, session) - session is None if cancelled/failed</span></span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> require_admin_login(</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    parent: wx.Window,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    required_role: AdminRole,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    context: <span class="bu">str</span> <span class="op">=</span> <span class="st">&quot;Admin Access&quot;</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> Tuple[<span class="bu">bool</span>, Optional[AdminSession]]:</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Show GitHub PAT login dialog if needed.</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="co">        parent: Parent window for dialog</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co">        required_role: Minimum role required (mapped from GitHub permissions)</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co">        context: Description of what requires admin access</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="co">        (success, session) - session is None if cancelled/failed</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
 <h3 id="security-best-practices">Security Best Practices</h3>
 <ol type="1">
 <li><strong>GitHub PAT Scopes</strong>: Only <code>read:org</code> scope
@@ -1184,21 +1444,21 @@ access loss</li>
 <hr />
 <h2 id="error-handling">Error Handling</h2>
 <h3 id="playback-errors">Playback Errors</h3>
-<div class="sourceCode" id="cb43"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _on_playback_error(<span class="va">self</span>, error: <span class="bu">str</span>):</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.logger.error(<span class="ss">f&quot;Playback error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.state <span class="op">=</span> PlayerState.ERROR</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.on_error:</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.on_error(error)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _on_playback_error(<span class="va">self</span>, error: <span class="bu">str</span>):</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.logger.error(<span class="ss">f&quot;Playback error: </span><span class="sc">{</span>error<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.state <span class="op">=</span> PlayerState.ERROR</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="va">self</span>.on_error:</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.on_error(error)</span></code></pre></div>
 <h3 id="connectivity-errors">Connectivity Errors</h3>
-<div class="sourceCode" id="cb44"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConnectivityMonitor:</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _check_connectivity(<span class="va">self</span>):</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>            requests.get(<span class="st">&quot;https://acb.org&quot;</span>, timeout<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._set_online(<span class="va">True</span>)</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span>:</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._set_online(<span class="va">False</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ConnectivityMonitor:</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _check_connectivity(<span class="va">self</span>):</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>            requests.get(<span class="st">&quot;https://acb.org&quot;</span>, timeout<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._set_online(<span class="va">True</span>)</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span>:</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>._set_online(<span class="va">False</span>)</span></code></pre></div>
 <hr />
 <h2 id="contributing">Contributing</h2>
 <h3 id="code-style">Code Style</h3>
@@ -1216,6 +1476,7 @@ class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a h
 <li>Submit PR with description</li>
 </ol>
 <hr />
-<p><em>Technical Reference Version 1.0</em><br />
-<em>Last Updated: January 2025</em><br />
-<em>© American Council of the Blind</em></p>
+<p><em>Technical Reference Version 1.0</em> <em>Last Updated: January
+2025</em> <em>© American Council of the Blind</em></p>
+</body>
+</html>

@@ -28,10 +28,15 @@ SpeechRecognition>=3.10.0    # Speech recognition engine
 pyaudio>=0.2.13              # Audio input for speech recognition
 pyttsx3>=2.90                # Text-to-speech for voice feedback
 
-# Wake word detection (optional - enables "Hey ACB Link" activation)
-openwakeword>=0.6.0          # Free, open-source wake word detection
-                              # Runs locally, no API keys or costs
-                              # Falls back to speech recognition if not installed
+# Wake word detection - OPTIONAL (~5GB with dependencies)
+# Not included in standard installer to keep download size manageable.
+# Voice control works without these via keyboard shortcut (Ctrl+Shift+V).
+# To enable "Hey ACB Link" activation, install manually:
+#   pip install openwakeword torch torchaudio
+#
+# openwakeword>=0.6.0        # Free, open-source wake word detection
+# torch                      # Required by openwakeword
+# torchaudio                 # Required by openwakeword
 
 # ============================================================================
 # RSS Feed Parsing (Podcasts)
@@ -52,8 +57,8 @@ icalendar>=5.0.0             # iCalendar file generation
 # ============================================================================
 # Data Handling
 # ============================================================================
-numpy>=1.24.0                # Required for OpenWakeWord audio processing
 # Note: json, dataclasses, typing are Python standard library (3.9+)
+# numpy is NOT required - audio processing uses Python's struct/array modules
 
 # ============================================================================
 # Development Dependencies (install with: pip install -r requirements-dev.txt)

@@ -1,7 +1,7 @@
 # ACB Link Desktop - Technical Reference
 
-**Version:** 1.0.0  
-**Last Updated:** January 2025  
+**Version:** 1.0.0
+**Last Updated:** January 2025
 **Audience:** Developers, Contributors, System Administrators
 
 ---
@@ -177,7 +177,7 @@ The main application window.
 ```python
 class MainFrame(wx.Frame):
     """Main application window for ACB Link."""
-    
+
     def __init__(self):
         # Initialize managers
         self.podcast_manager = PodcastManager()
@@ -188,7 +188,7 @@ class MainFrame(wx.Frame):
         self.calendar_manager = CalendarManager()
         self.shortcut_manager = ShortcutManager()
         self.voice_controller = EnhancedVoiceController()
-        
+
     def _build_menubar(self): ...
     def _build_ui(self): ...
     def _setup_accelerators(self): ...
@@ -207,7 +207,7 @@ class AppSettings:
     home_tab: HomeTabSettings
     system_tray: SystemTraySettings
     accessibility: AccessibilitySettings
-    
+
     @classmethod
     def load(cls) -> 'AppSettings': ...
     def save(self): ...
@@ -226,7 +226,7 @@ class NativeAudioPlayer:
         on_error: Callable = None
     ):
         self.backend = self._detect_backend()  # VLC or WMF
-        
+
     def play(self, url: str): ...
     def pause(self): ...
     def stop(self): ...
@@ -243,7 +243,7 @@ class ShortcutManager:
     def __init__(self):
         self.shortcuts: Dict[str, Shortcut] = {}
         self._load_config()
-    
+
     def get_shortcut(self, shortcut_id: str) -> Optional[Shortcut]: ...
     def set_shortcut(self, shortcut_id: str, key: str) -> bool: ...
     def get_shortcut_by_key(self, key: str) -> Optional[Shortcut]: ...
@@ -388,7 +388,7 @@ class NativeAudioPlayer:
             return "vlc"
         except ImportError:
             pass
-        
+
         # Fall back to Windows Media Foundation
         return "wmf"
 ```
@@ -426,19 +426,19 @@ class AudioDuckingManager:
     def __init__(self, player):
         self.player = player
         self.settings = self._load_settings()
-        
+
     @property
     def duck_percentage(self) -> int: ...
-    
+
     @duck_percentage.setter
     def duck_percentage(self, value: int): ...  # Clamps to 10-90
-    
+
     @property
     def restore_delay(self) -> float: ...
-    
+
     @restore_delay.setter
     def restore_delay(self, value: float): ...  # Clamps to 0.5-10.0
-    
+
     def start_ducking(self): ...
     def stop_ducking(self): ...
     def _on_system_sound(self): ...
@@ -466,6 +466,29 @@ class ViewSettingsDialog(wx.Dialog):
 
 ## Voice Control
 
+### Dependencies
+
+Voice control has two operational modes:
+
+**Core Dependencies (Always Included):**
+- `SpeechRecognition` - Google Speech Recognition API
+- `pyttsx3` - Text-to-speech engine
+- Activated via keyboard shortcut (`Ctrl+Shift+V`)
+
+**Optional Wake Word Dependencies (~5GB download):**
+```bash
+pip install openwakeword torch torchaudio
+```
+
+The application automatically detects available components:
+```python
+try:
+    import openwakeword
+    HAS_OPENWAKEWORD = True
+except ImportError:
+    HAS_OPENWAKEWORD = False
+```
+
 ### Configuration
 
 Voice control settings are stored in `VoiceSettings` dataclass:
@@ -487,17 +510,19 @@ class VoiceSettings:
     custom_triggers: dict = None  # Command name -> list of triggers
 ```
 
-### Wake Word Activation
+### Wake Word Activation (Optional)
+
+> **Note:** Requires `openwakeword` package. Without it, `wake_word_enabled` is ignored and voice control uses keyboard activation only.
 
 ```python
 class VoiceController:
     DEFAULT_WAKE_WORD = "hey link"
-    
+
     def set_wake_word(self, wake_word: str, enabled: bool = True):
         """Set custom wake word."""
         self.wake_word = wake_word.lower().strip()
         self.wake_word_enabled = enabled
-    
+
     def _handle_recognized_text(self, text: str):
         """Handle recognized speech, checking wake word first."""
         if self.wake_word_enabled and not self.wake_word_active:
@@ -613,7 +638,7 @@ def set_shortcut(self, shortcut_id: str, new_key: str) -> bool:
     existing = self.get_shortcut_by_key(new_key)
     if existing and existing.id != shortcut_id:
         return False  # Conflict detected
-    
+
     self.shortcuts[shortcut_id].current_key = new_key
     self._save_config()
     return True
@@ -821,7 +846,7 @@ class AdminSession:
     permissions: List[AdminPermission]
     github_token: str       # PAT (memory only, never saved)
     authenticated_at: datetime
-    
+
     def has_role(self, required_role: AdminRole) -> bool: ...
     def has_permission(self, perm: AdminPermission) -> bool: ...
 ```
@@ -831,26 +856,26 @@ class AdminSession:
 ```python
 class GitHubAdminManager:
     """Central manager for GitHub-based admin authentication."""
-    
+
     def authenticate(self, github_token: str) -> Tuple[bool, str, Optional[AdminSession]]:
         """
         Authenticate with GitHub PAT.
-        
+
         1. Validate token via GET /user
         2. Check repo permissions via GitHub API
         3. Check org ownership if applicable
         4. Create session with appropriate role
         """
         ...
-    
+
     def require_role(self, required_role: AdminRole) -> Tuple[bool, str]:
         """Check if current session has required role."""
         ...
-    
+
     def fetch_org_config(self) -> Tuple[bool, str, Optional[Dict]]:
         """Fetch org config from GitHub repository."""
         ...
-    
+
     def update_org_config(self, config: Dict, commit_message: str) -> Tuple[bool, str]:
         """Push config changes to GitHub (requires CONFIG_ADMIN)."""
         ...
@@ -883,7 +908,7 @@ class AdminToken:
     permissions: List[AdminPermission]
     issued_at: datetime
     expires_at: datetime
-    
+
     def is_valid(self) -> bool: ...
     def has_permission(self, perm: AdminPermission) -> bool: ...
     def has_role(self, required_role: AdminRole) -> bool: ...
@@ -901,14 +926,14 @@ class OrganizationConfig:
     streams_url: str = "{base_url}/streams.xml"
     podcasts_url: str = "{base_url}/podcasts.xml"
     affiliates_url: str = "{base_url}/states.xml"
-    
+
     # Network settings
     timeout_seconds: int = 30
     retry_count: int = 3
-    
+
     # Update settings
     update_server: str = "https://github.com/acb-org/acb-link/releases"
-    
+
     # Organization defaults
     default_theme: str = "system"
     default_volume: int = 100
@@ -943,12 +968,12 @@ class CorrectionManager:
     def submit_correction(self, correction: AffiliateCorrection) -> str:
         """Queue a correction for review."""
         ...
-    
-    def approve_correction(self, correction_id: str, 
+
+    def approve_correction(self, correction_id: str,
                           admin_name: str) -> Tuple[bool, str]:
         """Approve a pending correction (requires AFFILIATE_ADMIN)."""
         ...
-    
+
     def apply_correction(self, correction_id: str,
                         admin_name: str) -> Tuple[bool, str]:
         """Apply approved correction to XML (with backup)."""
@@ -960,12 +985,12 @@ class CorrectionManager:
 ```python
 class XMLUpdater:
     """Safely update affiliate XML files."""
-    
-    def update_affiliate(self, xml_file: str, 
+
+    def update_affiliate(self, xml_file: str,
                         changes: Dict[str, str]) -> Tuple[bool, str]:
         """
         Update affiliate data with automatic backup.
-        
+
         1. Create backup of original file
         2. Parse and validate XML
         3. Apply changes
@@ -973,7 +998,7 @@ class XMLUpdater:
         5. Write atomically
         """
         ...
-    
+
     def rollback(self, backup_file: str) -> Tuple[bool, str]:
         """Restore from backup if issues detected."""
         ...
@@ -991,12 +1016,12 @@ def require_admin_login(
 ) -> Tuple[bool, Optional[AdminSession]]:
     """
     Show GitHub PAT login dialog if needed.
-    
+
     Args:
         parent: Parent window for dialog
         required_role: Minimum role required (mapped from GitHub permissions)
         context: Description of what requires admin access
-    
+
     Returns:
         (success, session) - session is None if cancelled/failed
     """
@@ -1059,6 +1084,6 @@ class ConnectivityMonitor:
 
 ---
 
-*Technical Reference Version 1.0*  
-*Last Updated: January 2025*  
+*Technical Reference Version 1.0*
+*Last Updated: January 2025*
 *© American Council of the Blind*

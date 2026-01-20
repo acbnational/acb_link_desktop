@@ -1,0 +1,70 @@
+name: Pre-commit checks
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install system packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ] && [ -f requirements-dev.txt ]; then
+            pip install -r requirements.txt -r requirements-dev.txt
+          elif [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install pypandoc pre-commit
+          fi
+
+      - name: Run server-side pre-commit hooks
+        run: |
+          if [ -f .ci/.pre-commit-config.yaml ]; then
+            pre-commit run --config .ci/.pre-commit-config.yaml --all-files || true
+          elif [ -f .pre-commit-config.yaml ]; then
+            pre-commit run --all-files || true
+          else
+            echo "No pre-commit config found; skipping."
+          fi
+
+      - name: Convert Markdown to HTML
+        run: |
+          md_files=$(git ls-files "*.md" || true)
+          if [ -z "$md_files" ]; then
+            echo "No markdown files to convert."
+          else
+            python scripts/convert_md_to_html.py $md_files
+          fi
+
+      - name: Check for uncommitted changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "Uncommitted changes detected:"
+            git --no-pager status --porcelain
+            echo "::warning::Uncommitted changes detected. CI continues but please commit locally."
+          else
+            echo "No uncommitted changes."
+          fi
+
+      - name: Upload generated HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-html
+          path: "**/*.html"
