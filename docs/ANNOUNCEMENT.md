@@ -94,13 +94,13 @@ Instant access to the complete ACB Media network:
 | **Alt+1** | ACB Media 1 | Flagship programming |
 | **Alt+2** | ACB Media 2 | More flagship content |
 | **Alt+3** | ACB Media 3 | Old Time Radio classics |
-| **Alt+4** | ACB Media 4 | Advocacy and news |
-| **Alt+5** | ACB Media 5 | Audio description content |
-| **Alt+6** | ACB Media 6 | International programming |
-| **Alt+7** | ACB Media 7 | ACB Café |
-| **Alt+8** | ACB Media 8 | Classical music |
-| **Alt+9** | ACB Media 9 | Jazz |
-| **Alt+0** | ACB Media 10 | Country |
+| **Alt+4** | ACB Media 4 | ACB Media Café |
+| **Alt+5** | ACB Media 5 | ACB Community |
+| **Alt+6** | ACB Media 6 | ACB Affiliate and Buisness stream |
+| **Alt+7** | ACB Media 7 | Convention related stream |
+| **Alt+8** | ACB Media 8 | Convention related stream |
+| **Alt+9** | ACB Media 9 | Convention related Stream |
+| **Alt+0** | ACB Media 10 | ACB Braille Forum |
 
 One keypress. That's all it takes.
 
