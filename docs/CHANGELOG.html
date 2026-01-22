@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>CHANGELOG</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -261,6 +254,22 @@ regions</p>
 </ul>
 <hr />
 <h2 id="unreleased">[Unreleased]</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Key Feedback Sounds for Voice Recognition</strong>: Audio
+feedback when voice recognition starts and stops
+<ul>
+<li>Plays “key down” sound when voice recognition activates</li>
+<li>Plays “key up” sound when voice recognition deactivates</li>
+<li>Default sounds included (key_down.mp3, key_up.mp3 in sounds
+folder)</li>
+<li>Customizable with user-specified MP3, WAV, or OGG files</li>
+<li>Enable/disable toggle in Settings &gt; Voice Control &gt; Key
+Feedback Sounds</li>
+<li>Improves accessibility by providing clear audio indication of voice
+control state</li>
+</ul></li>
+</ul>
 <p>Features planned for future releases:</p>
 <ul>
 <li>Podcast subscription management</li>

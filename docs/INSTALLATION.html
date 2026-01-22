@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>INSTALLATION</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -170,9 +163,8 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -243,34 +235,34 @@ Installation Guide</h1>
 <h3 id="windows">Windows</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Requirement</th>
 <th>Minimum</th>
 <th>Recommended</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>OS</td>
 <td>Windows 10 (64-bit)</td>
 <td>Windows 11</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Architecture</td>
 <td>x64 or ARM64</td>
 <td>x64 or ARM64</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>RAM</td>
 <td>256 MB</td>
 <td>512 MB</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Storage</td>
 <td>100 MB</td>
 <td>500 MB (+ 5GB for optional wake word)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Internet</td>
 <td>Required for streaming</td>
 <td>Broadband</td>
@@ -280,34 +272,34 @@ Installation Guide</h1>
 <h3 id="macos">macOS</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Requirement</th>
 <th>Minimum</th>
 <th>Recommended</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>OS</td>
 <td>macOS 10.14 (Mojave)</td>
 <td>macOS 13+</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Architecture</td>
 <td>Intel or Apple Silicon</td>
 <td>Apple Silicon</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>RAM</td>
 <td>256 MB</td>
 <td>512 MB</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Storage</td>
 <td>100 MB</td>
 <td>500 MB (+ 5GB for optional wake word)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Internet</td>
 <td>Required for streaming</td>
 <td>Broadband</td>
@@ -331,7 +323,7 @@ Releases</a></li>
 <li><p>Download <code>ACBLink-X.X.X-SHA256.txt</code></p></li>
 <li><p>Open PowerShell and run:</p>
 <div class="sourceCode" id="cb1"><pre
-class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Get-FileHash ACBLink-X<span class="op">.</span><span class="fu">X</span><span class="op">.</span><span class="fu">X</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>Algorithm SHA256</span></code></pre></div></li>
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Get<span class="op">-</span>FileHash ACBLink<span class="op">-</span>X<span class="op">.</span><span class="fu">X</span><span class="op">.</span><span class="fu">X</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span> <span class="op">-</span>Algorithm SHA256</span></code></pre></div></li>
 <li><p>Compare with the checksum file</p></li>
 </ul></li>
 <li><strong>Run installer</strong>:

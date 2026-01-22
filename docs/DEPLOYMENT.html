@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>DEPLOYMENT</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -170,9 +163,8 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
     /* CSS for syntax highlighting */
-    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -367,7 +359,7 @@ class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb9-
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>signtool sign <span class="op">/</span>n <span class="st">&quot;Your Certificate Name&quot;</span> <span class="op">/</span>t http<span class="op">://</span>timestamp<span class="op">.</span><span class="fu">digicert</span><span class="op">.</span><span class="fu">com</span> dist\ACBLink\ACBLink<span class="op">.</span><span class="fu">exe</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sign installer</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>signtool sign <span class="op">/</span>n <span class="st">&quot;Your Certificate Name&quot;</span> <span class="op">/</span>t http<span class="op">://</span>timestamp<span class="op">.</span><span class="fu">digicert</span><span class="op">.</span><span class="fu">com</span> dist\ACBLink-1<span class="op">.</span><span class="dv">0.0</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span></span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>signtool sign <span class="op">/</span>n <span class="st">&quot;Your Certificate Name&quot;</span> <span class="op">/</span>t http<span class="op">://</span>timestamp<span class="op">.</span><span class="fu">digicert</span><span class="op">.</span><span class="fu">com</span> dist\ACBLink<span class="op">-</span>1<span class="op">.</span><span class="fu">0</span><span class="op">.</span><span class="fu">0</span><span class="op">-</span>Setup<span class="op">.</span><span class="fu">exe</span></span></code></pre></div>
 <hr />
 <h2 id="macos-deployment">macOS Deployment</h2>
 <h3 id="build-process-2">Build Process</h3>
@@ -503,29 +495,29 @@ attached</li>
 <p>Keep these files synchronized:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>File</th>
 <th>Location</th>
 <th>Format</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>init</strong>.py</td>
 <td>acb_link/</td>
 <td><code>__version__ = "1.0.0"</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td>pyproject.toml</td>
 <td>root</td>
 <td><code>version = "1.0.0"</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>version_info.txt</td>
 <td>installer/</td>
 <td><code>filevers=(1, 0, 0, 0)</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td>acb_link.nsi</td>
 <td>installer/</td>
 <td><code>!define VERSION "1.0.0"</code></td>
@@ -563,21 +555,21 @@ that can be modified for custom deployments.</p>
 <h3 id="configuration-file-locations">Configuration File Locations</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Platform</th>
 <th>Config Path</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Windows</td>
 <td><code>%APPDATA%\ACB Link\config.json</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td>macOS</td>
 <td><code>~/Library/Application Support/ACB Link/config.json</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Linux</td>
 <td><code>~/.acb_link/config.json</code></td>
 </tr>
@@ -657,7 +649,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href=
 <col style="width: 35%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -665,43 +657,43 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb17-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>name</code></td>
 <td>string</td>
 <td>-</td>
 <td>Internal identifier for the data source</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>description</code></td>
 <td>string</td>
 <td>-</td>
 <td>Human-readable description</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>live_url</code></td>
 <td>string</td>
 <td>-</td>
 <td>URL to fetch live data from</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>offline_path</code></td>
 <td>string</td>
 <td>-</td>
 <td>Path to bundled offline data (relative to app)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>cache_duration_hours</code></td>
 <td>int</td>
 <td>24</td>
 <td>How long to cache data before re-fetching</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>last_sync</code></td>
 <td>string</td>
 <td>null</td>
 <td>ISO timestamp of last successful sync</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>enabled</code></td>
 <td>bool</td>
 <td>true</td>
@@ -732,7 +724,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href=
 <col style="width: 35%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -740,49 +732,49 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb18-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>enabled</code></td>
 <td>bool</td>
 <td>true</td>
 <td>Enable/disable automatic updates</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>check_on_startup</code></td>
 <td>bool</td>
 <td>true</td>
 <td>Check for updates when app starts</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>check_interval_hours</code></td>
 <td>int</td>
 <td>24</td>
 <td>Hours between automatic update checks</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>github_repo</code></td>
 <td>string</td>
 <td>“acbnational/acb_link_desktop”</td>
 <td>GitHub repository for updates</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>github_api_url</code></td>
 <td>string</td>
 <td>(see above)</td>
 <td>Full URL to GitHub releases API</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>download_url_template</code></td>
 <td>string</td>
 <td>(see above)</td>
 <td>Template for download URLs</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>last_check</code></td>
 <td>string</td>
 <td>null</td>
 <td>ISO timestamp of last update check</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>skipped_version</code></td>
 <td>string</td>
 <td>null</td>
@@ -811,7 +803,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href=
 <col style="width: 35%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -819,37 +811,37 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb19-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>timeout_seconds</code></td>
 <td>int</td>
 <td>30</td>
 <td>Network request timeout</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>retry_count</code></td>
 <td>int</td>
 <td>3</td>
 <td>Number of retry attempts on failure</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>retry_delay_seconds</code></td>
 <td>int</td>
 <td>5</td>
 <td>Delay between retries</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>user_agent</code></td>
 <td>string</td>
 <td>“ACBLinkDesktop/1.0”</td>
 <td>HTTP User-Agent header</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>proxy_enabled</code></td>
 <td>bool</td>
 <td>false</td>
 <td>Enable proxy for network requests</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>proxy_url</code></td>
 <td>string</td>
 <td>null</td>
@@ -876,54 +868,54 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb20-1"><a href=
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>app_data_dir</code></td>
 <td>string</td>
 <td>Main application data directory</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>cache_dir</code></td>
 <td>string</td>
 <td>Cache for downloaded content</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>logs_dir</code></td>
 <td>string</td>
 <td>Application log files</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>downloads_dir</code></td>
 <td>string</td>
 <td>Downloaded podcast episodes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>recordings_dir</code></td>
 <td>string</td>
 <td>Stream recordings</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>settings_file</code></td>
 <td>string</td>
 <td>User settings JSON file</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>favorites_file</code></td>
 <td>string</td>
 <td>Saved favorites</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>playlists_file</code></td>
 <td>string</td>
 <td>User playlists</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>history_file</code></td>
 <td>string</td>
 <td>Playback history</td>
@@ -963,7 +955,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 <col style="width: 29%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -972,28 +964,28 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>default_volume</code></td>
 <td>int</td>
 <td>80</td>
 <td>0-100</td>
 <td>Initial volume level (%)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>default_playback_speed</code></td>
 <td>float</td>
 <td>1.0</td>
 <td>0.5-3.0</td>
 <td>Playback speed multiplier</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>default_skip_forward</code></td>
 <td>int</td>
 <td>30</td>
 <td>1-300</td>
 <td>Forward skip in seconds</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>default_skip_backward</code></td>
 <td>int</td>
 <td>10</td>
@@ -1012,7 +1004,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 <col style="width: 28%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -1021,28 +1013,28 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>default_tab</code></td>
 <td>string</td>
 <td>“home”</td>
 <td>home, streams, podcasts, favorites</td>
 <td>Initial tab on startup</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>default_theme</code></td>
 <td>string</td>
 <td>“system”</td>
 <td>system, light, dark, high_contrast</td>
 <td>Color theme</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>default_font_size</code></td>
 <td>int</td>
 <td>12</td>
 <td>8-24</td>
 <td>Base font size in points</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>default_font_family</code></td>
 <td>string</td>
 <td>“Segoe UI”</td>
@@ -1060,7 +1052,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 <col style="width: 35%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -1068,25 +1060,25 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>start_minimized</code></td>
 <td>bool</td>
 <td>false</td>
 <td>Start app minimized to tray</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>minimize_to_tray</code></td>
 <td>bool</td>
 <td>true</td>
 <td>Minimize to system tray instead of taskbar</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>close_to_tray</code></td>
 <td>bool</td>
 <td>false</td>
 <td>Close to tray instead of exiting</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>remember_window_position</code></td>
 <td>bool</td>
 <td>true</td>
@@ -1104,7 +1096,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 <col style="width: 28%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -1113,14 +1105,14 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>default_recording_format</code></td>
 <td>string</td>
 <td>“mp3”</td>
 <td>mp3, wav, ogg, flac</td>
 <td>Recording output format</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>default_recording_bitrate</code></td>
 <td>int</td>
 <td>128</td>
@@ -1132,7 +1124,7 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 <h4 id="sync-settings">Sync Settings</h4>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Default</th>
@@ -1140,13 +1132,13 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb21-1"><a href=
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>auto_sync_on_startup</code></td>
 <td>bool</td>
 <td>true</td>
 <td>Sync data when app starts</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>sync_interval_hours</code></td>
 <td>int</td>
 <td>24</td>
@@ -1164,29 +1156,29 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb22-1"><a href=
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>version</code></td>
 <td>string</td>
 <td>Application version (read-only)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>first_run</code></td>
 <td>bool</td>
 <td>True until first-run wizard completes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>install_date</code></td>
 <td>string</td>
 <td>ISO timestamp of first installation</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>last_run</code></td>
 <td>string</td>
 <td>ISO timestamp of last application launch</td>
@@ -1198,44 +1190,44 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb22-1"><a href=
 available:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Endpoint</th>
 <th>Format</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>/streams.xml</code></td>
 <td>XML</td>
 <td>Streaming station definitions</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>/link.opml</code></td>
 <td>OPML</td>
 <td>Podcast feed directory</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>/states.xml</code></td>
 <td>XML</td>
 <td>State affiliate organizations</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>/sigs.xml</code></td>
 <td>XML</td>
 <td>Special interest groups</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>/publications.xml</code></td>
 <td>XML</td>
 <td>Publications directory</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>/categories.xml</code></td>
 <td>XML</td>
 <td>Content categories</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>/acbsites.xml</code></td>
 <td>XML</td>
 <td>ACB website directory</td>
@@ -1314,7 +1306,7 @@ automatically used</li>
 <col style="width: 26%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>GitHub Permission</th>
 <th>Admin Role</th>
 <th>Level</th>
@@ -1322,25 +1314,25 @@ automatically used</li>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>None or Read</td>
 <td><code>USER</code></td>
 <td>0</td>
 <td>Standard user - no admin access</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Write/Triage</td>
 <td><code>AFFILIATE_ADMIN</code></td>
 <td>1</td>
 <td>Review and approve affiliate corrections</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Maintain/Admin</td>
 <td><code>CONFIG_ADMIN</code></td>
 <td>2</td>
 <td>Modify data sources, network settings</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Organization Owner</td>
 <td><code>SUPER_ADMIN</code></td>
 <td>3</td>
@@ -1394,29 +1386,29 @@ class="sourceCode json"><code class="sourceCode json"><span id="cb26-1"><a href=
 <p>Go to repository Settings → Collaborators and teams:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>User</th>
 <th>Permission</th>
 <th>Resulting Role</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>ceo-github</code></td>
 <td>Admin</td>
 <td>CONFIG_ADMIN</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>it-staff</code></td>
 <td>Admin</td>
 <td>CONFIG_ADMIN</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>affiliate-rep</code></td>
 <td>Write</td>
 <td>AFFILIATE_ADMIN</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>volunteer</code></td>
 <td>Write</td>
 <td>AFFILIATE_ADMIN</td>
@@ -1593,25 +1585,25 @@ legacy/self-hosted deployments.</p>
 <h4 id="affiliate_admin-permissions">AFFILIATE_ADMIN Permissions</h4>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Permission</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>review_corrections</code></td>
 <td>View pending affiliate corrections</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>approve_corrections</code></td>
 <td>Approve corrections for application</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>reject_corrections</code></td>
 <td>Reject corrections with notes</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>apply_corrections</code></td>
 <td>Apply approved corrections to XML files</td>
 </tr>
@@ -1621,29 +1613,29 @@ legacy/self-hosted deployments.</p>
 <p>Includes all AFFILIATE_ADMIN permissions, plus:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Permission</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>modify_data_sources</code></td>
 <td>Change data source URLs</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>modify_network_settings</code></td>
 <td>Change timeout, retry, proxy settings</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>modify_defaults</code></td>
 <td>Change organization default values</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>modify_update_settings</code></td>
 <td>Change update server configuration</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>view_audit_log</code></td>
 <td>View admin action history</td>
 </tr>
@@ -1653,25 +1645,25 @@ legacy/self-hosted deployments.</p>
 <p>Includes all permissions, plus:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Permission</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><code>manage_admins</code></td>
 <td>Create, modify, delete admin accounts</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>modify_signing_keys</code></td>
 <td>Rotate configuration signing keys</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>export_audit_log</code></td>
 <td>Export full audit history</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>emergency_rollback</code></td>
 <td>Rollback to previous config versions</td>
 </tr>
