@@ -172,6 +172,32 @@ file.</p>
 href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and
 this project adheres to <a
 href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2 id="unreleased">[Unreleased]</h2>
+<h3 id="added">Added</h3>
+<ul>
+<li><strong>Ctrl+Tab / Ctrl+Shift+Tab navigation</strong>: Cycle through
+tabs like modern browsers and IDEs</li>
+<li><strong>Enhanced F6 pane navigation</strong>: Four distinct
+navigable panes (Tab Bar, Tab Content, Player Controls, Status Bar)</li>
+<li><strong>Custom focus callbacks for pane navigation</strong>: Focus
+moves to primary control in each pane</li>
+<li><strong>Explicit tab order in all panels</strong>: Streams,
+Podcasts, Resources, and Affiliates panels now have proper Tab/Shift+Tab
+navigation</li>
+<li><strong>KeyboardNavigator.setup_panel_navigation()</strong>: New
+method for consistent panel keyboard setup</li>
+<li><strong>TabNavigationHandler class</strong>: Centralized tab cycling
+logic</li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li>PaneNavigator now supports custom focus callbacks for intelligent
+pane focus</li>
+<li>Tab bar pane focuses the current tab for immediate arrow key
+navigation</li>
+<li>Tab content pane focuses the primary interactive control (list,
+tree, etc.)</li>
+</ul>
 <h2 id="initial-release">[1.0.0] - 2025-01-19 - Initial Release</h2>
 <p>ACB Link Desktop 1.0.0 is the first public release, providing a
 comprehensive accessible audio streaming and podcast application for the
@@ -253,8 +279,8 @@ regions</p>
 <li>PAT tokens stored in memory only (never on disk)</li>
 </ul>
 <hr />
-<h2 id="unreleased">[Unreleased]</h2>
-<h3 id="added">Added</h3>
+<h2 id="unreleased-1">[Unreleased]</h2>
+<h3 id="added-1">Added</h3>
 <ul>
 <li><strong>Key Feedback Sounds for Voice Recognition</strong>: Audio
 feedback when voice recognition starts and stops
