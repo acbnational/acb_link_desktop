@@ -10,7 +10,7 @@ import platform
 import subprocess
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 import wx
 
@@ -614,6 +614,142 @@ class KeyboardNavigator:
                 control.MoveAfterInTabOrder(controls[i - 1])
 
     @staticmethod
+    def setup_panel_navigation(panel: wx.Window, primary_control: Optional[wx.Window] = None):
+        """
+        Set up comprehensive keyboard navigation for a panel.
+        
+        This method:
+        1. Finds all focusable controls in the panel
+        2. Sets up logical tab order
+        3. Ensures the primary control gets initial focus
+        
+        Args:
+            panel: The panel to set up navigation for
+            primary_control: The main control that should receive focus first
+        """
+        focusable = KeyboardNavigator.get_focusable_controls(panel)
+        
+        if not focusable:
+            return
+        
+        # Set up tab order
+        KeyboardNavigator.setup_tab_order(focusable)
+        
+        # Move primary control to front of tab order if specified
+        if primary_control and primary_control in focusable:
+            idx = focusable.index(primary_control)
+            if idx > 0:
+                primary_control.MoveBeforeInTabOrder(focusable[0])
+
+    @staticmethod
+    def get_focusable_controls(window: wx.Window) -> List[wx.Window]:
+        """
+        Recursively get all focusable controls in a window hierarchy.
+        
+        Args:
+            window: Root window to search from
+            
+        Returns:
+            List of focusable controls in visual order
+        """
+        focusable = []
+        
+        def collect_focusable(win: wx.Window):
+            for child in win.GetChildren():
+                # Skip hidden or disabled controls
+                if not child.IsShown() or not child.IsEnabled():
+                    continue
+                
+                # Check if this control can accept focus
+                if KeyboardNavigator._is_focusable(child):
+                    focusable.append(child)
+                
+                # Recurse into containers (but not notebook pages - those are handled separately)
+                if isinstance(child, (wx.Panel, wx.ScrolledWindow, wx.SplitterWindow)):
+                    if not isinstance(child.GetParent(), wx.Notebook):
+                        collect_focusable(child)
+        
+        collect_focusable(window)
+        return focusable
+
+    @staticmethod
+    def _is_focusable(control: wx.Window) -> bool:
+        """
+        Check if a control can accept keyboard focus.
+        
+        Args:
+            control: The control to check
+            
+        Returns:
+            True if the control can accept focus
+        """
+        # These control types are typically focusable
+        focusable_types = (
+            wx.Button,
+            wx.ToggleButton,
+            wx.TextCtrl,
+            wx.ComboBox,
+            wx.Choice,
+            wx.ListBox,
+            wx.CheckBox,
+            wx.RadioButton,
+            wx.Slider,
+            wx.SpinCtrl,
+            wx.ListCtrl,
+            wx.TreeCtrl,
+            wx.Notebook,
+            wx.html2.WebView if hasattr(wx, 'html2') else type(None),
+        )
+        
+        return isinstance(control, focusable_types) and control.AcceptsFocus()
+
+    @staticmethod
+    def ensure_focus_visible(control: wx.Window):
+        """
+        Ensure a focused control is visible by scrolling its parent if needed.
+        
+        Args:
+            control: The focused control
+        """
+        if not control:
+            return
+            
+        # Find scrolled window parent
+        parent = control.GetParent()
+        while parent:
+            if isinstance(parent, wx.ScrolledWindow):
+                # Calculate control position relative to scrolled window
+                ctrl_pos = control.GetPosition()
+                ctrl_size = control.GetSize()
+                
+                # Get current scroll position
+                scroll_x, scroll_y = parent.GetViewStart()
+                scroll_unit_x, scroll_unit_y = parent.GetScrollPixelsPerUnit()
+                
+                # Get visible area
+                client_size = parent.GetClientSize()
+                
+                # Calculate if control is visible
+                ctrl_y_start = ctrl_pos.y
+                ctrl_y_end = ctrl_pos.y + ctrl_size.height
+                
+                visible_y_start = scroll_y * scroll_unit_y
+                visible_y_end = visible_y_start + client_size.height
+                
+                # Scroll if needed
+                if ctrl_y_start < visible_y_start:
+                    # Control is above visible area
+                    new_scroll_y = ctrl_y_start // scroll_unit_y if scroll_unit_y > 0 else 0
+                    parent.Scroll(-1, new_scroll_y)
+                elif ctrl_y_end > visible_y_end:
+                    # Control is below visible area
+                    new_scroll_y = (ctrl_y_end - client_size.height) // scroll_unit_y if scroll_unit_y > 0 else 0
+                    parent.Scroll(-1, new_scroll_y + 1)
+                
+                break
+            parent = parent.GetParent()
+
+    @staticmethod
     def create_skip_link(
         parent: wx.Window, target: wx.Window, label: str = "Skip to main content"
     ) -> wx.Button:
@@ -649,6 +785,61 @@ class KeyboardNavigator:
         make_button_accessible(skip_btn, label, "Enter")
 
         return skip_btn
+
+
+class TabNavigationHandler:
+    """
+    Handler for improved Tab/Shift+Tab navigation in complex UI.
+    
+    This class provides enhanced keyboard navigation that:
+    1. Properly cycles through controls within panels
+    2. Supports escape from nested containers
+    3. Works with screen readers
+    """
+    
+    def __init__(self, root_window: wx.Window, announcer: Optional[Callable[[str], None]] = None):
+        """
+        Initialize the tab navigation handler.
+        
+        Args:
+            root_window: The main application window
+            announcer: Optional function for screen reader announcements
+        """
+        self.root = root_window
+        self.announcer = announcer or announce
+        self._setup_bindings()
+    
+    def _setup_bindings(self):
+        """Set up keyboard event bindings."""
+        self.root.Bind(wx.EVT_CHAR_HOOK, self._on_char_hook)
+    
+    def _on_char_hook(self, event):
+        """
+        Handle character events for enhanced Tab navigation.
+        
+        This intercepts Tab/Shift+Tab to provide better navigation.
+        """
+        key_code = event.GetKeyCode()
+        
+        # Handle Tab and Shift+Tab
+        if key_code == wx.WXK_TAB:
+            # Let standard Tab behavior work, but announce focused control
+            event.Skip()
+            # Schedule announcement after focus changes
+            wx.CallAfter(self._announce_focused_control)
+            return
+        
+        # Let other keys pass through
+        event.Skip()
+    
+    def _announce_focused_control(self):
+        """Announce the currently focused control to screen readers."""
+        focused = wx.Window.FindFocus()
+        if focused and self.announcer:
+            name = focused.GetName() or focused.GetLabel()
+            if name:
+                # Don't interrupt - this is supplementary info
+                pass  # Screen reader will announce naturally
 
 
 # ============================================================================

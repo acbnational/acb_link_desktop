@@ -780,7 +780,23 @@ Professional-style keyboard navigation between interface sections:
 - **Shift+F6**: Move focus to the previous pane
 - **Screen reader**: Pane name announced on focus change
 
+**Four navigable panes:**
+1. **Tab Bar**: Switch between main content tabs
+2. **Tab Content**: Primary control in the current panel
+3. **Player Controls**: Playback and volume controls
+4. **Status Bar**: Application status information
+
 Works like VS Code, Outlook, and other professional applications.
+
+### Tab Cycling (Ctrl+Tab)
+
+Quick navigation between content tabs:
+
+- **Ctrl+Tab**: Move to the next tab
+- **Ctrl+Shift+Tab**: Move to the previous tab
+- **Ctrl+1 to Ctrl+9**: Jump directly to a specific tab
+
+Focus automatically moves to the primary control in each tab for immediate interaction.
 
 ### Focus Mode
 

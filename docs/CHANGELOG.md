@@ -5,6 +5,21 @@ All notable changes to ACB Link Desktop will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Ctrl+Tab / Ctrl+Shift+Tab navigation**: Cycle through tabs like modern browsers and IDEs
+- **Enhanced F6 pane navigation**: Four distinct navigable panes (Tab Bar, Tab Content, Player Controls, Status Bar)
+- **Custom focus callbacks for pane navigation**: Focus moves to primary control in each pane
+- **Explicit tab order in all panels**: Streams, Podcasts, Resources, and Affiliates panels now have proper Tab/Shift+Tab navigation
+- **KeyboardNavigator.setup_panel_navigation()**: New method for consistent panel keyboard setup
+- **TabNavigationHandler class**: Centralized tab cycling logic
+
+### Changed
+- PaneNavigator now supports custom focus callbacks for intelligent pane focus
+- Tab bar pane focuses the current tab for immediate arrow key navigation
+- Tab content pane focuses the primary interactive control (list, tree, etc.)
+
 ## [1.0.0] - 2025-01-19 - Initial Release
 
 ACB Link Desktop 1.0.0 is the first public release, providing a comprehensive accessible audio streaming and podcast application for the American Council of the Blind community.

@@ -131,6 +131,8 @@ The application has nine tabs that you can navigate between:
 
 Use these keyboard shortcuts to switch tabs quickly:
 
+- Control plus Tab: Go to next tab
+- Control plus Shift plus Tab: Go to previous tab
 - Control plus 1: Go to Home tab
 - Control plus 2: Go to Streams tab
 - Control plus 3: Go to Podcasts tab
@@ -140,6 +142,17 @@ Use these keyboard shortcuts to switch tabs quickly:
 - Control plus 7: Go to Playlists tab
 - Control plus 8: Go to Search tab
 - Control plus 9: Go to Calendar tab
+
+### Pane Navigation
+
+Use F6 to move between the four main areas of the window:
+
+1. Tab Bar: The row of tabs at the top
+2. Tab Content: The main content area for the current tab
+3. Player Controls: Playback buttons and volume at the bottom
+4. Status Bar: Status information at the very bottom
+
+Press F6 to move to the next pane, or Shift plus F6 to move to the previous pane. Your screen reader will announce which pane has focus.
 
 ---
 

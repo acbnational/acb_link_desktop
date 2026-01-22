@@ -11,7 +11,7 @@ from typing import Any, Callable, Dict, List, Optional
 import wx
 import wx.html2
 
-from .accessibility import announce, make_accessible, make_list_accessible
+from .accessibility import KeyboardNavigator, announce, make_accessible, make_list_accessible
 from .data import AFFILIATES, PODCASTS, RESOURCES, STREAMS
 
 # Modern color constants for panels
@@ -344,6 +344,14 @@ class StreamsPanel(wx.Panel):
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self._on_context_menu)
         self.list_ctrl.Bind(wx.EVT_LIST_ITEM_RIGHT_CLICK, self._on_right_click)
 
+        # Set up keyboard navigation - list control is primary, then buttons
+        KeyboardNavigator.setup_tab_order([
+            self.list_ctrl,
+            self.btn_play,
+            self.btn_record,
+            self.btn_open_browser,
+        ])
+
     def _get_selected_stream(self) -> Optional[str]:
         """Get the currently selected stream name."""
         idx = self.list_ctrl.GetFirstSelected()
@@ -540,6 +548,15 @@ class PodcastsPanel(wx.Panel):
         self.episode_list.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._on_play_episode)
         self.episode_list.Bind(wx.EVT_CONTEXT_MENU, self._on_episode_context_menu)
 
+        # Set up keyboard navigation - tree first, then episode list and buttons
+        KeyboardNavigator.setup_tab_order([
+            self.tree,
+            self.episode_list,
+            self.btn_play_episode,
+            self.btn_download,
+            self.btn_refresh,
+        ])
+
     def _populate_tree(self):
         """Populate the podcast tree control."""
         root = self.tree.AddRoot("All Podcasts")
@@ -719,14 +736,18 @@ class ResourcesPanel(wx.Panel):
         sizer.Add(self.list_ctrl, 1, wx.EXPAND | wx.ALL, 10)
 
         # Button
-        btn_open = wx.Button(self, label="Open in Browser")
-        btn_open.Bind(wx.EVT_BUTTON, self._on_open)
-        sizer.Add(btn_open, 0, wx.ALL, 10)
+        self.btn_open = wx.Button(self, label="Open in Browser")
+        self.btn_open.Bind(wx.EVT_BUTTON, self._on_open)
+        make_accessible(self.btn_open, "Open in Browser", "Open the selected resource in your web browser")
+        sizer.Add(self.btn_open, 0, wx.ALL, 10)
 
         self.SetSizer(sizer)
 
         self.list_ctrl.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self._on_open)
         self.list_ctrl.Bind(wx.EVT_CONTEXT_MENU, self._on_context_menu)
+
+        # Set up keyboard navigation
+        KeyboardNavigator.setup_tab_order([self.list_ctrl, self.btn_open])
 
     def _on_open(self, event):
         """Open selected resource in browser."""
@@ -861,6 +882,16 @@ class AffiliatesPanel(wx.Panel):
         self.btn_copy.Bind(wx.EVT_BUTTON, self._on_copy_info)
         self.btn_email.Bind(wx.EVT_BUTTON, self._on_send_email)
         self.btn_correct.Bind(wx.EVT_BUTTON, self._on_suggest_correction)
+
+        # Set up keyboard navigation for the main buttons
+        # Note: Notebook and lists have their own focus handling
+        KeyboardNavigator.setup_tab_order([
+            self.notebook,
+            self.btn_visit,
+            self.btn_copy,
+            self.btn_email,
+            self.btn_correct,
+        ])
 
     def _build_states_tab(self):
         """Build the State Affiliates tab."""

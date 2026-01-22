@@ -60,10 +60,36 @@ ACB Link Desktop has deep VoiceOver integration:
 | Action | Key |
 |--------|-----|
 | Move between controls | Tab / Shift+Tab |
+| Move between panes | F6 / Shift+F6 |
+| Switch to next tab | Ctrl+Tab |
+| Switch to previous tab | Ctrl+Shift+Tab |
+| Jump to specific tab | Ctrl+1 through Ctrl+5 |
 | Move in lists | Arrow Up/Down |
 | Select item | Enter or Space |
 | Open context menu | Application key or Shift+F10 |
 | Cancel/Close | Escape |
+
+### Pane Navigation (F6)
+
+The application is divided into four navigable panes:
+
+1. **Tab Bar** - Switch between main sections (Streams, Podcasts, etc.)
+2. **Tab Content** - The current panel's main content area
+3. **Player Controls** - Playback controls at the bottom
+4. **Status Bar** - Application status information
+
+Press F6 to cycle forward through panes, Shift+F6 to cycle backward.
+Screen reader announces the pane name when focus changes.
+
+### Tab Navigation (Ctrl+Tab)
+
+Switch between the main content tabs:
+
+- **Ctrl+Tab** - Move to the next tab
+- **Ctrl+Shift+Tab** - Move to the previous tab
+- **Ctrl+1 to Ctrl+5** - Jump directly to a specific tab
+
+Focus automatically moves to the primary control in each tab.
 
 ### Menu Navigation
 

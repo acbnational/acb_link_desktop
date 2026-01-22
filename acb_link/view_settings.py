@@ -141,6 +141,16 @@ class PaneNavigator:
         self.panes: List[NavigablePane] = []
         self.current_index: int = 0
         self.announcer = announcer
+        self.focus_callback: Optional[Callable[[NavigablePane], bool]] = None
+
+    def set_focus_callback(self, callback: Optional[Callable[[NavigablePane], bool]]):
+        """
+        Set a custom focus callback for advanced focus handling.
+        
+        The callback receives the pane to focus and should return True if it
+        handled the focus, False to use default behavior.
+        """
+        self.focus_callback = callback
 
     def register_pane(
         self,
@@ -189,6 +199,12 @@ class PaneNavigator:
 
     def _focus_pane(self, pane: NavigablePane) -> NavigablePane:
         """Focus a pane and announce it."""
+        # Try custom focus callback first
+        if self.focus_callback:
+            if self.focus_callback(pane):
+                return pane
+
+        # Default focus behavior
         target = pane.focus_target or pane.window
 
         if target and target.IsShown():

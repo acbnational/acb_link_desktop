@@ -668,6 +668,14 @@ class MainFrame(wx.Frame):
         self.menu_prev_pane = view_menu.Append(
             wx.ID_ANY, "&Previous Pane\tShift+F6", "Move focus to previous pane"
         )
+
+        # Tab cycling
+        self.menu_next_tab = view_menu.Append(
+            wx.ID_ANY, "Next Tab\tCtrl+Tab", "Switch to next tab"
+        )
+        self.menu_prev_tab = view_menu.Append(
+            wx.ID_ANY, "Previous Tab\tCtrl+Shift+Tab", "Switch to previous tab"
+        )
         view_menu.AppendSeparator()
 
         # Focus mode
@@ -1145,12 +1153,15 @@ class MainFrame(wx.Frame):
     def _setup_accelerators(self):
         """Set up keyboard accelerators."""
         accel_entries = [
-            # Tab navigation
+            # Tab navigation (direct access)
             (wx.ACCEL_CTRL, ord("1"), self.menu_home.GetId()),
             (wx.ACCEL_CTRL, ord("2"), self.menu_streams_tab.GetId()),
             (wx.ACCEL_CTRL, ord("3"), self.menu_podcasts_tab.GetId()),
             (wx.ACCEL_CTRL, ord("4"), self.menu_affiliates_tab.GetId()),
             (wx.ACCEL_CTRL, ord("5"), self.menu_resources_tab.GetId()),
+            # Tab cycling (Ctrl+Tab / Ctrl+Shift+Tab)
+            (wx.ACCEL_CTRL, wx.WXK_TAB, self.menu_next_tab.GetId()),
+            (wx.ACCEL_CTRL | wx.ACCEL_SHIFT, wx.WXK_TAB, self.menu_prev_tab.GetId()),
             # Pane navigation (F6 / Shift+F6)
             (wx.ACCEL_NORMAL, wx.WXK_F6, self.menu_next_pane.GetId()),
             (wx.ACCEL_SHIFT, wx.WXK_F6, self.menu_prev_pane.GetId()),
@@ -1220,6 +1231,10 @@ class MainFrame(wx.Frame):
         # View menu - pane navigation
         self.Bind(wx.EVT_MENU, self._on_next_pane, self.menu_next_pane)
         self.Bind(wx.EVT_MENU, self._on_prev_pane, self.menu_prev_pane)
+
+        # View menu - tab cycling
+        self.Bind(wx.EVT_MENU, self._on_next_tab, self.menu_next_tab)
+        self.Bind(wx.EVT_MENU, self._on_prev_tab, self.menu_prev_tab)
 
         # View menu - modes
         self.Bind(wx.EVT_MENU, self._on_toggle_focus_mode, self.menu_focus_mode)
@@ -2355,15 +2370,72 @@ General:
     # VIEW MENU HANDLERS - Pane Navigation (F6 / Shift+F6)
     # =========================================================================
 
+    def _get_current_tab_primary_control(self) -> Optional[wx.Window]:
+        """
+        Get the primary focusable control for the currently selected tab.
+        This ensures F6 navigation focuses the most useful control in each tab.
+        """
+        selection = self.notebook.GetSelection()
+        if selection == -1:
+            return None
+
+        # Map tab indices to their primary controls
+        panel_map = {
+            0: self.home_panel,
+            1: self.streams_panel,
+            2: self.podcasts_panel,
+            3: self.affiliates_panel,
+            4: self.resources_panel,
+        }
+
+        panel = panel_map.get(selection)
+        if not panel:
+            return None
+
+        # Try to find the primary list or tree control in the panel
+        for attr in ["streams_list", "podcast_list", "episodes_list", "affiliates_tree",
+                     "resources_list", "list_ctrl", "tree_ctrl"]:
+            if hasattr(panel, attr):
+                ctrl = getattr(panel, attr)
+                if ctrl and ctrl.IsShown():
+                    return ctrl
+
+        # Fallback to first focusable child
+        return self._find_first_focusable_child(panel)
+
+    def _find_first_focusable_child(self, parent: wx.Window) -> Optional[wx.Window]:
+        """Find the first focusable child control in a window."""
+        for child in parent.GetChildren():
+            if child.IsShown() and child.IsEnabled():
+                # Prefer interactive controls
+                if isinstance(child, (wx.ListCtrl, wx.TreeCtrl, wx.Button, wx.TextCtrl,
+                                     wx.Choice, wx.ComboBox, wx.Slider, wx.CheckBox)):
+                    return child
+                # Recursively search containers
+                if isinstance(child, (wx.Panel, wx.ScrolledWindow)):
+                    result = self._find_first_focusable_child(child)
+                    if result:
+                        return result
+        return parent
+
     def _register_panes(self):
         """Register navigable panes for F6 navigation."""
-        # Tab content
+        # Tab bar itself - allow navigating to the tab strip for tab switching
+        self.pane_navigator.register_pane(
+            PaneType.TOOLBAR,  # Use TOOLBAR type for tab bar
+            self.notebook,
+            "Tab bar",
+            lambda: True,
+            focus_target=self.notebook,  # Focus the notebook for tab key navigation
+        )
+
+        # Tab content - the content area within the selected tab
         self.pane_navigator.register_pane(
             PaneType.TAB_CONTENT,
             self.notebook,
-            "Main content",
+            "Tab content",
             lambda: True,
-            focus_target=self.notebook,
+            focus_target=None,  # Will use dynamic focus via _focus_tab_content
         )
 
         # Player controls
@@ -2376,6 +2448,44 @@ General:
                 focus_target=self.btn_play_pause if hasattr(self, "btn_play_pause") else None,
             )
 
+        # Status bar (if visible)
+        if hasattr(self, "statusbar"):
+            self.pane_navigator.register_pane(
+                PaneType.STATUS_BAR,
+                self.statusbar,
+                "Status bar",
+                lambda: self.statusbar.IsShown(),
+                focus_target=None,
+            )
+
+        # Set up custom focus handler for dynamic tab content focus
+        self.pane_navigator.set_focus_callback(self._custom_pane_focus)
+
+    def _custom_pane_focus(self, pane) -> bool:
+        """
+        Custom focus handler for pane navigation.
+        Returns True if focus was handled, False to use default behavior.
+        """
+        if pane.pane_type == PaneType.TAB_CONTENT:
+            # Focus the primary control in the current tab
+            target = self._get_current_tab_primary_control()
+            if target:
+                target.SetFocus()
+                if self.settings.accessibility.screen_reader_announcements:
+                    # Announce tab name and focused control
+                    tab_name = self.notebook.GetPageText(self.notebook.GetSelection())
+                    control_name = target.GetName() or target.GetLabel() or "content"
+                    announce(f"{tab_name} tab, {control_name}")
+                return True
+        elif pane.pane_type == PaneType.TOOLBAR:
+            # Focus the notebook itself to allow Ctrl+Tab/Ctrl+Shift+Tab tab switching
+            self.notebook.SetFocus()
+            if self.settings.accessibility.screen_reader_announcements:
+                tab_name = self.notebook.GetPageText(self.notebook.GetSelection())
+                announce(f"Tab bar, {tab_name} selected. Use Ctrl+Tab to switch tabs.")
+            return True
+        return False  # Use default focus behavior
+
     def _on_next_pane(self, event):
         """Navigate to next pane (F6)."""
         self.pane_navigator.navigate_next()
@@ -2383,6 +2493,38 @@ General:
     def _on_prev_pane(self, event):
         """Navigate to previous pane (Shift+F6)."""
         self.pane_navigator.navigate_previous()
+
+    def _on_next_tab(self, event):
+        """Navigate to next tab (Ctrl+Tab)."""
+        current = self.notebook.GetSelection()
+        count = self.notebook.GetPageCount()
+        next_idx = (current + 1) % count
+        self.notebook.SetSelection(next_idx)
+        # Focus the tab content and announce
+        tab_name = self.notebook.GetPageText(next_idx)
+        if self.settings.accessibility.screen_reader_announcements:
+            announce(f"{tab_name} tab")
+        # Focus the primary control in the new tab
+        wx.CallAfter(self._focus_current_tab_content)
+
+    def _on_prev_tab(self, event):
+        """Navigate to previous tab (Ctrl+Shift+Tab)."""
+        current = self.notebook.GetSelection()
+        count = self.notebook.GetPageCount()
+        prev_idx = (current - 1) % count
+        self.notebook.SetSelection(prev_idx)
+        # Focus the tab content and announce
+        tab_name = self.notebook.GetPageText(prev_idx)
+        if self.settings.accessibility.screen_reader_announcements:
+            announce(f"{tab_name} tab")
+        # Focus the primary control in the new tab
+        wx.CallAfter(self._focus_current_tab_content)
+
+    def _focus_current_tab_content(self):
+        """Focus the primary control in the current tab."""
+        target = self._get_current_tab_primary_control()
+        if target:
+            target.SetFocus()
 
     # =========================================================================
     # VIEW MENU HANDLERS - Focus Mode and Full Screen
