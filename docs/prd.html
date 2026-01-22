@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>PRD</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -218,54 +211,54 @@ ARM64 architectures</li>
 <col style="width: 28%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Component</th>
 <th>Technology</th>
 <th>Purpose</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Desktop Framework</td>
 <td>wxPython 4.2+</td>
 <td>Native Windows UI controls</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Web Server</td>
 <td>FastAPI + Uvicorn</td>
 <td>Local accessible HTML rendering</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Audio Player</td>
 <td>VLC / Windows Media Foundation</td>
 <td>Native embedded audio playback</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Recording</td>
 <td>FFmpeg + Threading</td>
 <td>Stream and scheduled recording</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Data Storage</td>
 <td>JSON</td>
 <td>Settings, favorites, playlists</td>
 </tr>
-<tr>
+<tr class="even">
 <td>System Tray</td>
 <td>wx.adv.TaskBarIcon</td>
 <td>Background operation</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Voice Control</td>
 <td>SpeechRecognition + pyttsx3</td>
 <td>Hands-free operation</td>
 </tr>
-<tr>
+<tr class="even">
 <td>RSS Parsing</td>
 <td>feedparser</td>
 <td>Podcast feed management</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Localization</td>
 <td>Custom i18n framework</td>
 <td>Multi-language support</td>
@@ -322,54 +315,54 @@ voice</li>
 <h3 id="tabbed-interface">3.1 Tabbed Interface</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Tab</th>
 <th>Description</th>
 <th>Key Features</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Home</td>
 <td>Dashboard</td>
 <td>Quick access, event alerts</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Streams</td>
 <td>Live audio</td>
 <td>10 stations, shortcuts</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Podcasts</td>
 <td>Podcast browser</td>
 <td>RSS, downloads, position memory</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Affiliates</td>
 <td>Organizations</td>
 <td>ACB affiliate links</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Resources</td>
 <td>Web resources</td>
 <td>ACB websites</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Favorites</td>
 <td>Saved content</td>
 <td>Streams, podcasts, bookmarks</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Playlists</td>
 <td>Custom lists</td>
 <td>Mixed content, shuffle, repeat</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Search</td>
 <td>Global search</td>
 <td>All content types, voice</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Calendar</td>
 <td>ACB events</td>
 <td>Reminders, recording, join</td>
@@ -517,24 +510,24 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="file-menu">4.1 File Menu</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Item</th>
 <th>Shortcut</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Open in Browser</td>
 <td>Ctrl+B</td>
 <td>Open content in browser</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Settings…</td>
 <td>Ctrl+,</td>
 <td>Open settings dialog</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Exit</td>
 <td>Alt+F4</td>
 <td>Close application</td>
@@ -544,49 +537,49 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="playback-menu">4.2 Playback Menu</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Item</th>
 <th>Shortcut</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Play/Pause</td>
 <td>Space</td>
 <td>Toggle playback</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Stop</td>
 <td>Ctrl+Shift+S</td>
 <td>Stop playback</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Skip Back</td>
 <td>Ctrl+Left</td>
 <td>Skip backward</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Skip Forward</td>
 <td>Ctrl+Right</td>
 <td>Skip forward</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Volume Up</td>
 <td>Ctrl+Up</td>
 <td>Increase volume</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Volume Down</td>
 <td>Ctrl+Down</td>
 <td>Decrease volume</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Mute</td>
 <td>Ctrl+M</td>
 <td>Toggle mute</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Record</td>
 <td>Ctrl+R</td>
 <td>Start/stop recording</td>
@@ -601,119 +594,119 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="view-menu">4.5 View Menu</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Item</th>
 <th>Shortcut</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Home</td>
 <td>Ctrl+1</td>
 <td>Home tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Streams</td>
 <td>Ctrl+2</td>
 <td>Streams tab</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Podcasts</td>
 <td>Ctrl+3</td>
 <td>Podcasts tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Affiliates</td>
 <td>Ctrl+4</td>
 <td>Affiliates tab</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Resources</td>
 <td>Ctrl+5</td>
 <td>Resources tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Favorites</td>
 <td>Ctrl+6</td>
 <td>Favorites tab</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Playlists</td>
 <td>Ctrl+7</td>
 <td>Playlists tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Search</td>
 <td>Ctrl+8</td>
 <td>Search tab</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Calendar</td>
 <td>Ctrl+9</td>
 <td>Calendar tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>—</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Toolbar</td>
 <td></td>
 <td>Toggle toolbar visibility</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Tab Bar</td>
 <td></td>
 <td>Toggle tab bar visibility</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Status Bar</td>
 <td></td>
 <td>Toggle status bar visibility</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Player Controls</td>
 <td>Ctrl+Shift+P</td>
 <td>Toggle player controls</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Sidebar</td>
 <td>Ctrl+\</td>
 <td>Toggle sidebar</td>
 </tr>
-<tr>
+<tr class="even">
 <td>—</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Focus Mode</td>
 <td>Ctrl+Shift+D</td>
 <td>Minimal distraction-free interface</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Full Screen</td>
 <td>F11</td>
 <td>Toggle full screen mode</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>View Settings…</td>
 <td></td>
 <td>Open view configuration dialog</td>
 </tr>
-<tr>
+<tr class="even">
 <td>—</td>
 <td></td>
 <td></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Next Pane</td>
 <td>F6</td>
 <td>Move focus to next pane</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Previous Pane</td>
 <td>Shift+F6</td>
 <td>Move focus to previous pane</td>
@@ -727,57 +720,57 @@ Voice control works without these via keyboard shortcut.</p>
 <col style="width: 68%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Item</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Start/Stop Web Server</td>
 <td>Toggle local web server</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Audio Ducking</td>
 <td>Toggle audio ducking on/off</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Audio Ducking Settings…</td>
 <td>Configure ducking percentage (10-90%) and delay</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Media Key Support</td>
 <td>Toggle hardware media key support</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Auto-Play on Startup…</td>
 <td>Configure automatic playback</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Quiet Hours…</td>
 <td>Configure scheduled volume reduction</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scheduled Tasks…</td>
 <td>Manage scheduled recordings</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Listening Statistics</td>
 <td>View listening history and stats</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Export/Import Settings</td>
 <td>Backup and restore all settings</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Sync Data</td>
 <td>Manually synchronize with ACB servers</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Clear Cache</td>
 <td>Remove cached data</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Clear Recent Items</td>
 <td>Clear playback history</td>
 </tr>
@@ -786,34 +779,34 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="help-menu">4.7 Help Menu</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Item</th>
 <th>Shortcut</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>User Guide</td>
 <td>F1</td>
 <td>Open documentation</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Keyboard Shortcuts</td>
 <td></td>
 <td>Show shortcuts dialog</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>ACB Website</td>
 <td></td>
 <td>Open acb.org</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Check for Updates</td>
 <td></td>
 <td>Check for new version</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>About ACB Link</td>
 <td></td>
 <td>Version and credits</td>
@@ -897,7 +890,7 @@ Voice control works without these via keyboard shortcut.</p>
 <h2 id="stream-data">6. Stream Data</h2>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>#</th>
 <th>Station ID</th>
 <th>Name</th>
@@ -906,70 +899,70 @@ Voice control works without these via keyboard shortcut.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1</td>
 <td>a11911</td>
 <td>ACB Media 1</td>
 <td>Flagship</td>
 <td>Alt+1</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2</td>
 <td>a27778</td>
 <td>ACB Media 2</td>
 <td>Flagship</td>
 <td>Alt+2</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>3</td>
 <td>a17972</td>
 <td>ACB Media 3</td>
 <td>Old Time Radio</td>
 <td>Alt+3</td>
 </tr>
-<tr>
+<tr class="even">
 <td>4</td>
 <td>a89697</td>
 <td>ACB Media 4</td>
 <td>Advocacy</td>
 <td>Alt+4</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>5</td>
 <td>a46090</td>
 <td>ACB Media 5</td>
 <td>Audio Description</td>
 <td>Alt+5</td>
 </tr>
-<tr>
+<tr class="even">
 <td>6</td>
 <td>a36240</td>
 <td>ACB Media 6</td>
 <td>International</td>
 <td>Alt+6</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>7</td>
 <td>a95398</td>
 <td>ACB Media 7</td>
 <td>ACB Café</td>
 <td>Alt+7</td>
 </tr>
-<tr>
+<tr class="even">
 <td>8</td>
 <td>a18975</td>
 <td>ACB Media 8</td>
 <td>Classical</td>
 <td>Alt+8</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>9</td>
 <td>a44175</td>
 <td>ACB Media 9</td>
 <td>Jazz</td>
 <td>Alt+9</td>
 </tr>
-<tr>
+<tr class="even">
 <td>10</td>
 <td>a85327</td>
 <td>ACB Media 10</td>
@@ -983,44 +976,44 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="wcag-2.2-aa-requirements">7.1 WCAG 2.2 AA Requirements</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Criterion</th>
 <th>Status</th>
 <th>Implementation</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1.4.3 Contrast</td>
 <td>✅</td>
 <td>4.5:1 minimum ratio</td>
 </tr>
-<tr>
+<tr class="even">
 <td>1.4.4 Text Resize</td>
 <td>✅</td>
 <td>Scalable to 200%</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>2.1.1 Keyboard</td>
 <td>✅</td>
 <td>Full keyboard access</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2.1.2 No Traps</td>
 <td>✅</td>
 <td>Escape always works</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>2.4.3 Focus Order</td>
 <td>✅</td>
 <td>Logical tab sequence</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2.4.7 Focus Visible</td>
 <td>✅</td>
 <td>Customizable focus ring</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>4.1.2 Name/Role</td>
 <td>✅</td>
 <td>All controls labeled</td>
@@ -1030,24 +1023,24 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="screen-reader-testing">7.2 Screen Reader Testing</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Screen Reader</th>
 <th>Compatibility</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>JAWS 2024+</td>
 <td>Full</td>
 <td>Tested extensively</td>
 </tr>
-<tr>
+<tr class="even">
 <td>NVDA 2024+</td>
 <td>Full</td>
 <td>Tested extensively</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Narrator</td>
 <td>Full</td>
 <td>Windows built-in</td>
@@ -1067,57 +1060,57 @@ Voice control works without these via keyboard shortcut.</p>
 <h2 id="file-locations">8. File Locations</h2>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Purpose</th>
 <th>Location</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Settings</td>
 <td>~/.acb_link/settings.json</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Favorites</td>
 <td>~/.acb_link/favorites.json</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Playlists</td>
 <td>~/.acb_link/playlists.json</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Shortcuts</td>
 <td>~/.acb_link/shortcuts.json</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Scheduled Events</td>
 <td>~/.acb_link/scheduled_events.json</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Voice Config</td>
 <td>~/.acb_link/voice_config.json</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>View Settings</td>
 <td>~/.acb_link/view_settings.json</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Audio Ducking</td>
 <td>~/.acb_link/audio_ducking.json</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Cache</td>
 <td>~/.acb_link/cache/</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Downloads</td>
 <td>~/.acb_link/downloads/</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Recordings</td>
 <td>~/.acb_link/recordings/</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Logs</td>
 <td>~/.acb_link/logs/</td>
 </tr>
@@ -1128,33 +1121,33 @@ Voice control works without these via keyboard shortcut.</p>
 <h3 id="system-requirements">9.1 System Requirements</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Requirement</th>
 <th>Specification</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Operating System</td>
 <td>Windows 10/11 (x64 or ARM64)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Python</td>
 <td>3.9 or later</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>RAM</td>
 <td>256 MB minimum</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Disk Space</td>
 <td>100 MB + downloads/recordings</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Internet</td>
 <td>Required for streaming</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Audio</td>
 <td>Sound card with speakers/headphones</td>
 </tr>
@@ -1187,29 +1180,29 @@ x86-specific dependencies</p>
 <h2 id="performance-targets">10. Performance Targets</h2>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Metric</th>
 <th>Target</th>
 <th>Current</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>App Launch</td>
 <td>&lt; 3 sec</td>
 <td>✅ Met</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Stream Start</td>
 <td>&lt; 2 sec</td>
 <td>✅ Met</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Memory Usage</td>
 <td>&lt; 200 MB</td>
 <td>✅ Met</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Crash Rate</td>
 <td>&lt; 0.1%</td>
 <td>✅ Met</td>
@@ -1235,7 +1228,7 @@ infrastructure required.</p>
 <h3 id="configuration-tiers">12.2 Configuration Tiers</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Tier</th>
 <th>Scope</th>
 <th>Storage</th>
@@ -1243,19 +1236,19 @@ infrastructure required.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>User Preferences</td>
 <td>Individual</td>
 <td>Local JSON</td>
 <td>Any user</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Organization Config</td>
 <td>Organization-wide</td>
 <td>GitHub repo</td>
 <td>Admins only</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Affiliate Data</td>
 <td>Content</td>
 <td>XML files</td>
@@ -1273,7 +1266,7 @@ infrastructure required.</p>
 <col style="width: 30%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>GitHub Permission</th>
 <th>Role</th>
 <th>Level</th>
@@ -1281,25 +1274,25 @@ infrastructure required.</p>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>None/Read</td>
 <td>USER</td>
 <td>0</td>
 <td>Standard app usage, personal settings</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Write/Triage</td>
 <td>AFFILIATE_ADMIN</td>
 <td>1</td>
 <td>Review/approve affiliate corrections</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Maintain/Admin</td>
 <td>CONFIG_ADMIN</td>
 <td>2</td>
 <td>Modify organization config, data sources</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Organization Owner</td>
 <td>SUPER_ADMIN</td>
 <td>3</td>
@@ -1359,29 +1352,29 @@ Config Update Flow (Admin):
 (Admin-Only)</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Category</th>
 <th>Settings</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Data Sources</td>
 <td>Stream URLs, podcast feeds, affiliate data URLs</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Network</td>
 <td>Timeouts, retries, proxy configuration</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Updates</td>
 <td>GitHub repo, API URL, update server</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Paths</td>
 <td>Application data directories</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Defaults</td>
 <td>Organization-wide default values</td>
 </tr>
@@ -1391,29 +1384,29 @@ Config Update Flow (Admin):
 Modify)</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Category</th>
 <th>Settings</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Appearance</td>
 <td>Theme, font size, colors, contrast</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Playback</td>
 <td>Volume, speed, skip intervals</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Behavior</td>
 <td>System tray, minimize behavior</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Accessibility</td>
 <td>Screen reader options, audio feedback</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Storage</td>
 <td>Personal download/recording paths</td>
 </tr>
@@ -1486,14 +1479,14 @@ support</label></li>
 <col style="width: 37%" />
 </colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Version</th>
 <th>Date</th>
 <th>Changes</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>1.0</td>
 <td>Jan 2025</td>
 <td>Initial release with full feature set including podcasts, favorites,
