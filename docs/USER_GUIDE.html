@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>USER_GUIDE</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -786,6 +779,12 @@ responses</p>
 <p>Text-to-Speech: - Adjust speaking rate from 100 to 300 words per
 minute - Set TTS volume independently from playback - Choose from
 available system voices</p>
+<p>Key Feedback Sounds: - Enable or disable audio feedback sounds during
+voice recognition - A “key down” sound plays when voice recognition
+starts - A “key up” sound plays when voice recognition stops - Use the
+default sounds or specify custom sound files (MP3, WAV, or OGG) - Custom
+sound paths can be entered directly or selected via the Browse
+button</p>
 <h3 id="customizing-voice-commands">Customizing Voice Commands</h3>
 <p>You can customize the trigger phrases for any voice command:</p>
 <ol type="1">
@@ -799,6 +798,20 @@ available system voices</p>
 <p>This allows you to: - Add phrases in your preferred style - Use
 shorter or longer commands - Add regional language variations - Remove
 triggers you accidentally speak</p>
+<h3 id="customizing-key-feedback-sounds">Customizing Key Feedback
+Sounds</h3>
+<p>To use your own audio feedback sounds during voice recognition:</p>
+<ol type="1">
+<li>Go to Settings, Voice Control tab</li>
+<li>Scroll to the Key Feedback Sounds section</li>
+<li>Check “Enable key feedback sounds” to turn sounds on or off</li>
+<li>For custom sounds, click Browse next to “Key down sound” or “Key up
+sound”</li>
+<li>Select an MP3, WAV, or OGG audio file</li>
+<li>Leave the paths empty to use the default sounds</li>
+</ol>
+<p>The default sounds are located in the <code>sounds</code> folder
+(key_down.mp3 and key_up.mp3).</p>
 <hr />
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <h3 id="complete-shortcut-reference">Complete Shortcut Reference</h3>
@@ -1125,29 +1138,29 @@ have read all announcements, it hides automatically.</p>
 <h3 id="priority-levels">Priority Levels</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Priority</th>
 <th>What It Means</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Critical</td>
 <td>Urgent - requires immediate attention (security, outages)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>High</td>
 <td>Important information you should read soon</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Normal</td>
 <td>Standard announcements and updates</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Low</td>
 <td>Minor updates and tips</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Info</td>
 <td>General information</td>
 </tr>
@@ -1195,45 +1208,45 @@ Whether to play sounds - Whether critical announcements show popups</p>
 Announcements tab:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Check on startup</td>
 <td>Look for new announcements when app starts</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Check interval</td>
 <td>How often to check (in minutes, 0 for manual only)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Native notifications</td>
 <td>Show desktop notifications</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Critical dialogs</td>
 <td>Always show popup for critical alerts</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Sound</td>
 <td>Play sound for notifications</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Show widget</td>
 <td>Display widget on home page</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Max items</td>
 <td>How many to show in widget</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Min priority</td>
 <td>Lowest priority that shows notifications</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Keep history</td>
 <td>How long to keep read announcements</td>
 </tr>
@@ -1242,17 +1255,17 @@ Announcements tab:</p>
 <h3 id="keyboard-shortcuts-1">Keyboard Shortcuts</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Action</th>
 <th>Shortcut</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>View Announcements</td>
 <td>Control plus Shift plus A</td>
 </tr>
-<tr>
+<tr class="even">
 <td>What’s New</td>
 <td>(from Help menu)</td>
 </tr>
@@ -1288,41 +1301,41 @@ alerts</li>
 <p>Control how ACB Link launches:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Start at login</td>
 <td>Launch automatically when you sign in</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Start minimized</td>
 <td>Launch with window minimized to taskbar</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Start minimized to tray</td>
 <td>Launch hidden in system tray only</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Restore last session</td>
 <td>Remember what you were listening to</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Auto-play on startup</td>
 <td>Resume playback automatically</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Auto-play delay</td>
 <td>Wait before auto-playing (0-30 seconds)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Check updates on startup</td>
 <td>Look for new versions</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Sync data on startup</td>
 <td>Update from ACB servers</td>
 </tr>

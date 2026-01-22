@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>ACCESSIBILITY</title>
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
     html {
       color: #1a1a1a;
       background-color: #fdfdfd;
@@ -63,10 +60,6 @@
     img {
       max-width: 100%;
     }
-    svg {
-      height: auto;
-      max-width: 100%;
-    }
     h1, h2, h3, h4, h5, h6 {
       margin-top: 1.4em;
     }
@@ -110,8 +103,8 @@
      overflow: visible;
     }
     hr {
+      background-color: #1a1a1a;
       border: none;
-      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -181,29 +174,29 @@ best practices.</p>
 <p>ACB Link Desktop supports these screen readers:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Screen Reader</th>
 <th>Support Level</th>
 <th>Notes</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>NVDA</strong></td>
 <td>Full</td>
 <td>Recommended for best experience</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>JAWS</strong></td>
 <td>Full</td>
 <td>All features work</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Narrator</strong></td>
 <td>Full</td>
 <td>Windows built-in</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>System Access</strong></td>
 <td>Good</td>
 <td>Basic support</td>
@@ -217,25 +210,25 @@ Desktop 2. The screen reader should announce “ACB Link Desktop window”
 <p>ACB Link Desktop has deep VoiceOver integration:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Feature</th>
 <th>Support Level</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Element announcement</strong></td>
 <td>Full</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Rotor navigation</strong></td>
 <td>Full</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Keyboard commands</strong></td>
 <td>Full</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>VoiceOver gestures</strong></td>
 <td>Supported</td>
 </tr>
@@ -249,59 +242,59 @@ VoiceOver</p>
 <h3 id="global-shortcuts">Global Shortcuts</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Action</th>
 <th>Windows</th>
 <th>macOS</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Play/Pause</td>
 <td>Space</td>
 <td>Space</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Stop</td>
 <td>Ctrl+S</td>
 <td>Command+S</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Volume Up</td>
 <td>Ctrl+Up</td>
 <td>Command+Up</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Volume Down</td>
 <td>Ctrl+Down</td>
 <td>Command+Down</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Mute</td>
 <td>Ctrl+M</td>
 <td>Command+M</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Next Stream</td>
 <td>Ctrl+Right</td>
 <td>Command+Right</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Previous Stream</td>
 <td>Ctrl+Left</td>
 <td>Command+Left</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Settings</td>
 <td>Ctrl+Comma</td>
 <td>Command+Comma</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Check Updates</td>
 <td>Ctrl+U</td>
 <td>Command+U</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Exit</td>
 <td>Alt+F4</td>
 <td>Command+Q</td>
@@ -311,29 +304,29 @@ VoiceOver</p>
 <h3 id="navigation">Navigation</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Action</th>
 <th>Key</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Move between controls</td>
 <td>Tab / Shift+Tab</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Move in lists</td>
 <td>Arrow Up/Down</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Select item</td>
 <td>Enter or Space</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Open context menu</td>
 <td>Application key or Shift+F10</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Cancel/Close</td>
 <td>Escape</td>
 </tr>
@@ -342,25 +335,25 @@ VoiceOver</p>
 <h3 id="menu-navigation">Menu Navigation</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Action</th>
 <th>Key</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Open menu bar</td>
 <td>Alt or F10</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Navigate menus</td>
 <td>Arrow keys</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Select menu item</td>
 <td>Enter</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Close menu</td>
 <td>Escape</td>
 </tr>
@@ -415,25 +408,25 @@ live region - Confirmation dialogs for destructive actions</p>
 <p><strong>Menu: File &gt; Settings &gt; Accessibility</strong></p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Enable announcements</strong></td>
 <td>Turn spoken feedback on/off</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Announce status changes</strong></td>
 <td>Speak when playback status changes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Announce connections</strong></td>
 <td>Speak connection status</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Verbose mode</strong></td>
 <td>Include additional details</td>
 </tr>
@@ -442,21 +435,21 @@ live region - Confirmation dialogs for destructive actions</p>
 <h3 id="visual-options">Visual Options</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Setting</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Theme</strong></td>
 <td>Light, Dark, or High Contrast</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Font size</strong></td>
 <td>Small, Medium, Large, Extra Large</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Show focus ring</strong></td>
 <td>Visible indicator on focused control</td>
 </tr>
@@ -482,44 +475,62 @@ Thick focus indicators - No background images</p>
 <li>Check “Enable voice commands”</li>
 <li>Configure wake word (default: “ACB Link”)</li>
 </ol>
+<h3 id="key-feedback-sounds">Key Feedback Sounds</h3>
+<p>Voice control provides audio feedback to indicate when listening
+starts and stops:</p>
+<ul>
+<li><strong>Key down sound</strong>: Plays when voice recognition
+activates</li>
+<li><strong>Key up sound</strong>: Plays when voice recognition
+deactivates</li>
+</ul>
+<p>To configure key feedback sounds:</p>
+<ol type="1">
+<li>Go to Settings &gt; Voice Control</li>
+<li>Scroll to “Key Feedback Sounds” section</li>
+<li>Enable or disable sounds with the checkbox</li>
+<li>Optionally set custom sound files (MP3, WAV, or OGG)</li>
+</ol>
+<p>This audio feedback is especially helpful for screen reader users to
+know when the system is listening for commands.</p>
 <h3 id="commands">Commands</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Say This</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>“Play”</td>
 <td>Start playback</td>
 </tr>
-<tr>
+<tr class="even">
 <td>“Pause”</td>
 <td>Pause playback</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>“Stop”</td>
 <td>Stop playback</td>
 </tr>
-<tr>
+<tr class="even">
 <td>“Next stream”</td>
 <td>Switch to next stream</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>“Previous stream”</td>
 <td>Switch to previous stream</td>
 </tr>
-<tr>
+<tr class="even">
 <td>“Volume up”</td>
 <td>Increase volume</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>“Volume down”</td>
 <td>Decrease volume</td>
 </tr>
-<tr>
+<tr class="even">
 <td>“What’s playing?”</td>
 <td>Announce current stream</td>
 </tr>
@@ -530,33 +541,33 @@ Thick focus indicators - No background images</p>
 <p>ACB Link Desktop automatically announces important events:</p>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Event</th>
 <th>Announcement Example</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Stream connected</td>
 <td>“Now playing ACB Main Audio”</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Stream disconnected</td>
 <td>“Stream disconnected, reconnecting”</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Recording started</td>
 <td>“Recording started”</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Recording stopped</td>
 <td>“Recording saved to Downloads”</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Volume changed</td>
 <td>“Volume 50 percent”</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Error</td>
 <td>“Error: Unable to connect to stream”</td>
 </tr>
