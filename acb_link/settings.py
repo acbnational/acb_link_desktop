@@ -285,6 +285,10 @@ class VoiceSettings:
     ambient_noise_adjustment: bool = True
     command_confirmation: bool = True  # Speak confirmation after commands
     custom_triggers: dict = None  # Command name -> list of custom triggers
+    # Key feedback sounds settings
+    key_sounds_enabled: bool = True  # Play sounds on key press/release during voice recognition
+    key_down_sound: str = ""  # Custom key down sound path (empty = default)
+    key_up_sound: str = ""  # Custom key up sound path (empty = default)
 
     def __post_init__(self):
         if self.custom_triggers is None:

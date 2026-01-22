@@ -508,7 +508,35 @@ class VoiceSettings:
     recognition_timeout: float = 5.0  # Seconds
     command_confirmation: bool = True
     custom_triggers: dict = None  # Command name -> list of triggers
+    # Key feedback sounds
+    key_sounds_enabled: bool = True  # Play sounds on key press/release
+    key_down_sound: str = ""  # Custom key down sound path (empty = default)
+    key_up_sound: str = ""  # Custom key up sound path (empty = default)
 ```
+
+### Key Feedback Sounds
+
+The `KeySoundPlayer` class provides audio feedback during voice recognition:
+
+```python
+class KeySoundPlayer:
+    """Plays audio cues when voice recognition starts/stops."""
+
+    def play_key_down(self):
+        """Play sound when voice recognition activates."""
+
+    def play_key_up(self):
+        """Play sound when voice recognition deactivates."""
+
+    def apply_settings(self, voice_settings):
+        """Apply settings from VoiceSettings dataclass."""
+```
+
+Default sounds are located in the `sounds/` directory:
+- `key_down.mp3` - Played when voice recognition starts
+- `key_up.mp3` - Played when voice recognition stops
+
+Users can specify custom sound files (MP3, WAV, OGG) in Settings > Voice Control.
 
 ### Wake Word Activation (Optional)
 

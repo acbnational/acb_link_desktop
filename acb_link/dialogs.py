@@ -995,8 +995,127 @@ class SettingsDialog(wx.Dialog):
 
         sizer.Add(cmd_sizer, 0, wx.EXPAND | wx.ALL, 10)
 
+        # Key Feedback Sounds Settings
+        sounds_box = wx.StaticBox(panel, label="Key Feedback Sounds")
+        sounds_sizer = wx.StaticBoxSizer(sounds_box, wx.VERTICAL)
+
+        sounds_note = wx.StaticText(
+            panel,
+            label="Play audio feedback when starting or stopping voice recognition."
+        )
+        sounds_sizer.Add(sounds_note, 0, wx.ALL, 5)
+
+        self.chk_key_sounds_enabled = wx.CheckBox(
+            panel, label="Enable key feedback sounds"
+        )
+        self.chk_key_sounds_enabled.SetValue(self.settings.voice.key_sounds_enabled)
+        self.chk_key_sounds_enabled.SetToolTip(
+            "Play sounds when voice recognition starts (key down) and stops (key up)"
+        )
+        make_accessible(
+            self.chk_key_sounds_enabled,
+            "Enable key feedback sounds",
+            "Toggle audio feedback when activating or deactivating voice recognition"
+        )
+        sounds_sizer.Add(self.chk_key_sounds_enabled, 0, wx.ALL, 5)
+
+        # Key down sound path
+        key_down_row = wx.BoxSizer(wx.HORIZONTAL)
+        key_down_row.Add(
+            wx.StaticText(panel, label="Key down sound:"),
+            0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 10
+        )
+        self.txt_key_down_sound = wx.TextCtrl(
+            panel,
+            value=self.settings.voice.key_down_sound,
+            size=(250, -1)
+        )
+        self.txt_key_down_sound.SetToolTip(
+            "Custom sound file for when voice recognition starts (leave empty for default)"
+        )
+        make_accessible(
+            self.txt_key_down_sound,
+            "Key down sound path",
+            "Path to custom sound file played when voice recognition starts"
+        )
+        key_down_row.Add(self.txt_key_down_sound, 1, wx.EXPAND)
+        btn_browse_key_down = wx.Button(panel, label="Browse...")
+        btn_browse_key_down.Bind(wx.EVT_BUTTON, self._on_browse_key_down_sound)
+        btn_browse_key_down.SetToolTip("Browse for a custom key down sound file")
+        make_accessible(
+            btn_browse_key_down,
+            "Browse for key down sound",
+            "Select a custom sound file for voice recognition activation"
+        )
+        key_down_row.Add(btn_browse_key_down, 0, wx.LEFT, 5)
+        sounds_sizer.Add(key_down_row, 0, wx.EXPAND | wx.ALL, 5)
+
+        # Key up sound path
+        key_up_row = wx.BoxSizer(wx.HORIZONTAL)
+        key_up_row.Add(
+            wx.StaticText(panel, label="Key up sound:"),
+            0, wx.ALIGN_CENTER_VERTICAL | wx.RIGHT, 10
+        )
+        self.txt_key_up_sound = wx.TextCtrl(
+            panel,
+            value=self.settings.voice.key_up_sound,
+            size=(250, -1)
+        )
+        self.txt_key_up_sound.SetToolTip(
+            "Custom sound file for when voice recognition stops (leave empty for default)"
+        )
+        make_accessible(
+            self.txt_key_up_sound,
+            "Key up sound path",
+            "Path to custom sound file played when voice recognition stops"
+        )
+        key_up_row.Add(self.txt_key_up_sound, 1, wx.EXPAND)
+        btn_browse_key_up = wx.Button(panel, label="Browse...")
+        btn_browse_key_up.Bind(wx.EVT_BUTTON, self._on_browse_key_up_sound)
+        btn_browse_key_up.SetToolTip("Browse for a custom key up sound file")
+        make_accessible(
+            btn_browse_key_up,
+            "Browse for key up sound",
+            "Select a custom sound file for voice recognition deactivation"
+        )
+        key_up_row.Add(btn_browse_key_up, 0, wx.LEFT, 5)
+        sounds_sizer.Add(key_up_row, 0, wx.EXPAND | wx.ALL, 5)
+
+        sounds_hint = wx.StaticText(
+            panel,
+            label="Leave paths empty to use the default sounds (key_down.mp3, key_up.mp3)."
+        )
+        sounds_hint.SetForegroundColour(wx.Colour(100, 100, 100))
+        sounds_sizer.Add(sounds_hint, 0, wx.LEFT | wx.BOTTOM, 5)
+
+        sizer.Add(sounds_sizer, 0, wx.EXPAND | wx.ALL, 10)
+
         panel.SetSizer(sizer)
         self.notebook.AddPage(panel, "Voice Control")
+
+    def _on_browse_key_down_sound(self, event):
+        """Browse for custom key down sound file."""
+        with wx.FileDialog(
+            self,
+            "Select Key Down Sound",
+            wildcard="Audio files (*.mp3;*.wav;*.ogg)|*.mp3;*.wav;*.ogg|All files (*.*)|*.*",
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+        ) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                self.txt_key_down_sound.SetValue(dlg.GetPath())
+                announce("Key down sound selected")
+
+    def _on_browse_key_up_sound(self, event):
+        """Browse for custom key up sound file."""
+        with wx.FileDialog(
+            self,
+            "Select Key Up Sound",
+            wildcard="Audio files (*.mp3;*.wav;*.ogg)|*.mp3;*.wav;*.ogg|All files (*.*)|*.*",
+            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST
+        ) as dlg:
+            if dlg.ShowModal() == wx.ID_OK:
+                self.txt_key_up_sound.SetValue(dlg.GetPath())
+                announce("Key up sound selected")
 
     def _on_tts_volume_change(self, event):
         """Update TTS volume label when slider changes."""
@@ -1428,6 +1547,10 @@ class SettingsDialog(wx.Dialog):
         self.settings.voice.tts_enabled = self.chk_tts_enabled.GetValue()
         self.settings.voice.tts_rate = self.spin_tts_rate.GetValue()
         self.settings.voice.tts_volume = self.slider_tts_volume.GetValue() / 100.0
+        # Key feedback sounds
+        self.settings.voice.key_sounds_enabled = self.chk_key_sounds_enabled.GetValue()
+        self.settings.voice.key_down_sound = self.txt_key_down_sound.GetValue().strip()
+        self.settings.voice.key_up_sound = self.txt_key_up_sound.GetValue().strip()
 
         # Privacy
         self.settings.privacy.remember_search_history = self.chk_search_history.GetValue()

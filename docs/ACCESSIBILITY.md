@@ -200,6 +200,22 @@ ACB Link Desktop includes voice command support.
 3. Check "Enable voice commands"
 4. Configure wake word (default: "ACB Link")
 
+### Key Feedback Sounds
+
+Voice control provides audio feedback to indicate when listening starts and stops:
+
+- **Key down sound**: Plays when voice recognition activates
+- **Key up sound**: Plays when voice recognition deactivates
+
+To configure key feedback sounds:
+
+1. Go to Settings > Voice Control
+2. Scroll to "Key Feedback Sounds" section
+3. Enable or disable sounds with the checkbox
+4. Optionally set custom sound files (MP3, WAV, or OGG)
+
+This audio feedback is especially helpful for screen reader users to know when the system is listening for commands.
+
 ### Commands
 
 | Say This | Action |

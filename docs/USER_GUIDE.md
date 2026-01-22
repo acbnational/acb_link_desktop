@@ -688,6 +688,13 @@ Text-to-Speech:
 - Set TTS volume independently from playback
 - Choose from available system voices
 
+Key Feedback Sounds:
+- Enable or disable audio feedback sounds during voice recognition
+- A "key down" sound plays when voice recognition starts
+- A "key up" sound plays when voice recognition stops
+- Use the default sounds or specify custom sound files (MP3, WAV, or OGG)
+- Custom sound paths can be entered directly or selected via the Browse button
+
 ### Customizing Voice Commands
 
 You can customize the trigger phrases for any voice command:
@@ -704,6 +711,19 @@ This allows you to:
 - Use shorter or longer commands
 - Add regional language variations
 - Remove triggers you accidentally speak
+
+### Customizing Key Feedback Sounds
+
+To use your own audio feedback sounds during voice recognition:
+
+1. Go to Settings, Voice Control tab
+2. Scroll to the Key Feedback Sounds section
+3. Check "Enable key feedback sounds" to turn sounds on or off
+4. For custom sounds, click Browse next to "Key down sound" or "Key up sound"
+5. Select an MP3, WAV, or OGG audio file
+6. Leave the paths empty to use the default sounds
+
+The default sounds are located in the `sounds` folder (key_down.mp3 and key_up.mp3).
 
 ---
 

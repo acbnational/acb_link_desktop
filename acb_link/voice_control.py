@@ -65,6 +65,8 @@ EXTENSIBILITY GUIDE
     - Customize triggers for any command
     - Adjust TTS voice, rate, and volume
     - Enable/disable voice feedback
+    - Enable/disable key feedback sounds during voice recognition
+    - Set custom key_up and key_down sounds
 
 5. CUSTOM SPEECH RECOGNITION BACKEND
 ------------------------------------
@@ -105,6 +107,166 @@ try:
     HAS_TTS = True
 except ImportError:
     HAS_TTS = False
+
+
+def get_default_sounds_path() -> Path:
+    """Get the path to the default sounds directory."""
+    # Try to find the sounds directory relative to this module
+    module_dir = Path(__file__).parent
+    sounds_dir = module_dir.parent / "sounds"
+    if sounds_dir.exists():
+        return sounds_dir
+    # Fallback to checking in the same directory as the module
+    alt_sounds = module_dir / "sounds"
+    if alt_sounds.exists():
+        return alt_sounds
+    return sounds_dir
+
+
+class KeySoundPlayer:
+    """
+    Handles playing key press/release feedback sounds during voice recognition.
+    
+    This class provides audio feedback when the user presses or releases keys
+    to activate voice recognition, improving accessibility and user experience.
+    """
+    
+    def __init__(self):
+        self._enabled = True
+        self._key_down_sound = ""  # Empty = use default
+        self._key_up_sound = ""  # Empty = use default
+        self._default_sounds_path = get_default_sounds_path()
+        self._sound_lock = threading.Lock()
+    
+    @property
+    def enabled(self) -> bool:
+        """Whether key sounds are enabled."""
+        return self._enabled
+    
+    @enabled.setter
+    def enabled(self, value: bool):
+        """Enable or disable key sounds."""
+        self._enabled = value
+    
+    @property
+    def key_down_sound(self) -> str:
+        """Path to custom key down sound, or empty for default."""
+        return self._key_down_sound
+    
+    @key_down_sound.setter
+    def key_down_sound(self, path: str):
+        """Set custom key down sound path."""
+        self._key_down_sound = path
+    
+    @property
+    def key_up_sound(self) -> str:
+        """Path to custom key up sound, or empty for default."""
+        return self._key_up_sound
+    
+    @key_up_sound.setter
+    def key_up_sound(self, path: str):
+        """Set custom key up sound path."""
+        self._key_up_sound = path
+    
+    def _get_sound_path(self, sound_type: str) -> Optional[str]:
+        """
+        Get the path to a sound file.
+        
+        Args:
+            sound_type: Either 'key_down' or 'key_up'
+            
+        Returns:
+            Path to sound file or None if not found
+        """
+        if sound_type == "key_down":
+            custom_path = self._key_down_sound
+            default_name = "key_down.mp3"
+        else:
+            custom_path = self._key_up_sound
+            default_name = "key_up.mp3"
+        
+        # Use custom path if specified and exists
+        if custom_path and os.path.exists(custom_path):
+            return custom_path
+        
+        # Use default sound
+        default_path = self._default_sounds_path / default_name
+        if default_path.exists():
+            return str(default_path)
+        
+        return None
+    
+    def play_key_down(self):
+        """Play the key down sound asynchronously."""
+        if not self._enabled:
+            return
+        threading.Thread(target=self._play_sound, args=("key_down",), daemon=True).start()
+    
+    def play_key_up(self):
+        """Play the key up sound asynchronously."""
+        if not self._enabled:
+            return
+        threading.Thread(target=self._play_sound, args=("key_up",), daemon=True).start()
+    
+    def _play_sound(self, sound_type: str):
+        """
+        Play a sound file.
+        
+        Args:
+            sound_type: Either 'key_down' or 'key_up'
+        """
+        with self._sound_lock:
+            sound_path = self._get_sound_path(sound_type)
+            if not sound_path:
+                return
+            
+            try:
+                # Try using pygame for cross-platform audio
+                try:
+                    import pygame
+                    if not pygame.mixer.get_init():
+                        pygame.mixer.init()
+                    sound = pygame.mixer.Sound(sound_path)
+                    sound.play()
+                    return
+                except ImportError:
+                    pass
+                
+                # Try using playsound
+                try:
+                    from playsound import playsound
+                    playsound(sound_path, block=False)
+                    return
+                except ImportError:
+                    pass
+                
+                # Try platform-specific methods
+                import platform
+                system = platform.system()
+                
+                if system == "Windows":
+                    import winsound
+                    # winsound only supports WAV natively, use PlaySound for async
+                    winsound.PlaySound(sound_path, winsound.SND_FILENAME | winsound.SND_ASYNC)
+                elif system == "Darwin":  # macOS
+                    os.system(f'afplay "{sound_path}" &')
+                else:  # Linux and others
+                    # Try aplay for ALSA
+                    os.system(f'aplay -q "{sound_path}" &')
+            except Exception as e:
+                # Silently fail - don't interrupt voice recognition for sound errors
+                print(f"Key sound playback error: {e}")
+    
+    def apply_settings(self, voice_settings):
+        """
+        Apply settings from VoiceSettings dataclass.
+        
+        Args:
+            voice_settings: VoiceSettings instance with key sound settings
+        """
+        self._enabled = getattr(voice_settings, 'key_sounds_enabled', True)
+        self._key_down_sound = getattr(voice_settings, 'key_down_sound', "")
+        self._key_up_sound = getattr(voice_settings, 'key_up_sound', "")
 
 
 class CommandCategory(Enum):
@@ -357,6 +519,9 @@ class VoiceController:
         self.voice_feedback = True
         self.command_confirmation = True
 
+        # Key sound player for audio feedback during voice recognition
+        self.key_sound_player = KeySoundPlayer()
+
         # Plugins
         self.plugins: Dict[str, VoiceCommandPlugin] = {}
 
@@ -416,6 +581,9 @@ class VoiceController:
         # Voice feedback
         self.voice_feedback = voice_settings.voice_feedback
         self.command_confirmation = voice_settings.command_confirmation
+
+        # Key sound settings
+        self.key_sound_player.apply_settings(voice_settings)
 
         # TTS settings
         if voice_settings.tts_enabled and self.tts_engine:
@@ -1078,6 +1246,9 @@ class VoiceController:
         self.is_listening = True
         self.is_enabled = True
 
+        # Play key down sound to indicate listening started
+        self.key_sound_player.play_key_down()
+
         self._listen_thread = threading.Thread(
             target=self._listen_loop, daemon=True, name="VoiceControlListener"
         )
@@ -1094,6 +1265,9 @@ class VoiceController:
         self._stop_event.set()
         self.is_listening = False
         self.is_enabled = False
+
+        # Play key up sound to indicate listening stopped
+        self.key_sound_player.play_key_up()
 
         if self._listen_thread:
             self._listen_thread.join(timeout=2.0)

@@ -291,6 +291,19 @@ Configure how ACB Link speaks to you:
 | Voice feedback | Spoken confirmations after commands |
 | Command confirmation | Announce when commands execute |
 
+### Key Feedback Sounds
+
+Audio cues provide feedback when voice recognition starts and stops:
+
+| Setting | Description |
+|---------|-------------|
+| Enable key sounds | Toggle audio feedback on/off |
+| Key down sound | Sound played when voice recognition activates |
+| Key up sound | Sound played when voice recognition deactivates |
+| Custom sounds | Use your own MP3, WAV, or OGG files |
+
+Default sounds are included in the `sounds` folder. You can customize these by specifying your own audio files in Settings > Voice Control > Key Feedback Sounds.
+
 ---
 
 ## Announcements and Updates

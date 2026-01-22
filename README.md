@@ -62,6 +62,8 @@ ACB Link Desktop is a cross-platform desktop application developed by BITS (Blin
 - Voice commands for hands-free operation
 - Natural language understanding
 - Customizable voice feedback
+- Audio key feedback sounds when voice recognition starts/stops
+- Customizable sound files for audio cues
 
 ### Accessibility
 

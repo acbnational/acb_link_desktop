@@ -125,6 +125,16 @@ ACB Link Desktop 1.0.0 is the first public release, providing a comprehensive ac
 
 ## [Unreleased]
 
+### Added
+
+- **Key Feedback Sounds for Voice Recognition**: Audio feedback when voice recognition starts and stops
+  - Plays "key down" sound when voice recognition activates
+  - Plays "key up" sound when voice recognition deactivates
+  - Default sounds included (key_down.mp3, key_up.mp3 in sounds folder)
+  - Customizable with user-specified MP3, WAV, or OGG files
+  - Enable/disable toggle in Settings > Voice Control > Key Feedback Sounds
+  - Improves accessibility by providing clear audio indication of voice control state
+
 Features planned for future releases:
 
 - Podcast subscription management
